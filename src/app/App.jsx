@@ -15,7 +15,7 @@ import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { ProductsList } from "../components/productsList/ProductsList";
+import { ProductsListPage } from "../components/productsList/ProductsListPage";
 
 export default function App() {
   return (
@@ -30,7 +30,7 @@ export default function App() {
         <MyProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<ProductsList />} />
+              <Route path="/" element={<ProductsListPage />} />
             </Routes>
           </BrowserRouter>
         </MyProvider>

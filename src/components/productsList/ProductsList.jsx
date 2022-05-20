@@ -1,28 +1,15 @@
 import {
-  Page,
-  Card,
-  Stack,
   ResourceList,
-  ResourceItem,
-  Thumbnail,
   Pagination,
-  Spinner,
-  TextContainer, 
-  TextStyle
-} from "@shopify/polaris";
-import { getIdFromGid } from "../../utils/gidHelper";
-import { useMemo } from "react";
-import { fetchProducts } from "../../utils/fetchProducts";
+  Card
+} from "@shopify/polaris"
+import { ProductsListItem } from "./ProductsListItem";
 import { QUERY_PAGE_SIZE } from "../../constants";
 
-export const ProductsList = () => {
-  const { 
-    products, 
-    pageInfo, 
-    loading, 
-    error, 
-    fetchMore 
-  } = fetchProducts();
+export const ProductsList = ({ products, pageInfo, fetchMore }) => {
+  const renderItem = (product) => {
+    return <ProductsListItem product={product} />;
+  };
 
   const getNextPage = () => { 
     fetchMore({
@@ -45,69 +32,32 @@ export const ProductsList = () => {
     });
   };
 
-  const renderItem = (product) => {
-    const { id, title, featuredImage, totalVariants } = product;
-    const productId = getIdFromGid(id);
-
-    return (
-      <ResourceItem id={productId} name={title} url={`/products/${productId}`}>
-        <Thumbnail
-          source={featuredImage ? featuredImage.url : ""}
-          alt={featuredImage ? featuredImage.altText : ""}
-        /> 
-        <h3>{title}</h3>
-        <h4>Variants: {totalVariants}</h4>
-      </ResourceItem>
-    );
-  };
-
-  const pageContent = useMemo(() => {
-    if (!products || loading) {
-      return <Spinner />;
-    }
-
-    if (error) {
-      return (
-        <TextContainer>
-          <TextStyle variation="negative">
-            Unable to load products: {error.message}.
-          </TextStyle>
-        </TextContainer>
-      );
-    }
-
-    if (products) {
-      return (
-        <div className="products-list-container">
-          <ResourceList
-            resourceName={{
-              singular: "product",
-              plural: "products",
-            }}
-            items={products}
-            renderItem={renderItem}
-            emptyState={<h1>No unique variant products</h1>}
-          />
-          <Pagination
-            hasNext={pageInfo && pageInfo.hasNextPage }
-            hasPrevious={pageInfo && pageInfo.hasPreviousPage }
-            onNext={getNextPage}
-            onPrevious={getPrevPage}
-          />
-        </div>
-      );
-    }
-
-    return null;
-  }, [products, pageInfo, loading, error]);
-
   return (
-    <Page title="Unique Variants Products">
-      <Card>
-        <Stack alignment="center">
-          {pageContent} 
-        </Stack>
-      </Card>
-    </Page>
+    <Card 
+      className="products-list-container"
+      styles={{
+        width: "100%"
+      }}
+    >
+      <Card.Section>
+        <ResourceList
+          resourceName={{
+            singular: "product",
+            plural: "products",
+          }}
+          items={products || []}
+          renderItem={renderItem}
+          emptyState={<h1>No unique variant products</h1>}
+        />
+      </Card.Section> 
+      <Card.Subsection>
+        <Pagination
+        hasNext={pageInfo && pageInfo.hasNextPage}
+        hasPrevious={pageInfo && pageInfo.hasPreviousPage}
+        onNext={getNextPage}
+        onPrevious={getPrevPage}
+      />
+      </Card.Subsection>
+    </Card>
   );
 };

@@ -8,8 +8,7 @@ export const fetchProducts = () => {
     variables: {
       first: QUERY_PAGE_SIZE.products
     },
-    fetchPolicy: "network-only",
-    nextFetchPolicy: "cache-and-network"
+    fetchPolicy: "cache-first"
   });
 
   const { products, pageInfo } = useMemo(() => {
