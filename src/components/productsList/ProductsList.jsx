@@ -13,6 +13,7 @@ import {
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useMemo } from "react";
 import { fetchProducts } from "../../utils/fetchProducts";
+import { QUERY_PAGE_SIZE } from "../../constants";
 
 export const ProductsList = () => {
   const { 
@@ -26,6 +27,8 @@ export const ProductsList = () => {
   const getNextPage = () => { 
     fetchMore({
       variables: {
+        first: QUERY_PAGE_SIZE.products,
+        last: null,
         startCursor: null,
         endCursor: pageInfo.endCursor
       }
@@ -34,6 +37,8 @@ export const ProductsList = () => {
   const getPrevPage = () => { 
     fetchMore({
       variables: {
+        first: null,
+        last: QUERY_PAGE_SIZE.products,
         startCursor: pageInfo.startCursor,
         endCursor: null
       }

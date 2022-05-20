@@ -3,12 +3,13 @@ import gql from "graphql-tag";
 /* Grabs the first page of products */
 export const FETCH_PRODUCTS = gql`
   query FetchProducts(
-    $page_size: Int! 
-    $variant_page_size: Int!
+    $first: Int
+    $last: Int
     $startCursor: String
     $endCursor: String) {
     products(
-      first: $page_size
+      first: $first
+      last: $last
       query: "tag:'unique variants'"
       sortKey: UPDATED_AT
       after: $endCursor
@@ -23,7 +24,7 @@ export const FETCH_PRODUCTS = gql`
             altText
           }
           totalVariants
-          variants(first: $variant_page_size) {
+          variants(first: 5) {
             edges {
               node {
                 id

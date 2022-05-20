@@ -6,8 +6,7 @@ import { QUERY_PAGE_SIZE } from "../constants";
 export const fetchProducts = () => {
   const { data, loading, error, fetchMore } = useQuery(FETCH_PRODUCTS, {
     variables: {
-      page_size: QUERY_PAGE_SIZE.products,
-      variant_page_size: QUERY_PAGE_SIZE.variants
+      first: QUERY_PAGE_SIZE.products
     },
     fetchPolicy: "network-only",
     nextFetchPolicy: "cache-and-network"

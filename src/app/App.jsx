@@ -41,9 +41,20 @@ export default function App() {
 
 function MyProvider({ children }) {
   const app = useAppBridge();
+  const cacheOptions = {
+    typePolicies: {
+      Query: {
+        fields: {
+          products: {
+            keyArgs: false
+          }
+        }
+      }
+    }
+  }
 
   const client = new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache(cacheOptions),
     link: new HttpLink({
       credentials: "include",
       fetch: userLoggedInFetch(app),
