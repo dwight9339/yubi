@@ -1,12 +1,19 @@
 import {
   ResourceList,
   Pagination,
-  Card
+  Card,
+  Stack,
+  Autocomplete
 } from "@shopify/polaris"
 import { ProductsListItem } from "./ProductsListItem";
 import { QUERY_PAGE_SIZE } from "../../constants";
+import useWindowDimensions from "../../utils/hooks/useWindowDimensions";
+import { ResourcePicker } from "@shopify/app-bridge-react";
+import { ProductsListEmptyState } from "./ProductsListEmptyState";
 
 export const ProductsList = ({ products, pageInfo, fetchMore }) => {
+  const { width: windowWidth } = useWindowDimensions();
+
   const renderItem = (product) => {
     return <ProductsListItem product={product} />;
   };
@@ -33,31 +40,42 @@ export const ProductsList = ({ products, pageInfo, fetchMore }) => {
   };
 
   return (
-    <Card 
-      className="products-list-container"
-      styles={{
-        width: "100%"
+    <div
+      style={{
+        width: windowWidth * 0.6
       }}
     >
-      <Card.Section>
-        <ResourceList
-          resourceName={{
-            singular: "product",
-            plural: "products",
-          }}
-          items={products || []}
-          renderItem={renderItem}
-          emptyState={<h1>No unique variant products</h1>}
+      <Card 
+        className="products-list-container" 
+      >
+        <Card.Section>
+          <ResourcePicker 
+            resourceType="Product"
+            open={false}
+          />
+        </Card.Section>
+        <Card.Section>
+          <Stack distribution="fill">
+            <ResourceList
+              resourceName={{
+                singular: "product",
+                plural: "products",
+              }}
+              items={[]}
+              renderItem={renderItem}
+              emptyState={<ProductsListEmptyState />}
+            />
+          </Stack>
+        </Card.Section> 
+        <Card.Section>
+          <Pagination
+          hasNext={pageInfo && pageInfo.hasNextPage}
+          hasPrevious={pageInfo && pageInfo.hasPreviousPage}
+          onNext={getNextPage}
+          onPrevious={getPrevPage}
         />
-      </Card.Section> 
-      <Card.Subsection>
-        <Pagination
-        hasNext={pageInfo && pageInfo.hasNextPage}
-        hasPrevious={pageInfo && pageInfo.hasPreviousPage}
-        onNext={getNextPage}
-        onPrevious={getPrevPage}
-      />
-      </Card.Subsection>
-    </Card>
+        </Card.Section>
+      </Card>
+    </div>
   );
 };

@@ -1,12 +1,11 @@
 import {
   Page,
-  Card,
   Stack,
   Spinner,
   TextContainer, 
   TextStyle
 } from "@shopify/polaris";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { fetchProducts } from "../../utils/fetchProducts";
 
 import { ProductsList } from "./ProductsList";
@@ -48,11 +47,9 @@ export const ProductsListPage = () => {
 
   return (
     <Page 
-      title="Unique Variants Products"  
-      divider
+      fullWidth
     >
       <Stack 
-        alignment="center"
         distribution="center"
       >
         {pageContent} 
