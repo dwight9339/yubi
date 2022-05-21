@@ -1,6 +1,5 @@
 import gql from "graphql-tag";
 
-/* Grabs the first page of products */
 export const FETCH_PRODUCTS = gql`
   query FetchProducts(
     $first: Int
@@ -24,29 +23,6 @@ export const FETCH_PRODUCTS = gql`
             altText
           }
           totalVariants
-          variants(first: 5) {
-            edges {
-              node {
-                id
-                image {
-                  url
-                }
-                price
-                name: metafield(
-                  namespace: "uvapp-variants",
-                  key: "variant_name"
-                ) {
-                  value
-                }
-                description: metafield(
-                  namespace: "uvapp-variants",
-                  key: "variant_description"
-                ) {
-                  value
-                }
-              }
-            }
-          }
         }
       }
       pageInfo {
