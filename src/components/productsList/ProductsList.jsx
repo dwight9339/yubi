@@ -3,16 +3,21 @@ import {
   Pagination,
   Card,
   Stack,
-  Autocomplete
+  TextStyle,
+  TextContainer,
+  Button,
+  ButtonGroup
 } from "@shopify/polaris"
 import { ProductsListItem } from "./ProductsListItem";
 import { QUERY_PAGE_SIZE } from "../../constants";
 import useWindowDimensions from "../../utils/hooks/useWindowDimensions";
 import { ResourcePicker } from "@shopify/app-bridge-react";
 import { ProductsListEmptyState } from "./ProductsListEmptyState";
+import { useState } from "react";
 
 export const ProductsList = ({ products, pageInfo, fetchMore }) => {
   const { width: windowWidth } = useWindowDimensions();
+  const [productPickerOpen, setProductPickerOpen] = useState(false);
 
   const renderItem = (product) => {
     return <ProductsListItem product={product} />;
@@ -45,23 +50,45 @@ export const ProductsList = ({ products, pageInfo, fetchMore }) => {
         width: windowWidth * 0.6
       }}
     >
+      <ResourcePicker 
+        resourceType="Product"
+        open={productPickerOpen}
+        showVariants={false}
+        showArchived={false}
+        showHidden={false}
+        selectMultiple={false}
+        onSelection={() => {/* To do */}}
+      />
       <Card 
         className="products-list-container" 
       >
-        <Card.Section>
-          <ResourcePicker 
-            resourceType="Product"
-            open={false}
-          />
+        <Card.Section title="Product Search">
+          <Stack>
+            <TextContainer>
+              <TextStyle></TextStyle>
+            </TextContainer>
+            <ButtonGroup fullWidth>
+              <Button
+                onClick={() => setProductPickerOpen(!productPickerOpen)}
+              >
+                Search Products
+              </Button>
+              <Button
+                onClick={() => { /* To do */}}
+              >
+                Create New
+              </Button>
+            </ButtonGroup>
+          </Stack>
         </Card.Section>
-        <Card.Section>
+        <Card.Section title="Unique Variants Products">
           <Stack distribution="fill">
             <ResourceList
               resourceName={{
                 singular: "product",
                 plural: "products",
               }}
-              items={[]}
+              items={products || []}
               renderItem={renderItem}
               emptyState={<ProductsListEmptyState />}
             />
