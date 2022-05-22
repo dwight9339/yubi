@@ -5,9 +5,8 @@ import {
   TextContainer, 
   TextStyle
 } from "@shopify/polaris";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 import { fetchProducts } from "../../utils/fetchProducts";
-
 import { ProductsList } from "./ProductsList";
 
 export const ProductsListPage = () => {
@@ -36,24 +35,14 @@ export const ProductsListPage = () => {
 
     if (products) {
       return <ProductsList 
-                products={products} 
-                pageInfo={pageInfo}
-                fetchMore={fetchMore}
+              products={products} 
+              pageInfo={pageInfo}
+              fetchMore={fetchMore}
              />;
     }
 
     return null;
   }, [products, pageInfo, loading, error]);
 
-  return (
-    <Page 
-      fullWidth
-    >
-      <Stack 
-        distribution="center"
-      >
-        {pageContent} 
-      </Stack>
-    </Page>
-  );
+  return pageContent;
 };
