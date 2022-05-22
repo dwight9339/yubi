@@ -8,7 +8,7 @@ export const FETCH_PRODUCT = gql`
     $variants_start_cursor: String
     $variants_end_cursor: String
   ) {
-    products(id: $id) {
+    product(id: $id) {
       id
       title
       description
@@ -24,6 +24,7 @@ export const FETCH_PRODUCT = gql`
       ) {
         edges {
           node {
+            id
             title
             image {
               url
