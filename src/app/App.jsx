@@ -13,9 +13,11 @@ import { Redirect } from "@shopify/app-bridge/actions";
 import { AppProvider as PolarisProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { Page, Stack} from "@shopify/polaris"
 
 import { ProductsListPage } from "../components/productsList/ProductsListPage";
+import { ProductPage } from "../components/productPage/ProductPage";
 
 export default function App() {
   return (
@@ -28,11 +30,15 @@ export default function App() {
         }}
       >
         <MyProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<ProductsListPage />} />
-            </Routes>
-          </BrowserRouter>
+        <Page 
+          fullWidth
+        >
+          <Stack 
+            distribution="center"
+          >
+            <Outlet />
+          </Stack>
+        </Page>
         </MyProvider>
       </AppBridgeProvider>
     </PolarisProvider>
@@ -46,6 +52,9 @@ function MyProvider({ children }) {
       Query: {
         fields: {
           products: {
+            keyArgs: false
+          },
+          variants: {
             keyArgs: false
           }
         }
