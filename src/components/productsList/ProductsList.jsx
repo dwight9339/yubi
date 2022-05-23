@@ -61,26 +61,17 @@ export const ProductsList = ({ products, pageInfo, fetchMore }) => {
       />
       <Card 
         className="products-list-container" 
+        actions={[
+          {
+            content: "Search Products",
+            onAction: () => setProductPickerOpen(!productPickerOpen)
+          },
+          {
+            content: "Create New",
+            /* To do: url: "/create-product" */
+          }
+        ]}
       >
-        <Card.Section title="Product Search">
-          <Stack>
-            <TextContainer>
-              <TextStyle></TextStyle>
-            </TextContainer>
-            <ButtonGroup fullWidth>
-              <Button
-                onClick={() => setProductPickerOpen(!productPickerOpen)}
-              >
-                Search Products
-              </Button>
-              <Button
-                onClick={() => { /* To do */}}
-              >
-                Create New
-              </Button>
-            </ButtonGroup>
-          </Stack>
-        </Card.Section>
         <Card.Section title="Unique Variants Products">
           <Stack distribution="fill">
             <ResourceList
@@ -95,12 +86,12 @@ export const ProductsList = ({ products, pageInfo, fetchMore }) => {
           </Stack>
         </Card.Section> 
         <Card.Section>
-          <Pagination
-          hasNext={pageInfo && pageInfo.hasNextPage}
-          hasPrevious={pageInfo && pageInfo.hasPreviousPage}
-          onNext={getNextPage}
-          onPrevious={getPrevPage}
-        />
+            <Pagination
+            hasNext={pageInfo && pageInfo.hasNextPage}
+            hasPrevious={pageInfo && pageInfo.hasPreviousPage}
+            onNext={getNextPage}
+            onPrevious={getPrevPage}
+          />
         </Card.Section>
       </Card>
     </div>

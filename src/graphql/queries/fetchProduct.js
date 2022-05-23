@@ -31,12 +31,6 @@ export const FETCH_PRODUCT = gql`
               altText
             }
             price
-            description: metafield(
-              namespace: "uvapp-variants"
-              key: "variant_description"
-            ) {
-              value
-            }
           }
         }
         pageInfo {
