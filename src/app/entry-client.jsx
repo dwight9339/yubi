@@ -6,8 +6,10 @@ import {
   Navigate
 } from "react-router-dom";
 import App from "./App";
+
 import { ProductsListPage } from "../components/productsList/ProductsListPage";
 import { ProductPage } from "../components/productPage/ProductPage";
+import { VariantPage } from "../components/variantViewEdit/VariantPage";
 
 ReactDOM.render((
   <BrowserRouter>
@@ -17,6 +19,9 @@ ReactDOM.render((
         <Route path="products" element={<ProductsListPage />} />
         <Route path="product">
           <Route path=":productId" element={<ProductPage />} />
+        </Route>
+        <Route path="variant">
+          <Route path=":variantId" element={<VariantPage />} />
         </Route>
       </Route>
     </Routes>

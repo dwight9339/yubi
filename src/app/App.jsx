@@ -15,11 +15,11 @@ import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 import { Outlet } from "react-router-dom";
 import { Page, Stack} from "@shopify/polaris"
-
-import { ProductsListPage } from "../components/productsList/ProductsListPage";
-import { ProductPage } from "../components/productPage/ProductPage";
+import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
 export default function App() {
+  const { width: windowWidth } = useWindowDimensions();
+  
   return (
     <PolarisProvider i18n={translations}>
       <AppBridgeProvider
@@ -36,7 +36,13 @@ export default function App() {
           <Stack 
             distribution="center"
           >
-            <Outlet />
+            <div
+              style={{
+                width: windowWidth * 0.8
+              }}
+            >
+              <Outlet />
+            </div>
           </Stack>
         </Page>
         </MyProvider>
