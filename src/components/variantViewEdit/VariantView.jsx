@@ -1,12 +1,12 @@
 import { 
   Layout,
   Heading,
+  Subheading,
   TextContainer,
-  TextStyle,
-  Subheading
-} from "@shopify/polaris";
+  TextStyle
+} from "@shopify/polaris"
 
-export const ProductInfo = ({ product }) => {
+export const VariantView = ({ variant }) => {
   return (
     <Layout>
       <Layout.Section secondary>
@@ -16,11 +16,11 @@ export const ProductInfo = ({ product }) => {
           }}
         >
           <Heading>
-            {product.title}
+            {variant.title}
           </Heading>
           <img
-            src={product.featuredImage.url}
-            alt={product.featuredImage.altText}
+            src={variant.image.url}
+            alt={variant.image.altText}
             style={{
               width: "100%",
               overflow: "hidden"
@@ -35,15 +35,23 @@ export const ProductInfo = ({ product }) => {
           }}
         >
           <Subheading>
+            Price
+          </Subheading>
+          <TextContainer>
+            <TextStyle>
+              $b{variant.price}
+            </TextStyle>
+          </TextContainer>
+          <Subheading>
             Description
           </Subheading>
           <TextContainer>
             <TextStyle>
-              {product.description}
+              {variant.description.value}
             </TextStyle>
           </TextContainer>
         </div>
       </Layout.Section>
     </Layout>
-  );
+  )
 }

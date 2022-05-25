@@ -6,14 +6,16 @@ import {
   Thumbnail,
   Heading
 } from "@shopify/polaris"
+import { getIdFromGid } from "../../utils/gidHelper";
 
 export const VariantsList = ({ variants }) => {
   const renderItem = (variant) => {
     const { id, image, title, price } = variant;
+    const variantId = getIdFromGid(id);
 
     return (
       <ResourceItem
-        id={id}
+        id={variantId}
         shortcutActions={[
           {
             content: "edit",
@@ -24,6 +26,7 @@ export const VariantsList = ({ variants }) => {
             /* To do - onAction: () => deleteVariant(id) */
           }
         ]}
+        url={`variant/${variantId}`}
       >
         <Stack>
           <Stack.Item fill>
