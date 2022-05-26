@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 import { STAGE_IMAGE } from "../graphql/mutations/stageImage";
-import { encodeUrlParams } from "./encodeUrlParams";
+import { encodeUrlParams } from "./queryStringHelper";
 import axios from "axios";
 
 export const stageImageUpload = () => {
