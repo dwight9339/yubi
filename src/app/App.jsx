@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useRoutePropagation } from "@shopify/app-bridge-react";
 import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
-export default function App() {
+export const App = () => {
   const { width: windowWidth } = useWindowDimensions();
   const location = useLocation();
 

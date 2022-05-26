@@ -20,8 +20,8 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import App from "./App";
 
+import { App } from "./App";
 import { ProductsListPage } from "../components/productsList/ProductsListPage";
 import { ProductPage } from "../components/productPage/ProductPage";
 import { VariantPage } from "../components/variantPage/VariantPage";
