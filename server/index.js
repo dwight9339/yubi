@@ -144,6 +144,7 @@ export async function createServer(
       res
         .status(200)
         .set("Content-Type", "text/html")
+        .set("Content-Security-Policy", "frame-ancestors frame iframe object embed applet")
         .send(fs.readFileSync(`${process.cwd()}/dist/client/index.html`));
     });
   }
