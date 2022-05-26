@@ -6,17 +6,19 @@ import {
   TextContainer,
   TextStyle
 } from "@shopify/polaris";
+import { useNavigate } from "react-router-dom";
 import { getIdFromGid } from "../../utils/gidHelper";
 
 export const ProductsListItem = ({ product }) => {
   const { id, title, featuredImage, totalVariants } = product;
   const productId = getIdFromGid(id);
+  const navigate = useNavigate();
 
   return (
     <ResourceItem 
       id={productId} 
       name={title} 
-      url={`/product/${productId}`}
+      onClick={() => navigate(`/product/${productId}`)}
     >
       <Stack>
         <Stack.Item fill>

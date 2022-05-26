@@ -7,8 +7,11 @@ import {
   Heading
 } from "@shopify/polaris"
 import { getIdFromGid } from "../../utils/gidHelper";
+import { useNavigate } from "react-router-dom";
 
 export const VariantsList = ({ variants }) => {
+  const navigate = useNavigate();
+
   const renderItem = (variant) => {
     const { id, image, title, price } = variant;
     const variantId = getIdFromGid(id);
@@ -19,14 +22,14 @@ export const VariantsList = ({ variants }) => {
         shortcutActions={[
           {
             content: "edit",
-            /* To do - url: variant-edit */
+            onAction: () => navigate(`/variant/${variantId}?edit=true`)
           },
           {
             content: "delete",
             /* To do - onAction: () => deleteVariant(id) */
           }
         ]}
-        url={`variant/${variantId}`}
+        onClick={() => navigate(`../../variant/${variantId}`)}
       >
         <Stack>
           <Stack.Item fill>

@@ -8,11 +8,12 @@ import {
 import { fetchVariant } from "../../utils/fetchVariant";
 import { useParams } from "react-router-dom";
 import { generateVariantGid } from "../../utils/gidHelper";
-import { useMemo, useState } from "react";
+import { serializeFormQuery } from "../../utils/queryStringHelper";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { VariantView } from "./VariantView";
 import { VariantEdit } from "./VariantEdit";
-import { TestForm } from "./TestForm";
 
 export const VariantPage = () => {
   const { variantId } = useParams();
@@ -20,6 +21,19 @@ export const VariantPage = () => {
   const { variant, loading, error, refetch } = fetchVariant(id);
 
   const [editPageOpen, setEditPageOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("edit")) {
+      setEditPageOpen(true);
+    }
+  }, [searchParams]);
+
+  const closeEditPage = () => {
+    searchParams.delete("edit");
+    setSearchParams(serializeFormQuery(searchParams));
+    setEditPageOpen(false);
+  }
 
   const pageContent = useMemo(() => {
     if (loading) return <Spinner />;
@@ -37,11 +51,10 @@ export const VariantPage = () => {
         ? <VariantEdit 
             variant={variant} 
             editComplete={() => {
-              setEditPageOpen(false);
+              closeEditPage();
               refetch();
             }}
           /> 
-        // ? <TestForm />
         : <VariantView variant={variant} />
       );
     } 
@@ -56,7 +69,9 @@ export const VariantPage = () => {
         ? [
           {
             content: "Cancel",
-            onAction: () => setEditPageOpen(false),
+            onAction: () => {
+              closeEditPage();
+            },  
             
           }
         ]

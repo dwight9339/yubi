@@ -39,7 +39,7 @@ export const VariantView = ({ variant }) => {
           </Subheading>
           <TextContainer>
             <TextStyle>
-              $b{variant.price}
+              ${variant.price}
             </TextStyle>
           </TextContainer>
           <Subheading>
