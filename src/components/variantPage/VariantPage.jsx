@@ -69,7 +69,7 @@ export const VariantPage = () => {
         ? <VariantEdit 
             variant={variant} 
             editComplete={() => {
-              closeEditPage();
+              handleClose();
               refetch();
             }}
           /> 
