@@ -8,9 +8,11 @@ import {
 } from "@shopify/polaris"
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate } from "react-router-dom";
+import { deleteVariant } from "../../utils/deleteVariant";
 
-export const VariantsList = ({ variants }) => {
+export const VariantsList = ({ variants, refetch }) => {
   const navigate = useNavigate();
+  const deleteVariantHook = deleteVariant();
 
   const renderItem = (variant) => {
     const { id, image, title, price } = variant;
@@ -26,7 +28,10 @@ export const VariantsList = ({ variants }) => {
           },
           {
             content: "delete",
-            /* To do - onAction: () => deleteVariant(id) */
+            onAction: () => {
+              deleteVariantHook(variant);
+              refetch();
+            }
           }
         ]}
         onClick={() => navigate(`../../variant/${variantId}`)}

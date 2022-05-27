@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { QUERY_PAGE_SIZE } from "../constants";
 
 export const fetchProduct = (id) => {
-  const { data, loading, error, fetchMore } = useQuery(FETCH_PRODUCT, {
+  const { data, loading, error, fetchMore, refetch } = useQuery(FETCH_PRODUCT, {
     variables: {
       id,
       variants_first: QUERY_PAGE_SIZE.variants
@@ -25,7 +25,7 @@ export const fetchProduct = (id) => {
   }, [data]);
 
   return useMemo(
-    () => ({product, variants, pageInfo, loading, error, fetchMore}), 
-    [product, variants, pageInfo, loading, error, fetchMore]
+    () => ({product, variants, pageInfo, loading, error, fetchMore, refetch}), 
+    [product, variants, pageInfo, loading, error, fetchMore, refetch]
   )
 };

@@ -23,7 +23,8 @@ export const ProductPage = () => {
     pageInfo, 
     loading, 
     error,
-    fetchMore
+    fetchMore,
+    refetch
   } = fetchProduct(generateProductGid(productId));
 
   const getNextPage = () => {
@@ -85,7 +86,7 @@ export const ProductPage = () => {
             ]}
           >
             <Stack>
-              <VariantsList variants={variants} />
+              <VariantsList variants={variants} refetch={refetch} />
             </Stack>
           </Card.Section>
           <Card.Section>

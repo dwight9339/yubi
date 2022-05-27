@@ -19,8 +19,8 @@ export const VariantView = ({ variant }) => {
             {variant.title}
           </Heading>
           <img
-            src={variant.image.url}
-            alt={variant.image.altText}
+            src={variant.image?.url}
+            alt={variant.image?.altText}
             style={{
               width: "100%",
               overflow: "hidden"

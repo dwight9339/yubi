@@ -2,8 +2,6 @@ import { UPDATE_VARIANT } from "../graphql/mutations/updateVariant";
 import { UPDATE_PRODUCT_IMAGE } from "../graphql/mutations/updateProductImage";
 import { useCallback } from "react";
 import { useMutation } from "@apollo/client";
-import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../constants";
-import { generateVariantGid } from "./gidHelper";
 
 export const updateVariant = () => {
   const [updateVariantMutation] = useMutation(UPDATE_VARIANT);
@@ -16,11 +14,6 @@ export const updateVariant = () => {
     imageData,
     prevVariant
   }) => {
-    console.log(`Variant name: ${variantName}`);
-    console.log(`Variant description: ${variantDescription}`);
-    console.log(`Variant price: ${variantPrice}`);
-    console.log(`Image data: ${JSON.stringify(imageData)}`);
-    console.log(`Prev variant: ${JSON.stringify(prevVariant)}`);
     let result = {};
 
     if (
