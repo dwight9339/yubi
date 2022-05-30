@@ -23,6 +23,8 @@ import {
 
 import { App } from "./App";
 import { ProductsListPage } from "../components/productsList/ProductsListPage";
+import { ProductsList } from "../components/productsList/ProductsList";
+import { ProductCreate } from "../components/productsList/ProductCreate";
 import { ProductPage } from "../components/productPage/ProductPage";
 import { ProductView } from "../components/productPage/ProductView";
 import { ProductEdit } from "../components/productPage/ProductEdit";
@@ -92,7 +94,10 @@ ReactDOM.render((
           <Routes>
             <Route path="/" element={<App />}>
               <Route index element={<Navigate to="/products" />} />
-              <Route path="products" element={<ProductsListPage />} />
+              <Route path="products" element={<ProductsListPage />}>
+                <Route index element={<ProductsList />} />
+                <Route path="new-product" element={<ProductCreate />} />
+              </Route>
               <Route path="product">
                 <Route path=":productId" element={<ProductPage />}>
                   <Route index element={<ProductView />} />

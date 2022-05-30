@@ -19,8 +19,8 @@ export const ProductInfo = ({ product }) => {
             {product.title}
           </Heading>
           <img
-            src={product.featuredImage.url}
-            alt={product.featuredImage.altText}
+            src={product?.featuredImage?.url}
+            alt={product?.featuredImage?.altText}
             style={{
               width: "100%",
               overflow: "hidden"

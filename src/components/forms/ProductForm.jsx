@@ -10,15 +10,17 @@ import {
  import { useState } from "react";
  import { useImageUpload } from "../../utils/hooks/useImageUpload";
  import { updateProduct } from "../../utils/updateProduct";
+ import { createProduct } from "../../utils/createProduct";
 
 export const ProductForm = ({ product, onSuccess }) => {
-  const { imageFile, imageSrc, imageLoading, onImageDrop } = useImageUpload();
   const productUpdateHook = updateProduct();
-  
+  const productCreateHook = createProduct();
+  const { imageFile, imageSrc, imageLoading, onImageDrop } = useImageUpload();
+
   const [productTitle, setProductTitle] = useState(product?.title);
   const [productDescription, setProductDescription] = useState(product?.description);
   const [productType, setProductType] = useState(product?.productType);
-  const [productTags, setProductTags] = useState(product?.tags);
+  const [productTags, setProductTags] = useState(product?.tags?.join());
   const [processing, setProcessing] = useState(false);
 
   const getImageData = () => {
@@ -48,7 +50,10 @@ export const ProductForm = ({ product, onSuccess }) => {
   };
 
   const doCreate = async () => {
+    const formData = getFormData();
+    const results = await productCreateHook(formData);
 
+    return results;
   }
 
   const handleSubmit = async () => {
@@ -96,7 +101,7 @@ export const ProductForm = ({ product, onSuccess }) => {
           />
           <TextField 
             type="text"
-            label="Tags"
+            label="Tags (Comma-separated)"
             value={productTags}
             onChange={setProductTags}
             autoComplete="off"

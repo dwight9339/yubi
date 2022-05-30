@@ -1,11 +1,13 @@
 import { UPDATE_PRODUCT } from "../graphql/mutations/updateProduct";
 import { UPDATE_PRODUCT_IMAGE } from "../graphql/mutations/updateProductImage";
+import { CREATE_PRODUCT_IMAGE } from "../graphql/mutations/createProductImage";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 
 export const updateProduct = () => {
   const [updateProductMutation] = useMutation(UPDATE_PRODUCT);
   const [updateProductImageMutation] = useMutation(UPDATE_PRODUCT_IMAGE);
+  const [createProductImageMutation] = useMutation(CREATE_PRODUCT_IMAGE);
 
   return useCallback(async ({
     productTitle,
@@ -23,6 +25,7 @@ export const updateProduct = () => {
       || productType !== prevProduct.productType
       || productTags !== prevProduct.tags
     ) {
+      const tags = `unique variants, ${productTags || ""}`;
       const productUpdateResults = await updateProductMutation({
         variables: {
           input: {
@@ -30,7 +33,7 @@ export const updateProduct = () => {
             title: productTitle,
             descriptionHtml: productDescription,
             productType,
-            tags: productTags
+            tags
           }
         }
       });
@@ -42,12 +45,21 @@ export const updateProduct = () => {
     }
 
     if (imageData) {
-      const productImageUpdateResults = await updateProductImageMutation({
-        variables: {
-          image: imageData,
-          productId: prevProduct.id
-        }
-      });
+      const productImageUpdateResults = imageData.id
+        ? await updateProductImageMutation({
+            variables: {
+              image: imageData,
+              productId: prevProduct.id
+            }
+        })
+        : await createProductImageMutation({
+          variables: {
+            input: {
+              id: prevProduct.id,
+              images: [imageData]
+            }
+          }
+        });
 
       results = {
         productImageUpdateResults,

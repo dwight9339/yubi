@@ -30,10 +30,14 @@ export const FETCH_PRODUCT = gql`
             id
             title
             image {
+              id
               url
               altText
             }
             price
+            product {
+              id
+            }
           }
         }
         pageInfo {

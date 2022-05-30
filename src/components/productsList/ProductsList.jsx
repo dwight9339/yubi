@@ -2,21 +2,21 @@ import {
   ResourceList,
   Pagination,
   Card,
-  Stack,
-  TextStyle,
-  TextContainer,
-  Button,
-  ButtonGroup
+  Stack
 } from "@shopify/polaris"
 import { ProductsListItem } from "./ProductsListItem";
 import { QUERY_PAGE_SIZE } from "../../constants";
 import useWindowDimensions from "../../utils/hooks/useWindowDimensions";
 import { ResourcePicker } from "@shopify/app-bridge-react";
 import { ProductsListEmptyState } from "./ProductsListEmptyState";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export const ProductsList = ({ products, pageInfo, fetchMore }) => {
+export const ProductsList = () => {
+  const navigate = useNavigate();
+  const { products, pageInfo, fetchMore } = useOutletContext();
   const { width: windowWidth } = useWindowDimensions();
+
   const [productPickerOpen, setProductPickerOpen] = useState(false);
 
   const renderItem = (product) => {
@@ -45,11 +45,7 @@ export const ProductsList = ({ products, pageInfo, fetchMore }) => {
   };
 
   return (
-    <div
-      style={{
-        width: windowWidth * 0.6
-      }}
-    >
+    <div>
       <ResourcePicker 
         resourceType="Product"
         open={productPickerOpen}
@@ -60,7 +56,6 @@ export const ProductsList = ({ products, pageInfo, fetchMore }) => {
         onSelection={() => {/* To do */}}
       />
       <Card 
-        className="products-list-container" 
         actions={[
           {
             content: "Search Products",
@@ -68,7 +63,7 @@ export const ProductsList = ({ products, pageInfo, fetchMore }) => {
           },
           {
             content: "Create New",
-            /* To do: url: "/create-product" */
+            onAction: () => navigate("/products/new-product")
           }
         ]}
       >

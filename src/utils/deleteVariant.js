@@ -10,12 +10,6 @@ export const deleteVariant = () => {
   return useCallback(async (variant) => {
     let results = {};
 
-    const variantDeleteResults = await deleteVariantMutation({
-      variables: {
-        id: variant.id
-      }
-    });
-
     if (variant.image) {
       const imageDeleteResults = await deleteProductImageMutation({
         variables: {
@@ -24,9 +18,24 @@ export const deleteVariant = () => {
         }
       });
 
-      return {variantDeleteResults, imageDeleteResults}
+      results = {
+        imageDeleteResults,
+        ...results
+      };
     }
 
-    return {variantDeleteResults};
+
+    const variantDeleteResults = await deleteVariantMutation({
+      variables: {
+        id: variant.id
+      }
+    });
+
+    results = {
+      variantDeleteResults,
+      ...results
+    };
+
+    return results;
   }, [deleteVariantMutation, deleteProductImageMutation]);
 };

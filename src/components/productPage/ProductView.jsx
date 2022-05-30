@@ -6,8 +6,10 @@ import {
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { ProductInfo } from "./ProductInfo";
 import { VariantsList } from "./VariantsList";
+import { deleteProduct } from "../../utils/deleteProduct";
 
 export const ProductView = () => {
+  const deleteProductHook = deleteProduct();
   const navigate = useNavigate();
   const { 
     product, 
@@ -39,6 +41,12 @@ export const ProductView = () => {
     })
   }
 
+  const handleDelete = async () => {
+    await deleteProductHook(product.id);
+
+    navigate("/", {state: {reload: true}});
+  }
+
   return (
     <Stack
       distribution="fill"
@@ -49,6 +57,10 @@ export const ProductView = () => {
           {
             content: "Edit",
             onAction: () => navigate("edit")
+          },
+          {
+            content: "Delete",
+            onAction: handleDelete
           }
         ]}
       >

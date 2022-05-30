@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const CREATE_PRODUCT_IMAGE = gql`
-  mutation CreateVariant($imageInput: ProductAppendImagesInput!) {
-    productAppendImages(input: $imageInput) {
+  mutation CreateProductImage($input: ProductAppendImagesInput!) {
+    productAppendImages(input: $input) {
       newImages {
         id
       }

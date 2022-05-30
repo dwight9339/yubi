@@ -30,14 +30,14 @@ export const VariantsList = ({ variants, refetch }) => {
             content: "delete",
             onAction: async () => {
               await deleteVariantHook(variant);
-              refetch();
+              navigate(".", {state: {reload: true}});
             }
           }
         ]}
         onClick={() => navigate(`/variant/${variantId}`)}
       >
-        <Stack>
-          <Stack.Item fill>
+        <Stack distribution="fill">
+          <Stack.Item>
             <Thumbnail
               source={image ? image.url : ""}
               alt={image ? image.altText : ""}

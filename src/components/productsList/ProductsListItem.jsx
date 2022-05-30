@@ -8,17 +8,35 @@ import {
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
 import { getIdFromGid } from "../../utils/gidHelper";
+import { deleteProduct } from "../../utils/deleteProduct";
 
 export const ProductsListItem = ({ product }) => {
   const { id, title, featuredImage, totalVariants } = product;
   const productId = getIdFromGid(id);
   const navigate = useNavigate();
+  const deleteProductHook = deleteProduct();
+
+  const handleDelete = async () => {
+    await deleteProductHook(id);
+
+    navigate(".", {state: {reload: true}});
+  }
 
   return (
     <ResourceItem 
       id={productId} 
       name={title} 
       onClick={() => navigate(`/product/${productId}`)}
+      shortcutActions={[
+        {
+          content: "Edit",
+          onAction: () => navigate(`/product/${productId}/edit`)
+        },
+        {
+          content: "Delete",
+          onAction: handleDelete
+        }
+      ]}
     >
       <Stack>
         <Stack.Item fill>

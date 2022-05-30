@@ -5,18 +5,28 @@ import {
   TextContainer, 
   TextStyle
 } from "@shopify/polaris";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { fetchProducts } from "../../utils/fetchProducts";
-import { ProductsList } from "./ProductsList";
+import { Outlet, useLocation } from "react-router-dom";
 
 export const ProductsListPage = () => {
+  const location = useLocation();
   const { 
     products, 
     pageInfo, 
     loading, 
     error, 
-    fetchMore 
+    fetchMore,
+    refetch
   } = fetchProducts();
+
+  useEffect(() => {
+    if (!location.state) return;
+
+    const { reload } = location.state;
+
+    if (reload) refetch();
+  });
 
   const pageContent = useMemo(() => {
     if (!products || loading) {
@@ -34,15 +44,25 @@ export const ProductsListPage = () => {
     }
 
     if (products) {
-      return <ProductsList 
-              products={products} 
-              pageInfo={pageInfo}
-              fetchMore={fetchMore}
-             />;
+      return (
+        <Outlet
+          context={{
+            products,
+            pageInfo,
+            fetchMore
+          }}
+        />
+      );
     }
 
     return null;
   }, [products, pageInfo, loading, error]);
 
-  return pageContent;
+  return (
+    <Page
+      title="Products List"
+    >
+      {pageContent}
+    </Page>
+  );
 };

@@ -2,6 +2,7 @@
 export const METAFIELD_NAMESPACE = {
   general: "uvapp",
   variants: "uvapp-variants",
+  products: "uvapp-products",
   installed: "uvapp-installed"
 };
 
@@ -10,6 +11,7 @@ export const METAFIELD_NAMESPACE = {
 export const METAFIELD_KEY = {
   variantName: "variant_name",
   variantDescription: "variant_description",
+  isUniqueVariantsProduct: "is_unique_variants_product",
   appInstalled: "app_installed"
 };
 
