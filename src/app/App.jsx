@@ -11,20 +11,16 @@ export const App = () => {
   useRoutePropagation(location);
   
   return (
-    <Page 
-      fullWidth
+    <Stack 
+      distribution="center"
     >
-      <Stack 
-        distribution="center"
+      <div
+        style={{
+          width: windowWidth * 0.8
+        }}
       >
-        <div
-          style={{
-            width: windowWidth * 0.8
-          }}
-        >
-          <Outlet />
-        </div>
-      </Stack>
-    </Page>
+        <Outlet />
+      </div>
+    </Stack>
   );
 };

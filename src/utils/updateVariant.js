@@ -55,8 +55,6 @@ export const updateVariant = () => {
       result.productImageUpdateResults = productImageUpdateResults;
     }
 
-    console.log(`Update result: ${JSON.stringify(result)}`);
-
     return result;
   }, [updateProductImageMutation, updateVariantMutation]);
 }

@@ -1,116 +1,67 @@
 import {
-  Card,
+  Page,
   Spinner,
   Stack,
   TextContainer,
   TextStyle
 } from "@shopify/polaris";
 import { fetchVariant } from "../../utils/fetchVariant";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, Outlet } from "react-router-dom";
 import { generateVariantGid, getIdFromGid } from "../../utils/gidHelper";
-import { serializeFormQuery } from "../../utils/queryStringHelper";
-import { useMemo, useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-import { deleteVariant } from "../../utils/deleteVariant";
-import { useNavigate } from "react-router-dom";
-import { useIsMounted } from "../../utils/hooks/useIsMounted";
 
-import { VariantView } from "./VariantView";
-import { VariantEdit } from "./VariantEdit";
+import { useMemo, useEffect } from "react";
 
 export const VariantPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { variantId } = useParams();
   const id = generateVariantGid(variantId);
   const { variant, loading, error, refetch } = fetchVariant(id);
-  const deleteVariantHook = deleteVariant();
-  const navigate = useNavigate();
-  const isMounted = useIsMounted();
-
-  const [editPageOpen, setEditPageOpen] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    if (isMounted && searchParams.get("edit")) {
-      setEditPageOpen(true);
-    }
-  }, [searchParams]);
+    if (!location.state) return;
+    
+    const { reload } = location.state;
 
-  const handleClose = () => {
-    searchParams.delete("edit");
-    setSearchParams(serializeFormQuery(searchParams));
-    setEditPageOpen(false);
-  }
-
-  const handleEdit = () => {
-    setEditPageOpen(true);
-  }
-
-  const handleDelete = () => {
-    if (variant) {
-      const productId = getIdFromGid(variant.product.id);
-      deleteVariantHook(variant);
-      navigate(`/product/${productId}`, {replace: true});
-    }
-  }
+    if (reload) refetch();
+  })
 
   const pageContent = useMemo(() => {
     if (loading) return <Spinner />;
     if (error) return (
       <TextContainer>
-        <TextStyle>
+        <TextStyle variation="negative">
           Unable to load variant: {error.message}
         </TextStyle>
       </TextContainer>
     )
 
     if (variant) {
-      return (
-        editPageOpen 
-        ? <VariantEdit 
-            variant={variant} 
-            editComplete={() => {
-              handleClose();
-              refetch();
-            }}
-          /> 
-        : <VariantView variant={variant} />
-      );
+      return <Outlet context={{variant}} />;
     } 
 
     return null;
-  }, [variant, loading, error, editPageOpen]);
+  }, [variant, loading, error]);
 
   return (
-    <Card 
-      actions={
-        editPageOpen
-        ? [
-          {
-            content: "Cancel",
-            loading,
-            onAction: handleClose,  
-            
-          }
-        ]
-        : [
-          {
-            content: "Edit",
-            onAction: handleEdit,
-            loading
+    <Page
+      title="Variant"
+      breadcrumbs={variant ? [
+        {
+          content: "Product",
+          onAction: () => {
+            const productId = getIdFromGid(variant.product.id);
+            navigate(`/product/${productId}`);
           },
-          {
-            content: "Delete",
-            loading,
-            onAction: handleDelete
-          }
-        ]
-      }
+          accessibilityLabel: "Return to product page"
+        }
+      ] : []}
     >
-        <Stack
-          distribution="fill"
-        >
-          {pageContent}
-        </Stack>
-    </Card>
+      <Stack
+        distribution="fill"
+      >
+        {pageContent}
+      </Stack>
+    </Page>
   );
 };

@@ -1,10 +1,28 @@
-import { VariantForm } from "../common/VariantForm";
+import { VariantForm } from "../forms/VariantForm";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import { Card } from "@shopify/polaris";
 
-export const VariantEdit = ({ variant, editComplete }) => {
+export const VariantEdit = () => {
+  const { variant } = useOutletContext();
+  const navigate = useNavigate();
+  const handleSuccess = () => {
+    navigate("..", { state: { reload: true }});
+  }
+
   return (
-    <VariantForm
-      variant={variant}
-      onSuccess={editComplete}
-    />
+    <Card
+      title="Edit Variant"
+      actions={[
+        {
+          content: "Cancel",
+          onAction: () => navigate("..")
+        }
+      ]}
+    >
+      <VariantForm
+        variant={variant}
+        onSuccess={handleSuccess}
+      />
+    </Card>
   );
 };

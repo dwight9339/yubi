@@ -13,9 +13,12 @@ export const FETCH_PRODUCT = gql`
       title
       description
       featuredImage {
+        id
         url
         altText
       }
+      productType
+      tags
       variants(
         first: $variants_first
         last: $variants_last

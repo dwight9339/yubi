@@ -24,7 +24,12 @@ import {
 import { App } from "./App";
 import { ProductsListPage } from "../components/productsList/ProductsListPage";
 import { ProductPage } from "../components/productPage/ProductPage";
+import { ProductView } from "../components/productPage/ProductView";
+import { ProductEdit } from "../components/productPage/ProductEdit";
 import { VariantPage } from "../components/variantPage/VariantPage";
+import { VariantCreate } from "../components/productPage/VariantCreate";
+import { VariantEdit } from "../components/variantPage/VariantEdit";
+import { VariantView } from "../components/variantPage/VariantView";
 
 function MyProvider({ children }) {
   const app = useAppBridge();
@@ -89,10 +94,17 @@ ReactDOM.render((
               <Route index element={<Navigate to="/products" />} />
               <Route path="products" element={<ProductsListPage />} />
               <Route path="product">
-                <Route path=":productId" element={<ProductPage />} />
+                <Route path=":productId" element={<ProductPage />}>
+                  <Route index element={<ProductView />} />
+                  <Route path="new-variant" element={<VariantCreate />} />
+                  <Route path="edit" element={<ProductEdit />} /> 
+                </Route>
               </Route>
               <Route path="variant">
-                <Route path=":variantId" element={<VariantPage />} />
+                <Route path=":variantId" element={<VariantPage />}>
+                  <Route index element={<VariantView />} />
+                  <Route path="edit" element={<VariantEdit />} />
+                </Route>
               </Route>
             </Route>
           </Routes>

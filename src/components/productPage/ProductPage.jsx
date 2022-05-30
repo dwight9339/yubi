@@ -1,14 +1,12 @@
 import {
-  Card,
+  Page,
   Spinner,
-  Stack,
   TextContainer,
-  TextStyle,
-  Pagination
+  TextStyle
 } from "@shopify/polaris"
 import { fetchProduct } from "../../utils/fetchProduct";
-import { useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useMemo, useEffect } from "react";
+import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
 import { QUERY_PAGE_SIZE } from "../../constants";
 
@@ -16,6 +14,8 @@ import { ProductInfo } from "./ProductInfo";
 import { VariantsList } from "./VariantsList";
 
 export const ProductPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { productId } = useParams();
   const { 
     product, 
@@ -26,28 +26,21 @@ export const ProductPage = () => {
     fetchMore,
     refetch
   } = fetchProduct(generateProductGid(productId));
-
-  const getNextPage = () => {
-    fetchMore({
-      variables: {
-        variants_first: QUERY_PAGE_SIZE.variants,
-        variants_last: null,
-        variants_end_cursor: pageInfo.endCursor,
-        variants_start_cursor: null
-      }
-    });
+  const outletContext = {
+    product,
+    variants,
+    pageInfo,
+    fetchMore,
+    refetch
   };
 
-  const getPrevPage = () => {
-    fetchMore({
-      variables: {
-        variants_first: null,
-        variants_last: QUERY_PAGE_SIZE.variants,
-        variants_end_cursor: null,
-        variants_start_cursor: pageInfo.startCursor
-      }
-    })
-  }
+  useEffect(() => {
+    if (!location.state) return;
+
+    const { reload } = location.state;
+
+    if (reload) refetch();
+  });
 
   const pageMarkup = useMemo(() => {
     if (loading) {
@@ -65,44 +58,24 @@ export const ProductPage = () => {
     }
 
     if (product) {
-      return (
-        <Card
-          title="Product Info"
-        >
-          <Card.Section
-            title="Product"
-          >
-            <Stack>
-              <ProductInfo product={product} />
-            </Stack>
-          </Card.Section>
-          <Card.Section
-            title="Variants"
-            actions={[
-              {
-                content: "Create variants",
-                /* To do - url: variant-creation */
-              }
-            ]}
-          >
-            <Stack>
-              <VariantsList variants={variants} refetch={refetch} />
-            </Stack>
-          </Card.Section>
-          <Card.Section>
-            <Pagination
-              hasNext={pageInfo.hasNextPage}
-              hasPrevious={pageInfo.hasPreviousPage}
-              onNext={getNextPage}
-              onPrevious={getPrevPage}
-            />
-          </Card.Section>
-        </Card>
-      );
+      return <Outlet context={outletContext} />;
     }
 
     return null;
   }, [product, variants, pageInfo, loading, error]);
 
-  return pageMarkup;
+  return (
+    <Page
+      title="Product"
+      breadcrumbs={[
+        {
+          content: "Products",
+          onAction: () => navigate("/"),
+          accessibilityLabel: "Return to products list page"
+        }
+      ]}
+    >
+      {pageMarkup}
+    </Page>
+  );;
 };

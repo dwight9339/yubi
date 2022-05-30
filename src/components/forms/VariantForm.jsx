@@ -1,4 +1,5 @@
 import { 
+  Card,
   Form,
   FormLayout,
   TextField,
@@ -6,59 +7,53 @@ import {
   Spinner,
   Thumbnail,
   Button
- } from "@shopify/polaris";
- import { useState, useCallback, useEffect } from "react";
- import { stageImageUpload } from "../../utils/stageImageUpload";
- import { updateVariant } from "../../utils/updateVariant";
+} from "@shopify/polaris";
+import { useState } from "react";
+import { useImageUpload } from "../../utils/hooks/useImageUpload";
+import { updateVariant } from "../../utils/updateVariant";
+import { createVariant } from "../../utils/createVariant";
 
- export const VariantForm = ({ variant, onSuccess }) => {
-  const stageImageHook = stageImageUpload();
+export const VariantForm = ({ variant, productId, onSuccess }) => {
   const updateVariantHook = updateVariant();
+  const createVariantHook = createVariant();
+  const { imageFile, imageSrc, imageLoading, onImageDrop } = useImageUpload();
 
   const [variantName, setVariantName] = useState(variant ? variant.name.value : "");
   const [variantDescription, setVariantDescription] = useState(variant ? variant.description.value : "");
   const [variantPrice, setVariantPrice] = useState(variant ? variant.price : 0);
-  const [imageFile, setImageFile] = useState();
-  const [imageData, setImageData] = useState();
-  const [imageLoading, setImageLoading] = useState(false);
   const [processing, setProcessing] = useState(false);
 
-  const onimageDrop = useCallback((files, accepted) => {
-    if (accepted.length) {
-      setImageFile(accepted[0]);
-    }
-  });
+  const getImageData = () => {
+    if (!imageSrc) return null;
 
-  const uploadImage = async () => {
-    if (!imageFile) return;
-    setImageLoading(true);
-    const result = await stageImageHook(imageFile);
-    setImageLoading(false);
-
-    if (result) {
-      const { src } = result;
-      setImageData({
-        src,
-        altText: `Image of ${variantName}`,
-        id: variant.image.id
-      });
-      console.log(`Image data: ${JSON.stringify(imageData)}`);
-    }
+    return {
+      src: imageSrc,
+      altText: `Image of ${variantName}`,
+      id: variant?.image?.id
+    };
   };
 
-  useEffect(() => {
-    uploadImage()
-  }, [imageFile]);
-
   const doUpdate = async () => {
-    const result =  await updateVariantHook({
+    const result = await updateVariantHook({
         variantName,
         variantDescription,
         variantPrice,
-        imageData,
+        imageData: getImageData(),
         prevVariant: variant
       });
 
+    return result;
+  }
+
+  const doCreate = async () => {
+    const result = await createVariantHook({
+      variantName,
+      variantDescription,
+      variantPrice,
+      imageData: getImageData(),
+      productId
+    });
+    
     return result;
   }
 
@@ -66,7 +61,7 @@ import {
     setProcessing(true);
     const result = variant
       ? await doUpdate()
-      : ""; // To do: doCreate()
+      : await doCreate();
     setProcessing(false);
 
     // To do: error checking
@@ -81,7 +76,7 @@ import {
         <FormLayout.Group>
           <TextField
             type="text"
-            label="Variant Name"
+            label="Name"
             value={variantName}
             onChange={setVariantName}
           />
@@ -105,8 +100,8 @@ import {
           <DropZone
             type="image"
             allowMultiple={false}
-            label="Variant Image"
-            onDrop={onimageDrop}
+            label="Image"
+            onDrop={onImageDrop}
             customValidator={(file) => file.type.split("/")[0] == "image"}
           >
             {imageLoading ? (
@@ -117,7 +112,7 @@ import {
                 source={
                   imageFile
                     ? window.URL.createObjectURL(imageFile)
-                    : variant.image.url
+                    : (variant?.image?.url || "")
                 }
               />
             )}
@@ -128,7 +123,7 @@ import {
           submit
           loading={processing || imageLoading}
         >
-          Update
+          {variant ? "Update" : "Create"}
         </Button>
       </FormLayout>
     </Form>

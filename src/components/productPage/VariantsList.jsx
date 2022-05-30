@@ -24,17 +24,17 @@ export const VariantsList = ({ variants, refetch }) => {
         shortcutActions={[
           {
             content: "edit",
-            onAction: () => navigate(`/variant/${variantId}?edit=true`)
+            onAction: () => navigate(`/variant/${variantId}/edit`)
           },
           {
             content: "delete",
-            onAction: () => {
-              deleteVariantHook(variant);
+            onAction: async () => {
+              await deleteVariantHook(variant);
               refetch();
             }
           }
         ]}
-        onClick={() => navigate(`../../variant/${variantId}`)}
+        onClick={() => navigate(`/variant/${variantId}`)}
       >
         <Stack>
           <Stack.Item fill>
