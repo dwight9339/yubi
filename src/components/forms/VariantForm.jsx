@@ -18,9 +18,9 @@ export const VariantForm = ({ variant, productId, onSuccess }) => {
   const createVariantHook = createVariant();
   const { imageFile, imageSrc, imageLoading, onImageDrop } = useImageUpload();
 
-  const [variantName, setVariantName] = useState(variant ? variant.name.value : "");
-  const [variantDescription, setVariantDescription] = useState(variant ? variant.description.value : "");
-  const [variantPrice, setVariantPrice] = useState(variant ? variant.price : 0);
+  const [variantName, setVariantName] = useState(variant?.name?.value || "");
+  const [variantDescription, setVariantDescription] = useState(variant?.description?.value || "");
+  const [variantPrice, setVariantPrice] = useState(variant?.price || 0);
   const [processing, setProcessing] = useState(false);
 
   const getImageData = () => {
@@ -59,13 +59,13 @@ export const VariantForm = ({ variant, productId, onSuccess }) => {
 
   const handleSubmit = async() => {
     setProcessing(true);
-    const result = variant
+    const results = variant
       ? await doUpdate()
       : await doCreate();
     setProcessing(false);
 
     // To do: error checking
-    onSuccess();
+    onSuccess(results);
   }
   
   return (

@@ -71,7 +71,7 @@ export const VariantView = () => {
             </Subheading>
             <TextContainer>
               <TextStyle>
-                {variant.description.value}
+                {variant.description?.value}
               </TextStyle>
             </TextContainer>
           </div>

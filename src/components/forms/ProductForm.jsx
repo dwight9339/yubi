@@ -64,7 +64,7 @@ export const ProductForm = ({ product, onSuccess }) => {
     setProcessing(false);
 
     // To do: error checking
-    onSuccess();
+    onSuccess(results);
   }
 
   return (
