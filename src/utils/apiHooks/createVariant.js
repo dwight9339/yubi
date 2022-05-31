@@ -1,8 +1,8 @@
-import { CREATE_VARIANT } from "../graphql/mutations/createVariant";
-import { CREATE_PRODUCT_IMAGE } from "../graphql/mutations/createProductImage";
+import { CREATE_VARIANT } from "../../graphql/mutations/createVariant";
+import { CREATE_PRODUCT_IMAGE } from "../../graphql/mutations/createProductImage";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
-import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../constants";
+import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../../constants";
 
 export const createVariant = () => {
   const [createVariantMutation] = useMutation(CREATE_VARIANT);

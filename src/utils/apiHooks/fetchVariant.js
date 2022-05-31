@@ -1,4 +1,4 @@
-import { FETCH_VARIANT } from "../graphql/queries/fetchVariant";
+import { FETCH_VARIANT } from "../../graphql/queries/fetchVariant";
 import { useQuery } from "@apollo/client";
 import { useMemo } from "react";
 

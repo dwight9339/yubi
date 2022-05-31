@@ -1,5 +1,5 @@
-import { DELETE_VARIANT } from "../graphql/mutations/deleteVariant";
-import { DELETE_PRODUCT_IMAGE } from "../graphql/mutations/deleteProductImage";
+import { DELETE_VARIANT } from "../../graphql/mutations/deleteVariant";
+import { DELETE_PRODUCT_IMAGE } from "../../graphql/mutations/deleteProductImage";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 

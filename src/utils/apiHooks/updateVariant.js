@@ -1,7 +1,7 @@
-import { UPDATE_VARIANT } from "../graphql/mutations/updateVariant";
-import { UPDATE_PRODUCT_IMAGE } from "../graphql/mutations/updateProductImage";
-import { CREATE_PRODUCT_IMAGE } from "../graphql/mutations/createProductImage";
-import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../constants";
+import { UPDATE_VARIANT } from "../../graphql/mutations/updateVariant";
+import { UPDATE_PRODUCT_IMAGE } from "../../graphql/mutations/updateProductImage";
+import { CREATE_PRODUCT_IMAGE } from "../../graphql/mutations/createProductImage";
+import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../../constants";
 import { useCallback } from "react";
 import { useMutation } from "@apollo/client";
 

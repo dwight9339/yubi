@@ -1,4 +1,4 @@
-import { DELETE_PRODUCT } from "../graphql/mutations/deleteProduct";
+import { DELETE_PRODUCT } from "../../graphql/mutations/deleteProduct";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 

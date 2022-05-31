@@ -1,6 +1,6 @@
-import { UPDATE_PRODUCT } from "../graphql/mutations/updateProduct";
-import { UPDATE_PRODUCT_IMAGE } from "../graphql/mutations/updateProductImage";
-import { CREATE_PRODUCT_IMAGE } from "../graphql/mutations/createProductImage";
+import { UPDATE_PRODUCT } from "../../graphql/mutations/updateProduct";
+import { UPDATE_PRODUCT_IMAGE } from "../../graphql/mutations/updateProductImage";
+import { CREATE_PRODUCT_IMAGE } from "../../graphql/mutations/createProductImage";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 

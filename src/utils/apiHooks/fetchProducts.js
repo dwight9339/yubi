@@ -1,7 +1,7 @@
-import { FETCH_PRODUCTS } from "../graphql/queries/fetchProducts";
+import { FETCH_PRODUCTS } from "../../graphql/queries/fetchProducts";
 import { useQuery } from "@apollo/client";
 import { useMemo } from "react";
-import { QUERY_PAGE_SIZE } from "../constants";
+import { QUERY_PAGE_SIZE } from "../../constants";
 
 export const fetchProducts = () => {
   const { data, loading, error, fetchMore, refetch } = useQuery(FETCH_PRODUCTS, {
