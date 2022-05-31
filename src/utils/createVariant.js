@@ -18,13 +18,10 @@ export const createVariant = () => {
     }) => {
       const results = {};
 
-      console.log(`Product ID: ${productId}`);
-      console.log(`Image data: ${JSON.stringify(imageData)}`)
-
       if (imageData) {
         const imageAppendResults = await createProductImageMutation({
           variables: {
-            imageInput: {
+            input: {
               id: productId,
               images: [imageData]
             }
@@ -32,7 +29,6 @@ export const createVariant = () => {
         });
 
         results.imageAppendResults = imageAppendResults?.data.productAppendImages;
-        console.log(`Results after image create: ${JSON.stringify(results)}`);
       }
       
       const variantCreateResults = await createVariantMutation({
