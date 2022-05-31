@@ -42,8 +42,12 @@ function MyProvider({ children }) {
           products: {
             keyArgs: false
           },
-          variants: {
-            keyArgs: false
+          productVariants: {
+            keyArgs: false,
+            // merge: (existing, incoming) => {
+            //   console.log(`Existing: ${JSON.stringify(existing)}`);
+            //   console.log(`Incoming: ${JSON.stringify(incoming)}`);
+            // }
           }
         }
       }

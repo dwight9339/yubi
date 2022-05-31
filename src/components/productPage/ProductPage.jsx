@@ -18,24 +18,25 @@ export const ProductPage = () => {
     variants, 
     pageInfo, 
     loading, 
-    error,
-    fetchMore,
-    refetch
+    errors,
+    fetchMoreVariants,
+    refetchProduct,
+    refetchVariants
   } = fetchProduct(generateProductGid(productId));
   const outletContext = {
     product,
     variants,
     pageInfo,
-    fetchMore,
-    refetch
+    fetchMoreVariants
   };
 
   useEffect(() => {
     if (!location.state) return;
 
-    const { reload } = location.state;
+    const { reloadProduct, reloadVariants } = location.state;
 
-    if (reload) refetch();
+    if (reloadProduct) refetchProduct();
+    if (reloadVariants) refetchVariants();
   });
 
   const pageMarkup = useMemo(() => {
@@ -43,11 +44,14 @@ export const ProductPage = () => {
       return <Spinner />
     }
 
-    if (error) {
+    if (errors.productError || errors.variantsError) {
+      console.log(`Errors: ${JSON.stringify(errors)}`);
       return (
         <TextContainer>
           <TextStyle variation="negative">
-            Unable to load products: {error.message}.
+            Unable to load product: <br />
+            {errors.productError?.message}
+            {errors.variantsError?.message}
           </TextStyle>
         </TextContainer>
       );
@@ -58,7 +62,7 @@ export const ProductPage = () => {
     }
 
     return null;
-  }, [product, variants, pageInfo, loading, error]);
+  }, [product, variants, pageInfo, loading, errors]);
 
   return (
     <Page

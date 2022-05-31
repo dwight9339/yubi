@@ -10,7 +10,7 @@ import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate } from "react-router-dom";
 import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 
-export const VariantsList = ({ variants, refetch }) => {
+export const VariantsList = ({ variants }) => {
   const navigate = useNavigate();
   const deleteVariantHook = deleteVariant();
 

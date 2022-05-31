@@ -16,28 +16,27 @@ export const ProductView = () => {
     product, 
     variants, 
     pageInfo,  
-    fetchMore,
-    refetch
+    fetchMoreVariants
   } = useOutletContext();
 
   const getNextPage = () => {
-    fetchMore({
+    fetchMoreVariants({
       variables: {
-        variants_first: QUERY_PAGE_SIZE.variants,
-        variants_last: null,
-        variants_end_cursor: pageInfo.endCursor,
-        variants_start_cursor: null
+        first: QUERY_PAGE_SIZE.variants,
+        last: null,
+        after: pageInfo.endCursor,
+        before: null
       }
     });
   };
 
   const getPrevPage = () => {
-    fetchMore({
+    fetchMoreVariants({
       variables: {
-        variants_first: null,
-        variants_last: QUERY_PAGE_SIZE.variants,
-        variants_end_cursor: null,
-        variants_start_cursor: pageInfo.startCursor
+        first: null,
+        last: QUERY_PAGE_SIZE.variants,
+        after: null,
+        before: pageInfo.startCursor
       }
     })
   }
@@ -80,7 +79,7 @@ export const ProductView = () => {
       >
         <Card.Section>
           <Stack>
-            <VariantsList variants={variants} refetch={refetch} />
+            <VariantsList variants={variants} />
           </Stack>
         </Card.Section>
         <Card.Section>

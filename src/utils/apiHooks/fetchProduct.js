@@ -1,31 +1,60 @@
 import { FETCH_PRODUCT } from "../../graphql/queries/fetchProduct";
+import { FETCH_VARIANTS_BY_PRODUCT } from "../../graphql/queries/fetchVariantsByProduct";
 import { useQuery } from "@apollo/client";
 import { useMemo } from "react";
 import { QUERY_PAGE_SIZE } from "../../constants";
+import { getIdFromGid } from "../gidHelper";
 
 export const fetchProduct = (id) => {
-  const { data, loading, error, fetchMore, refetch } = useQuery(FETCH_PRODUCT, {
+  const { 
+    data: productData, 
+    loading: productLoading, 
+    error: productError, 
+    refetch: refetchProduct 
+  } = useQuery(FETCH_PRODUCT, {
     variables: {
-      id,
-      variants_first: QUERY_PAGE_SIZE.variants
+      id
     },
     fetchPolicy: "cache-first"
   });
 
-  const { product, variants, pageInfo } = useMemo(() => {
-    if (!data) {
-      return {product: {}, variants: {}, pageInfo: {}}
+  const {
+    data: variantsData,
+    loading: variantsLoading,
+    error: variantsError,
+    fetchMore: fetchMoreVariants,
+    refetch: refetchVariants
+  } = useQuery(FETCH_VARIANTS_BY_PRODUCT(getIdFromGid(id)), {
+    variables: {
+      first: QUERY_PAGE_SIZE.variants
     }
+  });
 
-    const { product } = data;
-    const { variants, ...productObj } = product;
-    const variantsObj = variants.edges.map(({ node }) => node);
-    const pageInfo = variants.pageInfo;
-    return {product: productObj, variants: variantsObj, pageInfo};
-  }, [data]);
+  const vars = useMemo(() => {
+    return {
+      product: productData?.product || {},
+      variants: variantsData?.productVariants?.edges?.map(({ node }) => node) || [],
+      pageInfo: variantsData?.productVariants?.pageInfo || {},
+      loading: productLoading || variantsLoading,
+      errors: {
+        productError,
+        variantsError
+      },
+      fetchMoreVariants,
+      refetchProduct,
+      refetchVariants
+    }
+  }, [
+    productData,
+    variantsData,
+    productLoading,
+    variantsLoading,
+    productError,
+    variantsError
+  ]);
 
   return useMemo(
-    () => ({product, variants, pageInfo, loading, error, fetchMore, refetch}), 
-    [product, variants, pageInfo, loading, error, fetchMore, refetch]
-  )
+    () => vars, 
+    [vars]
+  );
 };
