@@ -27,7 +27,8 @@ export const fetchProduct = (id) => {
   } = useQuery(FETCH_VARIANTS_BY_PRODUCT(getIdFromGid(id)), {
     variables: {
       first: QUERY_PAGE_SIZE.variants
-    }
+    },
+    fetchPolicy: "network-only"
   });
 
   const vars = useMemo(() => {
