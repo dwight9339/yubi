@@ -6,7 +6,8 @@ import {
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { ProductInfo } from "./ProductInfo";
 import { VariantsList } from "./VariantsList";
-import { deleteProduct } from "../../utils/deleteProduct";
+import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
+import { QUERY_PAGE_SIZE } from "../../constants";
 
 export const ProductView = () => {
   const deleteProductHook = deleteProduct();

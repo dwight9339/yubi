@@ -10,8 +10,8 @@ import {
 } from "@shopify/polaris";
 import { useState } from "react";
 import { useImageUpload } from "../../utils/hooks/useImageUpload";
-import { updateVariant } from "../../utils/updateVariant";
-import { createVariant } from "../../utils/createVariant";
+import { updateVariant } from "../../utils/apiHooks/updateVariant";
+import { createVariant } from "../../utils/apiHooks/createVariant";
 
 export const VariantForm = ({ variant, productId, onSuccess }) => {
   const updateVariantHook = updateVariant();

@@ -1,4 +1,4 @@
-import { stageImageUpload } from "../stageImageUpload";
+import { stageImageUpload } from "../apiHooks/stageImageUpload";
 import { useState, useCallback, useEffect, useMemo } from "react";
 
 export const useImageUpload = () => {

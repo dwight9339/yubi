@@ -8,7 +8,7 @@ import {
 } from "@shopify/polaris"
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate } from "react-router-dom";
-import { deleteVariant } from "../../utils/deleteVariant";
+import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 
 export const VariantsList = ({ variants, refetch }) => {
   const navigate = useNavigate();

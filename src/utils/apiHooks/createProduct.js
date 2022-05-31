@@ -1,7 +1,7 @@
-import { CREATE_PRODUCT } from "../graphql/mutations/createProduct";
+import { CREATE_PRODUCT } from "../../graphql/mutations/createProduct";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
-import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../constants";
+import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../../constants";
 
 export const createProduct = () => {
   const [createProductMutation] = useMutation(CREATE_PRODUCT);

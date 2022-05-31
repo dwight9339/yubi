@@ -6,7 +6,7 @@ import {
   TextStyle
 } from "@shopify/polaris";
 import { useMemo, useEffect } from "react";
-import { fetchProducts } from "../../utils/fetchProducts";
+import { fetchProducts } from "../../utils/apiHooks/fetchProducts";
 import { Outlet, useLocation } from "react-router-dom";
 
 export const ProductsListPage = () => {

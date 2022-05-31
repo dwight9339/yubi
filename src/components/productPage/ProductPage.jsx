@@ -4,14 +4,10 @@ import {
   TextContainer,
   TextStyle
 } from "@shopify/polaris"
-import { fetchProduct } from "../../utils/fetchProduct";
+import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
 import { useMemo, useEffect } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
-import { QUERY_PAGE_SIZE } from "../../constants";
-
-import { ProductInfo } from "./ProductInfo";
-import { VariantsList } from "./VariantsList";
 
 export const ProductPage = () => {
   const navigate = useNavigate();

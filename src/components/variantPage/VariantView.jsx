@@ -8,7 +8,7 @@ import {
 } from "@shopify/polaris";
 import { useOutletContext } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { deleteVariant } from "../../utils/deleteVariant";
+import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 import { getIdFromGid } from "../../utils/gidHelper";
 
 export const VariantView = () => {

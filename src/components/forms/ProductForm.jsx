@@ -9,8 +9,8 @@ import {
  } from "@shopify/polaris";
  import { useState } from "react";
  import { useImageUpload } from "../../utils/hooks/useImageUpload";
- import { updateProduct } from "../../utils/updateProduct";
- import { createProduct } from "../../utils/createProduct";
+ import { updateProduct } from "../../utils/apiHooks/updateProduct";
+ import { createProduct } from "../../utils/apiHooks/createProduct";
 
 export const ProductForm = ({ product, onSuccess }) => {
   const productUpdateHook = updateProduct();

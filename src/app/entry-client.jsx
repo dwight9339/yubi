@@ -41,6 +41,9 @@ function MyProvider({ children }) {
         fields: {
           products: {
             keyArgs: false
+          },
+          variants: {
+            keyArgs: false
           }
         }
       }

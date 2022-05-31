@@ -8,7 +8,7 @@ import {
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
 import { getIdFromGid } from "../../utils/gidHelper";
-import { deleteProduct } from "../../utils/deleteProduct";
+import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
 
 export const ProductsListItem = ({ product }) => {
   const { id, title, featuredImage, totalVariants } = product;
