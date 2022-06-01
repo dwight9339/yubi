@@ -1,0 +1,255 @@
+<script src="{{ 'app_constants.js' | asset_url }}" async></script>
+
+{% style %}
+  .variant-selection-grid-container td {
+    padding: {{ block.settings.thumbnail_padding }}px;
+  }
+
+  .variant-selection-grid-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .variant-selection-grid-container {
+    display: block;
+    max-width: 100%;
+    max-height: {{ block.settings.thumbnail_grid_max_height }}px;
+    overflow-x: clip;
+    overflow-y: scroll;
+
+    /* Non-webkit scrollbar styling */
+    scrollbar-width: {{ block.settings.scrollbar_width }};
+    {% if block.settings.show_scrollbar and block.settings.disappear_scrollbar != true %}
+      scrollbar-color: {{ block.settings.scrollbar_thumb_color }} {{ block.settings.scrollbar_track_color }};
+    {% else %}
+      scrollbar-color: {{ block.settings.scrollbar_thumb_color | color_modify: "alpha", 0 }} {{ block.settings.scrollbar_track_color | color_modify: "alpha", 0 }};
+      transition: scrollbar-color 0.3s;
+    {% endif %}
+  }
+
+  {% if block.settings.disappear_scrollbar and block.settings.show_scrollbar %}
+    .variant-selection-grid-container:hover {
+      scrollbar-color: {{ block.settings.scrollbar_thumb_color }} {{ block.settings.scrollbar_track_color }};
+    }
+  {% endif %}
+
+  .variant-thumbnail[data-selected=true] img, .variant-thumbnail img:hover {
+    border-style: solid;
+    border-width: {{ block.settings.border_width }}px;
+    border-color: {{ block.settings.border_color }};
+  }
+
+  .variant-info-container {
+    margin-bottom: {{ block.settings.variant_info_margin_bottom }}px;
+  }
+  
+  /* Webkit scrollbar styling */
+  .variant-selection-grid-container::-webkit-scrollbar {
+    width: {{ block.settings.scrollbar_width_webkit }}px;
+  }
+
+  .variant-selection-grid-container::-webkit-scrollbar-track {
+    {% if block.settings.show_scrollbar and block.settings.disappear_scrollbar != true %}
+      background-color: {{ block.settings.scrollbar_track_color }};
+    {% else %}
+      background-color: {{ block.settings.scrollbar_track_color | color_modify: "alpha", 0 }};
+      transition: background-color 0.3s ease;
+    {% endif %}
+
+    border-radius: {{ block.settings.scrollbar_corner_radius }}px;
+  }
+
+  .variant-selection-grid-container::-webkit-scrollbar-thumb {
+    {% if block.settings.show_scrollbar and block.settings.disappear_scrollbar != true %}
+      background-color: {{ block.settings.scrollbar_thumb_color }};
+    {% else %}
+      background-color: {{ block.settings.scrollbar_thumb_color | color_modify: "alpha", 0 }};
+      transition: background-color 0.3s ease;
+    {% endif %}
+
+    border-radius: {{ block.settings.scrollbar_corner_radius }}px;
+  }
+
+  {% if block.settings.show_scrollbar and block.settings.disappear_scrollbar %}
+    .variant-selection-grid-container:hover::-webkit-scrollbar-track {
+      background-color: {{ block.settings.scrollbar_track_color }};
+    }
+
+    .variant-selection-grid-container:hover::-webkit-scrollbar-thumb {
+      background-color: {{ block.settings.scrollbar_thumb_color }};
+    }
+  {% endif %}
+{% endstyle %}
+
+<variant-picker data-id="{{ block.id }}">
+
+  <div class="variant-info-container">
+    {% assign variant_info = product.selected_variant.metafields.uvapp-variants %}
+    <div class="variant-name">
+      <h2>Variant Name</h2>
+      {{ variant_info.variant_name }}
+    </div>
+    <div class="variant-description">
+      <h2>Variant Description</h2>
+      {{ variant_info.variant_description }}
+    </div>
+  </div>
+  <table class="variant-selection-grid-table">
+    <tbody class="variant-selection-grid-container">
+      {% tablerow variant in product.variants cols: block.settings.num_cols %}
+        <div class="variant-selection-grid-item variant-thumbnail" data-variant-id="{{ variant.id }}" data-selected="{{ variant.selected }}">
+          {{ variant | image_url: width: block.settings.thumbnail_width, height: block.settings.thumbnail_width, crop: "center" | image_tag }}
+        </div>
+      {% endtablerow %}
+    </tbody>
+  </table>
+</variant-picker>
+
+{% schema %}
+{
+  "name": "Unique Variant Picker",
+  "templates": ["product"],
+  "target": "section",
+  "stylesheet": "variant-picker.css",
+  "javascript": "variant-picker.js",
+  "settings": [
+    {
+      "type": "range",
+      "id": "num_cols",
+      "label": "Columns",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_padding",
+      "label": "Thumbnail padding",
+      "min": 1,
+      "max": 25,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_width",
+      "label": "Thumbnail width",
+      "min": 10,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Thumbnail border width",
+      "min": 1,
+      "max": 15,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "variant_info_margin_bottom",
+      "label": "Variant info bottom margin",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "thumbnail_grid_max_height",
+      "label": "Thumbnail grid max height",
+      "min": 100,
+      "max": 1500,
+      "step": 50,
+      "unit": "px",
+      "default": 800
+    },
+    // Scrollbar settings
+    {
+      "type": "header",
+      "content": "Scrollbar Settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "Scrollbar appearance may vary between browsers depending on setting support. Certain settings only apply in Webkit-based browsers such as Chrome and Safari. These settings will be marked 'Webkit only'."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scrollbar",
+      "label": "Show scrollbar",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_thumb_color",
+      "label": "Thumb color",
+      "default": "#bfbfbf"
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_track_color",
+      "label": "Track color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "select",
+      "id": "scrollbar_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "thin",
+          "label": "Thin"
+        },
+        {
+          "value": "auto",
+          "label": "Normal"
+        }
+      ],
+      "info": "Width of scrollbar in browsers that support the 'scrollbar-width' CSS property such as Firefox"
+    },
+    {
+      "type": "range",
+      "id": "scrollbar_width_webkit",
+      "label": "Webkit Width",
+      "min": 1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "px",
+      "default": 5,
+      "info": "Webkit only"
+    },
+    {
+      "type": "range",
+      "id": "scrollbar_corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 0.5,
+      "unit": "px",
+      "default": 5,
+      "info": "Webkit only"
+    },
+    {
+      "type": "checkbox",
+      "id": "disappear_scrollbar",
+      "label": "Disappear scrollbar",
+      "default": true,
+      "info": "Scrollbar fades away when mouse leaves thumbnail grid element"
+    }
+  ]
+}
+{% endschema %}
