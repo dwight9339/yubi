@@ -6,7 +6,7 @@ export const ProductEdit = () => {
   const { product } = useOutletContext();
   const navigate = useNavigate();
   const handleSuccess = () => {
-    navigate("..", {state: {reload: true}});
+    navigate("..", {state: {reloadProduct: true}});
   }
 
   return (

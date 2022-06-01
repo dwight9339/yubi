@@ -35,8 +35,14 @@ export const ProductPage = () => {
 
     const { reloadProduct, reloadVariants } = location.state;
 
-    if (reloadProduct) refetchProduct();
-    if (reloadVariants) refetchVariants();
+    if (reloadProduct) {
+      refetchProduct();
+      location.state.reloadProduct = false;
+    }
+    if (reloadVariants) {
+      refetchVariants();
+      location.state.reloadVariants = false;
+    }
   });
 
   const pageMarkup = useMemo(() => {

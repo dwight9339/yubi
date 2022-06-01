@@ -18,7 +18,7 @@ export const VariantView = () => {
   const handleDelete = async () => {
       const productId = getIdFromGid(variant.product.id);
       await deleteVariantHook(variant);
-      navigate(`/product/${productId}`, { state: { reload: true }});
+      navigate(`/product/${productId}`, { state: { reloadVariants: true }});
   }
 
   return (

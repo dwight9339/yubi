@@ -24,8 +24,11 @@ export const ProductsListPage = () => {
     if (!location.state) return;
 
     const { reload } = location.state;
-
-    if (reload) refetch();
+    
+    if (reload) {
+      location.state.reload = false;
+      refetch();
+    }
   });
 
   const pageContent = useMemo(() => {

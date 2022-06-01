@@ -30,7 +30,7 @@ export const VariantsList = ({ variants }) => {
             content: "delete",
             onAction: async () => {
               await deleteVariantHook(variant);
-              navigate(".", {state: {reload: true}});
+              navigate(".", {state: {reloadVariants: true}});
             }
           }
         ]}

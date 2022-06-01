@@ -23,7 +23,10 @@ export const VariantPage = () => {
     
     const { reload } = location.state;
 
-    if (reload) refetch();
+    if (reload) {
+      refetch();
+      location.state.reload = false;
+    }
   })
 
   const pageContent = useMemo(() => {
