@@ -64,14 +64,7 @@ export const updateVariant = () => {
                 key: METAFIELD_KEY.variantDescription,
                 id: prevVariant.description?.id,
                 value: variantDescription
-              },
-              {
-                description: "Unique variant name",
-                namespace: METAFIELD_NAMESPACE.variants,
-                key: METAFIELD_KEY.variantName,
-                id: prevVariant.name?.id,
-                value: variantName
-              },
+              }
             ],
             price: variantPrice
           }

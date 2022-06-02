@@ -10,13 +10,6 @@ export const FETCH_VARIANT = gql`
         url
         altText
       }
-      name: metafield(
-        namespace: "uvapp-variants",
-        key: "variant_name"
-      ) {
-        id
-        value
-      }
       description: metafield(
         namespace: "uvapp-variants",
         key: "variant_description"
