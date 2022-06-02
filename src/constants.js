@@ -20,6 +20,9 @@ export const ROUTES = {
 };
 
 export const QUERY_PAGE_SIZE = {
-  products: 2,
+  products: 5,
   variants: 5,
 };
+
+export const UV_TAG = "unique variants";
+export const UV_TEMPLATE_SUFFIX = "unique-variants";

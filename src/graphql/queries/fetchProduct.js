@@ -13,6 +13,11 @@ export const FETCH_PRODUCT = gql`
       }
       productType
       tags
+      hasOnlyDefaultVariant
+      options {
+        name
+      }
+      templateSuffix
     }
   }
 `;
