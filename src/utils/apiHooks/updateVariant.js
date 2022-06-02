@@ -49,7 +49,7 @@ export const updateVariant = () => {
       || results.imageUpdateResults?.data?.productAppendImages
     ) {
       const newImages = results.imageUpdateResults?.data?.productAppendImages?.newImages;
-      const imageId = newImages ? newImages[0].id : null;
+      const imageId = newImages ? newImages[0].id : prevVariant.image?.id;
 
       const variantUpdateResults = await updateVariantMutation({
         variables: {
@@ -59,19 +59,13 @@ export const updateVariant = () => {
             imageId,
             metafields: [
               {
+                type: "multi_line_text_field",
                 description: "Unique variant description",
                 namespace: METAFIELD_NAMESPACE.variants,
                 key: METAFIELD_KEY.variantDescription,
                 id: prevVariant.description?.id,
                 value: variantDescription
-              },
-              {
-                description: "Unique variant name",
-                namespace: METAFIELD_NAMESPACE.variants,
-                key: METAFIELD_KEY.variantName,
-                id: prevVariant.name?.id,
-                value: variantName
-              },
+              }
             ],
             price: variantPrice
           }

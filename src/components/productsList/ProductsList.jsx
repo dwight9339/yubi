@@ -11,16 +11,18 @@ import { ResourcePicker } from "@shopify/app-bridge-react";
 import { ProductsListEmptyState } from "./ProductsListEmptyState";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { getIdFromGid } from "../../utils/gidHelper";
 
 export const ProductsList = () => {
   const navigate = useNavigate();
   const { products, pageInfo, fetchMore } = useOutletContext();
-  const { width: windowWidth } = useWindowDimensions();
 
   const [productPickerOpen, setProductPickerOpen] = useState(false);
 
   const renderItem = (product) => {
-    return <ProductsListItem product={product} />;
+    const variants = products.variantsMap[product.id];
+
+    return <ProductsListItem product={product} variants={variants} />;
   };
 
   const getNextPage = () => { 
@@ -33,6 +35,7 @@ export const ProductsList = () => {
       }
     });
   };
+
   const getPrevPage = () => { 
     fetchMore({
       variables: {
@@ -44,6 +47,13 @@ export const ProductsList = () => {
     });
   };
 
+  const handlePickerSelection = ({ selection }) => {
+    const { id: productId } = selection[0];
+    const id = getIdFromGid(productId);
+
+    navigate(`/product/${id}`);
+  }
+
   return (
     <div>
       <ResourcePicker 
@@ -53,7 +63,7 @@ export const ProductsList = () => {
         showArchived={false}
         showHidden={false}
         selectMultiple={false}
-        onSelection={() => {/* To do */}}
+        onSelection={handlePickerSelection}
       />
       <Card 
         actions={[

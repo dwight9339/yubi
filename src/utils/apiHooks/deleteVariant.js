@@ -1,20 +1,20 @@
 import { DELETE_VARIANT } from "../../graphql/mutations/deleteVariant";
-import { DELETE_PRODUCT_IMAGE } from "../../graphql/mutations/deleteProductImage";
+import { DELETE_PRODUCT_IMAGES } from "../../graphql/mutations/deleteProductImages";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 
 export const deleteVariant = () => {
   const [deleteVariantMutation] = useMutation(DELETE_VARIANT);
-  const [deleteProductImageMutation] = useMutation(DELETE_PRODUCT_IMAGE);
+  const [deleteProductImagesMutation] = useMutation(DELETE_PRODUCT_IMAGES);
 
   return useCallback(async (variant) => {
     let results = {};
 
     if (variant.image) {
-      const imageDeleteResults = await deleteProductImageMutation({
+      const imageDeleteResults = await deleteProductImagesMutation({
         variables: {
           productId: variant.product.id,
-          imageId: variant.image.id
+          imageIds: [variant.image.id]
         }
       });
 
@@ -37,5 +37,5 @@ export const deleteVariant = () => {
     };
 
     return results;
-  }, [deleteVariantMutation, deleteProductImageMutation]);
+  }, [deleteVariantMutation, deleteProductImagesMutation]);
 };

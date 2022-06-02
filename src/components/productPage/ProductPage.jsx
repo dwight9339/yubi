@@ -8,6 +8,8 @@ import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
 import { useMemo, useEffect } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
+import { productRequirementsAudit } from "../../utils/productHelper";
+import { ConvertProductModal } from "../common/ConvertProductModal";
 
 export const ProductPage = () => {
   const navigate = useNavigate();
@@ -64,7 +66,25 @@ export const ProductPage = () => {
     }
 
     if (product) {
-      return <Outlet context={outletContext} />;
+      const productAuditFailed = !productRequirementsAudit(product);
+
+      return (
+        <>
+          <ConvertProductModal
+            product={product}
+            refetch={() => {
+              navigate(".", {
+                state: {
+                  reloadProduct: true, 
+                  reloadVariants: true
+                }
+              });
+            }}
+            show={productAuditFailed}
+          />
+          <Outlet context={outletContext} />
+        </>
+      )
     }
 
     return null;
@@ -81,6 +101,7 @@ export const ProductPage = () => {
         }
       ]}
     >
+      
       {pageMarkup}
     </Page>
   );;

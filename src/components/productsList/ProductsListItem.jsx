@@ -2,19 +2,22 @@ import {
   ResourceItem,
   Thumbnail,
   Stack,
-  Heading,
-  TextContainer,
-  TextStyle
+  Heading
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
 
-export const ProductsListItem = ({ product }) => {
-  const { id, title, featuredImage, totalVariants } = product;
+import { VariantsPreview } from "./VariantsPreview";
+
+export const ProductsListItem = ({ product, variants }) => {
+  const { id, title, featuredImage, totalVariants, hasOnlyDefaultVariant} = product;
   const productId = getIdFromGid(id);
   const navigate = useNavigate();
   const deleteProductHook = deleteProduct();
+
+  const [variantsPreviewOpen, setVariantsPreviewOpen] = useState(false);
 
   const handleDelete = async () => {
     await deleteProductHook(id);
@@ -26,7 +29,6 @@ export const ProductsListItem = ({ product }) => {
     <ResourceItem 
       id={productId} 
       name={title} 
-      onClick={() => navigate(`/product/${productId}`)}
       shortcutActions={[
         {
           content: "Edit",
@@ -38,20 +40,37 @@ export const ProductsListItem = ({ product }) => {
         }
       ]}
     >
-      <Stack>
-        <Stack.Item fill>
-          <Thumbnail
-            source={featuredImage ? featuredImage.url : ""}
-            alt={featuredImage ? featuredImage.altText : ""}
-          /> 
-          <Heading>{title}</Heading>
-        </Stack.Item>
-        <Stack.Item>
-          <TextContainer>
-            <TextStyle variation="strong">Variants: </TextStyle>{totalVariants}
-          </TextContainer>
-        </Stack.Item>
-      </Stack>
+      <div
+        onClick={() => navigate(`/product/${productId}`)}
+      >
+        <Stack>
+          <Stack.Item 
+            fill
+          >
+            <Thumbnail
+              source={featuredImage ? featuredImage.url : ""}
+              alt={featuredImage ? featuredImage.altText : ""}
+            /> 
+            <Heading>{title}</Heading>
+          </Stack.Item>
+          <Stack.Item>
+            <Heading>Variants: </Heading>{hasOnlyDefaultVariant ? 0 : totalVariants}
+          </Stack.Item>
+        </Stack>
+      </div>
+      { 
+        hasOnlyDefaultVariant 
+        || <VariantsPreview 
+          productId={productId}
+          items={
+            hasOnlyDefaultVariant 
+              ? []
+              : variants
+          }
+          listOpen={variantsPreviewOpen}
+          toggleList={() => setVariantsPreviewOpen(!variantsPreviewOpen)}
+        />
+      }
     </ResourceItem>
   );
 }

@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { QUERY_PAGE_SIZE } from "../../constants";
 
 export const FETCH_PRODUCTS = gql`
   query FetchProducts(
@@ -23,6 +24,19 @@ export const FETCH_PRODUCTS = gql`
             altText
           }
           totalVariants
+          hasOnlyDefaultVariant
+          variants(first: ${QUERY_PAGE_SIZE.variantsPreview}) {
+            edges {
+              node {
+                id
+                title
+                image {
+                  url
+                  altText
+                }
+              }
+            }
+          }
         }
       }
       pageInfo {
