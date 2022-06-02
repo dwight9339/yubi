@@ -49,7 +49,7 @@ export const updateVariant = () => {
       || results.imageUpdateResults?.data?.productAppendImages
     ) {
       const newImages = results.imageUpdateResults?.data?.productAppendImages?.newImages;
-      const imageId = newImages ? newImages[0].id : null;
+      const imageId = newImages ? newImages[0].id : prevVariant.image?.id;
 
       const variantUpdateResults = await updateVariantMutation({
         variables: {
