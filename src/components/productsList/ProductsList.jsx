@@ -16,12 +16,13 @@ import { getIdFromGid } from "../../utils/gidHelper";
 export const ProductsList = () => {
   const navigate = useNavigate();
   const { products, pageInfo, fetchMore } = useOutletContext();
-  const { width: windowWidth } = useWindowDimensions();
 
   const [productPickerOpen, setProductPickerOpen] = useState(false);
 
   const renderItem = (product) => {
-    return <ProductsListItem product={product} />;
+    const variants = products.variantsMap[product.id];
+
+    return <ProductsListItem product={product} variants={variants} />;
   };
 
   const getNextPage = () => { 

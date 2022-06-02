@@ -16,8 +16,15 @@ export const fetchProducts = () => {
       return { products: [], pageInfo: {} };
     }
 
+    let products = data.products.edges.map(({ node }) => node);
+    products.variantsMap = {};
+    products.forEach(product => {
+      products.variantsMap[product.id] = product.variants.edges?.map(({ node }) => node);
+    });
+    
+
     return {
-      products: data.products.edges.map(({ node }) => node),
+      products,
       pageInfo: data.products.pageInfo
     }
   });
