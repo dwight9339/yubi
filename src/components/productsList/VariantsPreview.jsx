@@ -68,6 +68,12 @@ export const VariantsPreview = ({ productId, items, listOpen, toggleList }) => {
           items={items}
           renderItem={renderVariantListItem}
         />
+        <Button
+          plain
+          onClick={() => navigate(`/product/${productId}`)}
+        >
+          See more
+        </Button>
       </Collapsible>
     </>
   )
