@@ -1,17 +1,15 @@
 import {
   ResourceItem,
-  ResourceList,
   Thumbnail,
   Stack,
-  Heading,
-  Button,
-  Collapsible
+  Heading
 } from "@shopify/polaris";
-import { CaretUpMinor, CaretDownMinor } from "@shopify/polaris-icons";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
+
+import { VariantsPreview } from "./VariantsPreview";
 
 export const ProductsListItem = ({ product, variants }) => {
   const { id, title, featuredImage, totalVariants, hasOnlyDefaultVariant} = product;
@@ -63,46 +61,19 @@ export const ProductsListItem = ({ product, variants }) => {
           <Heading>Variants: </Heading>{totalVariants - 1}
         </Stack.Item>
       </Stack>
-      <Button
-          icon={variantsPreviewOpen 
-            ? CaretUpMinor
-            : CaretDownMinor
+      { 
+        hasOnlyDefaultVariant 
+        || <VariantsPreview 
+          productId={productId}
+          items={
+            hasOnlyDefaultVariant 
+              ? []
+              : variants
           }
-          size="slim"
-          onClick={() => setVariantsPreviewOpen(!variantsPreviewOpen)}
-      />
-      <Collapsible
-        id={`variants-preview-for-product-${productId}`}
-        open={variantsPreviewOpen}
-      >
-        <h2>Variants</h2>
-        <ResourceList
-          resourceName={{
-            plural: "variants",
-            singular: "variant"
-          }}
-          emptyState={<h3>No variants</h3>}
-          items={hasOnlyDefaultVariant 
-            ? []
-            : variants
-          }
-          renderItem={(variant) => {
-            const variantId = getIdFromGid(variant.id);
-
-            return <ResourceItem
-              id={variantId}
-              onClick={() => navigate(`/variant/${variantId}`)}
-            >
-              <Thumbnail
-                size="small"
-                source={variant.image?.url}
-                alt={variant.image?.altText}
-              />
-              <h2>{variant.title}</h2>
-            </ResourceItem>
-          }}
+          listOpen={variantsPreviewOpen}
+          toggleList={() => setVariantsPreviewOpen(!variantsPreviewOpen)}
         />
-      </Collapsible>
+      }
     </ResourceItem>
   );
 }
