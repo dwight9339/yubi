@@ -31,8 +31,21 @@ const ACTIVE_SHOPIFY_SHOPS = {};
 Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
   path: "/webhooks",
   webhookHandler: async (topic, shop, body) => {
+    console.log("App uninstalled");
     delete ACTIVE_SHOPIFY_SHOPS[shop];
   },
+});
+
+Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
+  path: "/webhooks",
+  webhookHandler: async (topic, shop, body) => {
+    const data = JSON.parse(body);
+    const { confirmed, line_items: lineItems } = data;
+    const variantIds = lineItems.map((entry) => entry.variant_id);
+
+    console.log(`Order confirmed: ${confirmed}`);
+    console.log(`Variants in order: ${variantIds}`);
+  }
 });
 
 // export for test use only
