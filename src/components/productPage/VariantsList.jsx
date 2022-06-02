@@ -63,10 +63,7 @@ export const VariantsList = ({ variants }) => {
           singular: "variant",
           plural: "variants",
         }}
-        items={
-          variants.filter((variant) => !variant.title === "Default Title") 
-          || []
-        }
+        items={variants || []}
         renderItem={renderItem}
         emptyState={<h3>No variants</h3>}
       />

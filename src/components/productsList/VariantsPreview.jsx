@@ -18,8 +18,8 @@ export const VariantsPreview = ({ productId, items, listOpen, toggleList }) => {
     >
       <Thumbnail
         size="small"
-        source={variant.image?.url}
-        alt={variant.image?.altText}
+        source={variant.image?.url || ""}
+        alt={variant.image?.altText || ""}
       />
       <h2>{variant.title}</h2>
     </ResourceItem>

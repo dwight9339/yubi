@@ -79,7 +79,13 @@ export const ProductView = () => {
       >
         <Card.Section>
           <Stack>
-            <VariantsList variants={variants} />
+            <VariantsList 
+              variants={
+                product.hasOnlyDefaultVariant 
+                  ? []
+                  : variants
+              } 
+            />
           </Stack>
         </Card.Section>
         <Card.Section>

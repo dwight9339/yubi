@@ -58,7 +58,7 @@ export const ProductsListItem = ({ product, variants }) => {
           <Heading>{title}</Heading>
         </Stack.Item>
         <Stack.Item>
-          <Heading>Variants: </Heading>{totalVariants - 1}
+          <Heading>Variants: </Heading>{hasOnlyDefaultVariant ? 0 : totalVariants}
         </Stack.Item>
       </Stack>
       { 
