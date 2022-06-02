@@ -46,11 +46,6 @@ export const ProductsListItem = ({ product }) => {
           /> 
           <Heading>{title}</Heading>
         </Stack.Item>
-        <Stack.Item>
-          <TextContainer>
-            <TextStyle variation="strong">Variants: </TextStyle>{totalVariants}
-          </TextContainer>
-        </Stack.Item>
       </Stack>
     </ResourceItem>
   );
