@@ -29,7 +29,6 @@ export const ProductsListItem = ({ product, variants }) => {
     <ResourceItem 
       id={productId} 
       name={title} 
-
       shortcutActions={[
         {
           content: "Edit",
@@ -41,26 +40,24 @@ export const ProductsListItem = ({ product, variants }) => {
         }
       ]}
     >
-      <Stack>
-        <Stack.Item 
-          fill
-        >
-          <div
-            onClick={() => {
-              navigate(`/product/${productId}`);
-            }}
+      <div
+        onClick={() => navigate(`/product/${productId}`)}
+      >
+        <Stack>
+          <Stack.Item 
+            fill
           >
             <Thumbnail
               source={featuredImage ? featuredImage.url : ""}
               alt={featuredImage ? featuredImage.altText : ""}
             /> 
-          </div>
-          <Heading>{title}</Heading>
-        </Stack.Item>
-        <Stack.Item>
-          <Heading>Variants: </Heading>{hasOnlyDefaultVariant ? 0 : totalVariants}
-        </Stack.Item>
-      </Stack>
+            <Heading>{title}</Heading>
+          </Stack.Item>
+          <Stack.Item>
+            <Heading>Variants: </Heading>{hasOnlyDefaultVariant ? 0 : totalVariants}
+          </Stack.Item>
+        </Stack>
+      </div>
       { 
         hasOnlyDefaultVariant 
         || <VariantsPreview 
