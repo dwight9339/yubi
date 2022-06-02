@@ -3,12 +3,14 @@ import { useCallback } from "react";
 import { UPDATE_PRODUCT } from "../../graphql/mutations/updateProduct";
 import { DELETE_VARIANTS } from "../../graphql/mutations/deleteVariants";
 import { ADD_TAGS } from "../../graphql/mutations/addTags";
+import { DELETE_PRODUCT_IMAGES } from "../../graphql/mutations/deleteProductImages";
 import { FETCH_VARIANTS_BY_PRODUCT } from "../../graphql/queries/fetchVariantsByProduct"
 import { UV_TAG, UV_TEMPLATE_SUFFIX } from "../../constants";
 
 export const convertProduct = (productId) => {
   const [updateProductMutation] = useMutation(UPDATE_PRODUCT);
   const [deleteVariantsMutation] = useMutation(DELETE_VARIANTS);
+  const [deleteProductImagesMutation] = useMutation(DELETE_PRODUCT_IMAGES);
   const [addTagsMutation] = useMutation(ADD_TAGS);
   const [fetchVariantsQuery] = useLazyQuery(FETCH_VARIANTS_BY_PRODUCT(productId));
 
@@ -26,6 +28,8 @@ export const convertProduct = (productId) => {
       });
 
       const variantsIds = productVariants.edges.map(({ node }) => node.id);
+      const variantImageIds = productVariants.edges.map(({ node }) => node.image?.id);
+
       const variantDeletionResults = await deleteVariantsMutation({
         variables: {
           productId: product.id,
@@ -33,8 +37,16 @@ export const convertProduct = (productId) => {
         }
       });
 
+      const variantImageDeletionResults = await deleteProductImagesMutation({
+        variables: {
+          productId: product.id,
+          imageIds: variantImageIds
+        }
+      });
+
       results = {
         variantDeletionResults,
+        variantImageDeletionResults,
         ...results
       };
     }
