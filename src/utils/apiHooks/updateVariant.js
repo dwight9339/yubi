@@ -59,6 +59,7 @@ export const updateVariant = () => {
             imageId,
             metafields: [
               {
+                type: "multi_line_text_field",
                 description: "Unique variant description",
                 namespace: METAFIELD_NAMESPACE.variants,
                 key: METAFIELD_KEY.variantDescription,
