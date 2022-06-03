@@ -18,7 +18,7 @@ export const VariantForm = ({ variant, productId, onSuccess }) => {
   const createVariantHook = createVariant();
   const { imageFile, imageSrc, imageLoading, onImageDrop } = useImageUpload();
 
-  const [variantName, setVariantName] = useState(variant.title);
+  const [variantName, setVariantName] = useState(variant?.title);
   const [variantDescription, setVariantDescription] = useState(variant?.description?.value || "");
   const [variantPrice, setVariantPrice] = useState(variant?.price || 0);
   const [processing, setProcessing] = useState(false);
