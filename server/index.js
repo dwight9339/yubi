@@ -42,6 +42,9 @@ Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
     const data = JSON.parse(body);
     const { confirmed, line_items: lineItems } = data;
     const variantIds = lineItems.map((entry) => entry.variant_id);
+    const offlineSesh = await Shopify.Utils.loadOfflineSession(shop);
+
+    console.log(`(From webhook) Offline Access Token: ${offlineSesh.accessToken}`);
 
     console.log(`Order confirmed: ${confirmed}`);
     console.log(`Variants in order: ${variantIds}`);

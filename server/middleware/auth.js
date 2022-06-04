@@ -10,12 +10,14 @@ export default function applyAuthMiddleware(app) {
       );
     }
 
+    const offlineSesh = await Shopify.Utils.loadOfflineSession(req.query.shop);
+
     const redirectUrl = await Shopify.Auth.beginAuth(
       req,
       res,
       req.query.shop,
       "/auth/callback",
-      app.get("use-online-tokens")
+      Boolean(offlineSesh)
     );
 
     res.redirect(redirectUrl);
@@ -56,19 +58,24 @@ export default function applyAuthMiddleware(app) {
         })
       );
 
-      const response = await Shopify.Webhooks.Registry.registerAll({
-        accessToken: session.accessToken,
-        shop: session.shop
-      });
+      const offlineSesh = await Shopify.Utils.loadOfflineSession(session.shop);
 
-      Object.keys(response).forEach((key) => {
-        if (!response[key].success) {
-          console.error(`Unable to register webhook for topic ${key}`);
-        }
-      })
+      if (offlineSesh) {
+        const response = await Shopify.Webhooks.Registry.registerAll({
+          accessToken: offlineSesh.accessToken,
+          shop: session.shop
+        });
+  
+        Object.keys(response).forEach((key) => {
+          if (!response[key].success) {
+            console.error(`Unable to register webhook for topic ${key}`);
+          }
+        });
 
-      // Redirect to app with shop parameter upon auth
-      res.redirect(`/?shop=${session.shop}&host=${host}`);
+        res.redirect(`/?shop=${session.shop}&host=${host}`);
+      } else {
+        res.redirect(`/auth/?shop=${session.shop}`);
+      }
     } catch (e) {
       switch (true) {
         case e instanceof Shopify.Errors.InvalidOAuthError:
