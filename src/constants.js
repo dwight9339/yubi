@@ -11,8 +11,7 @@ export const METAFIELD_NAMESPACE = {
 export const METAFIELD_KEY = {
   variantName: "variant_name",
   variantDescription: "variant_description",
-  isUniqueVariantsProduct: "is_unique_variants_product",
-  appInstalled: "app_installed"
+  isUniqueVariant: "is_uv"
 };
 
 export const ROUTES = {

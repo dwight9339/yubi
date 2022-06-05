@@ -40,16 +40,18 @@ export const createVariant = () => {
             imageId: results.imageAppendResults?.newImages?.pop().id,
             metafields: [
               {
+                description: "Description for unique variant",
                 type: "multi_line_text_field",
                 namespace: METAFIELD_NAMESPACE.variants,
                 key: METAFIELD_KEY.variantDescription,
                 value: variantDescription
               },
               {
-                type: "single_line_text_field",
+                type: "boolean",
+                description: "Marks variant as unique variant",
                 namespace: METAFIELD_NAMESPACE.variants,
-                key: METAFIELD_KEY.variantName,
-                value: variantName
+                key: METAFIELD_KEY.isUniqueVariant,
+                value: "true"
               },
             ],
           }
