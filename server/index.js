@@ -3,6 +3,7 @@ import { resolve } from "path";
 import express from "express";
 import cookieParser from "cookie-parser";
 import { Shopify, ApiVersion } from "@shopify/shopify-api";
+import { fetchVariantsQuery, deleteVariantQuery } from "./helpers/queryHelper.js";
 import "dotenv/config";
 
 import applyAuthMiddleware from "./middleware/auth.js";
@@ -36,16 +37,28 @@ Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
   },
 });
 
+const deleteUvs = (client, uvIds) => {
+  uvIds.forEach(async (variantId) => {
+    const result = await client.query({data: deleteVariantQuery(variantId)});
+
+    console.log(`Delete result: ${JSON.stringify(result)}`);
+  });
+}
+
 Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
   path: "/webhooks",
   webhookHandler: async (topic, shop, body) => {
-    const data = JSON.parse(body);
-    const { confirmed, line_items: lineItems } = data;
+    const rawData = JSON.parse(body);
+    const { confirmed, line_items: lineItems } = rawData;
     const variantIds = lineItems.map((entry) => entry.variant_id);
     const offlineSesh = await Shopify.Utils.loadOfflineSession(shop);
-
-    console.log(`(From webhook) Offline Access Token: ${offlineSesh.accessToken}`);
-
+    const client = new Shopify.Clients.Graphql(shop, offlineSesh.accessToken);
+    const fetchResult = await client.query({data: fetchVariantsQuery(variantIds)});
+    const uvIds = Object.entries(fetchResult.body.data)
+      .filter(([key, value]) => value.description)
+      .map(([key, value]) => value.id);
+    deleteUvs(client, uvIds);
+    
     console.log(`Order confirmed: ${confirmed}`);
     console.log(`Variants in order: ${variantIds}`);
   }
