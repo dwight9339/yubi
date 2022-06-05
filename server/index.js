@@ -55,7 +55,7 @@ Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
     const client = new Shopify.Clients.Graphql(shop, offlineSesh.accessToken);
     const fetchResult = await client.query({data: fetchVariantsQuery(variantIds)});
     const uvIds = Object.entries(fetchResult.body.data)
-      .filter(([key, value]) => value.description)
+      .filter(([key, value]) => value.isUv)
       .map(([key, value]) => value.id);
     deleteUvs(client, uvIds);
     

@@ -7,14 +7,11 @@ export const fetchVariantsQuery = (variantIds) => {
         variant${i}: productVariant(id: "gid://shopify/ProductVariant/${variantId}") {
           id
           title
-          description: metafield(
+          isUv: metafield(
             namespace: "uvapp-variants",
-            key: "variant_description"
+            key: "is_uv"
           ) {
             value
-          }
-          image {
-            id
           }
         }
       `
@@ -28,6 +25,7 @@ export const deleteVariantQuery = (variantId) => {
   return `
     mutation {
       productVariantDelete(id: "${variantId}") {
+        deletedProductVariantId
         userErrors {
           field
           message
