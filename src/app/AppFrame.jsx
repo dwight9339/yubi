@@ -25,7 +25,7 @@ export const AppFrame = ({ children }) => {
   const defaultConfirmDeleteContext = {
     show: false,
     target: {},
-    redirectUrl: ""
+    redirectUrl: null
   }
 
   const [toastContext, setToastContext] = useState(defaultToastContext);
