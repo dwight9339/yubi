@@ -26,3 +26,5 @@ export const QUERY_PAGE_SIZE = {
 
 export const UV_TAG = "unique variants";
 export const UV_TEMPLATE_SUFFIX = "unique-variants";
+export const IMAGE_SIZE_LIMIT = 20.971e6; // In bytes
+export const SUPPORTED_IMAGE_TYPES = ["jpeg", "png", "gif"]

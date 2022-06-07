@@ -9,7 +9,7 @@ export const stageImageUpload = () => {
 
   return useCallback(
     async (imageFile) => {
-      let { data, error } = await stageImageUploadMutation({
+      let { data: { stagedUploadsCreate: results }, error } = await stageImageUploadMutation({
         variables: {
           input: [
             {
@@ -23,9 +23,10 @@ export const stageImageUpload = () => {
         }
       });
 
-      if (data) {
+      if (!results.userErrors) {
+        console.log(`results: ${JSON.stringify(results)}`);
         try {
-          const { stagedUploadsCreate: { stagedTargets } } = data;
+          const { stagedTargets } = results;
           const stagingTarget = stagedTargets[0];
           const { url, parameters } = stagingTarget;
           const key = parameters.filter((param) => param.name == "key")[0].value;
@@ -40,9 +41,14 @@ export const stageImageUpload = () => {
           const postRes = await axios.post(url, formData);
           
           return { src };
-        } catch (e) {
-          console.error(`Image upload error: ${e}`);
+        } catch (err) {
+          console.error(`Image upload error: ${err}`);
+
+          throw("Image upload error");
         } 
+      } else {
+        console.log(`Image upload error: ${JSON.stringify(results.userErrors)}`);
+        throw("Image upload error");
       }
 
       return null;

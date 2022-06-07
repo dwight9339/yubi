@@ -12,53 +12,50 @@ import {
   Thumbnail
 } from "@shopify/polaris";
 import { FeedbackContext } from "../../app/AppFrame";
+import { IMAGE_SIZE_LIMIT, SUPPORTED_IMAGE_TYPES } from "../../constants";
 
 export const useImageUpload = (parentResource) => {
   const stageImageHook = stageImageUpload();
-  const { showBanner, showModal } = useContext(FeedbackContext);
+  const { showBanner } = useContext(FeedbackContext);
 
   const [imageFile, setImageFile] = useState();
   const [imageSrc, setImageSrc] = useState();
   const [imageLoading, setImageLoading] = useState(false);
 
   const onDrop = useCallback((files, accepted) => {
-    if (accepted.length) {
-      setImageFile(accepted[0]);
+    if (!accepted.length) return;
+
+    setImageLoading(true);
+    const file = accepted[0];
+
+    if (file.size > 10e6) {
+      showBanner("Image size too large", "File size limited to 20MB", "warning");
+      setImageLoading(false);
+      return;
     }
+
+    setImageFile(file);
   });
 
   const uploadImage = async () => {
     if (!imageFile) return;
-    setImageLoading(true);
-    const result = await stageImageHook(imageFile);
-    setImageLoading(false);
 
-    if (result) {
-      const { src } = result;
-      setImageSrc(src);
+    try {
+      const result = await stageImageHook(imageFile);
+
+      setImageSrc(result?.src);
+    } catch(err) {
+      showBanner("Could not upload image", `${err}`, "critical");
+      setImageFile(undefined);
+    } finally {
+      setImageLoading(false);
     }
   };
 
   const validator = (file) => {
-    const { type, size } = file;
+    const [type, subtype] = file.type.split("/");
 
-    if (type !== "image/jpeg" || type !== "image/png") {
-      showBanner(
-        "Invalid file type", 
-        "Please use a jpeg or png image",
-        "critical"
-      );
-      return false;
-    } else if (size > 20.971e6) {
-      showBanner(
-        "File size too large", 
-        "Please use an image of less than 20MB",
-        "critical"
-      );
-      return false;
-    }
-
-    return true;
+    return type === "image" && SUPPORTED_IMAGE_TYPES.includes(subtype);
   }
 
   useEffect(() => {
@@ -67,16 +64,11 @@ export const useImageUpload = (parentResource) => {
 
   const component = useMemo(() =>
     <DropZone
-      accept="
-        image/jpeg,
-        image
-      "
       type="image"
       allowMultiple={false}
       label="Image"
       onDrop={onDrop}
       customValidator={validator}
-      errorOverlayText="File type not accepted"
     >
       {imageLoading ? (
         <Spinner />
@@ -95,7 +87,7 @@ export const useImageUpload = (parentResource) => {
         />
       )}
     </DropZone>
-  , [imageFile]);
+  , [imageLoading, imageFile]);
 
   return useMemo(
     () => ({imageSrc, imageLoading, component}), 
