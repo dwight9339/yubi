@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Page, Stack} from "@shopify/polaris"
 import { useLocation } from "react-router-dom";
 import { useRoutePropagation } from "@shopify/app-bridge-react";
+import { AppFrame } from "./AppFrame";
 import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
 export const App = () => {
@@ -19,7 +20,9 @@ export const App = () => {
           width: windowWidth * 0.8
         }}
       >
-        <Outlet />
+        <AppFrame>
+          <Outlet />
+        </AppFrame>
       </div>
     </Stack>
   );

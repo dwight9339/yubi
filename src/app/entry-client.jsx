@@ -88,7 +88,9 @@ export function userLoggedInFetch(app) {
 }
 
 ReactDOM.render((
-  <PolarisProvider i18n={translations}>
+  <PolarisProvider 
+    i18n={translations}
+  >
     <AppBridgeProvider
       config={{
         apiKey: process.env.SHOPIFY_API_KEY,

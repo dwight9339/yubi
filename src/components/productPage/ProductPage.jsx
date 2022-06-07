@@ -5,15 +5,17 @@ import {
   TextStyle
 } from "@shopify/polaris"
 import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useContext } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
 import { productRequirementsAudit } from "../../utils/productHelper";
 import { ConvertProductModal } from "../common/ConvertProductModal";
+import { FeedbackContext } from "../../app/AppFrame";
 
 export const ProductPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { showToast, showBanner } = useContext(FeedbackContext);
   const { productId } = useParams();
   const { 
     product, 
@@ -31,6 +33,11 @@ export const ProductPage = () => {
     pageInfo,
     fetchMoreVariants
   };
+
+  useEffect(() => {
+    showToast("Test toast", 10000, true);
+    showBanner("Test banner", "This is a test", "success");
+  }, []);
 
   useEffect(() => {
     if (!location.state) return;
