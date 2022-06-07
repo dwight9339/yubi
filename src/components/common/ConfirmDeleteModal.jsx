@@ -6,7 +6,6 @@ import {
 import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
 import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 export const ConfirmDeleteModal = ({
   show,
@@ -19,10 +18,6 @@ export const ConfirmDeleteModal = ({
   const navigate = useNavigate();
   const deleteProductHook = deleteProduct();
   const deleteVariantHook = deleteVariant();
-
-  useEffect(() => {
-    console.log(`redirectUrl: ${redirectUrl}`);
-  }, [redirectUrl]);
 
   const handleDelete = async () => {
     try {
