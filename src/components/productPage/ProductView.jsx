@@ -11,8 +11,9 @@ import { useContext } from "react";
 import { ModalContext } from "../../app/AppFrame";
 
 export const ProductView = () => {
-  const { showConfirmDeleteModal } = useContext(ModalContext);
+  const { showConfirmDeleteModal} = useContext(ModalContext);
   const navigate = useNavigate();
+
   const { 
     product, 
     variants, 
@@ -80,7 +81,7 @@ export const ProductView = () => {
               variants={
                 product.hasOnlyDefaultVariant 
                   ? []
-                  : variants
+                  : variants.filter((variant) => variant.title !== "Default Title")
               } 
             />
           </Stack>
