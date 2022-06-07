@@ -36,7 +36,7 @@ export const ProductPage = () => {
       refetchVariants();
       location.state.reload = false;
     }
-  }, [location.state]);
+  });
 
   const outletContext = {
     product,

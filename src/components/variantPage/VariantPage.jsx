@@ -27,7 +27,7 @@ export const VariantPage = () => {
       refetch();
       location.state.reload = false;
     }
-  })
+  });
 
   const pageContent = useMemo(() => {
     if (loading) return <Spinner />;
