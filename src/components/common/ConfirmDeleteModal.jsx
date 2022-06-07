@@ -6,6 +6,7 @@ import {
 import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
 import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const ConfirmDeleteModal = ({
   show,
@@ -19,19 +20,24 @@ export const ConfirmDeleteModal = ({
   const deleteProductHook = deleteProduct();
   const deleteVariantHook = deleteVariant();
 
+  const [processing, setProcessing] = useState(false);
+
   const handleDelete = async () => {
     try {
+      setProcessing(true);
       if (target.__typename === "Product") {
         await deleteProductHook(target.id);
       } else if (target.__typename === "ProductVariant") {
         await deleteVariantHook(target);
       }
       
+      setProcessing(false);
       handleClose();
       navigate(redirectUrl, {state: {reload: true}});
       showToast(`Deleted ${target.title}`)
     } catch (error) {
       console.error(error);
+      setProcessing(false);
       showBanner("Unable to delete", `Could not delete ${target.title}`, "critical");
       handleClose();
     }
@@ -45,7 +51,8 @@ export const ConfirmDeleteModal = ({
         content: "Delete",
         accessibilityLabel: `Delete ${target.title}`,
         onAction: handleDelete,
-        destructive: true
+        destructive: true,
+        loading: processing
       }}
       secondaryActions={[
         {
@@ -55,6 +62,7 @@ export const ConfirmDeleteModal = ({
         }
       ]}
       onClose={handleClose}
+      
     >
       <Modal.Section>
         <TextContainer>
