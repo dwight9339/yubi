@@ -6,11 +6,12 @@ import {
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { ProductInfo } from "./ProductInfo";
 import { VariantsList } from "./VariantsList";
-import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
 import { QUERY_PAGE_SIZE } from "../../constants";
+import { useContext } from "react";
+import { ModalContext } from "../../app/AppFrame";
 
 export const ProductView = () => {
-  const deleteProductHook = deleteProduct();
+  const { showConfirmDeleteModal } = useContext(ModalContext);
   const navigate = useNavigate();
   const { 
     product, 
@@ -41,12 +42,6 @@ export const ProductView = () => {
     })
   }
 
-  const handleDelete = async () => {
-    await deleteProductHook(product.id);
-
-    navigate("/", {state: {reload: true}});
-  }
-
   return (
     <Stack
       distribution="fill"
@@ -60,7 +55,9 @@ export const ProductView = () => {
           },
           {
             content: "Delete",
-            onAction: handleDelete
+            onAction: () => {
+              showConfirmDeleteModal(product, "/");
+            }
           }
         ]}
       >

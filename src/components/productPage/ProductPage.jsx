@@ -5,17 +5,15 @@ import {
   TextStyle
 } from "@shopify/polaris"
 import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
-import { useMemo, useEffect, useContext } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
 import { productRequirementsAudit } from "../../utils/productHelper";
 import { ConvertProductModal } from "../common/ConvertProductModal";
-import { FeedbackContext } from "../../app/AppFrame";
 
 export const ProductPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { showToast, showBanner } = useContext(FeedbackContext);
   const { productId } = useParams();
   const { 
     product, 
@@ -27,32 +25,25 @@ export const ProductPage = () => {
     refetchProduct,
     refetchVariants
   } = fetchProduct(generateProductGid(productId));
+
+  useEffect(() => {
+    if (!location.state) return;
+
+    const { reload } = location.state;
+
+    if (reload) {
+      refetchProduct();
+      refetchVariants();
+      location.state.reload = false;
+    }
+  });
+
   const outletContext = {
     product,
     variants,
     pageInfo,
     fetchMoreVariants
   };
-
-  useEffect(() => {
-    showToast("Test toast", 10000, true);
-    showBanner("Test banner", "This is a test", "success");
-  }, []);
-
-  useEffect(() => {
-    if (!location.state) return;
-
-    const { reloadProduct, reloadVariants } = location.state;
-
-    if (reloadProduct) {
-      refetchProduct();
-      location.state.reloadProduct = false;
-    }
-    if (reloadVariants) {
-      refetchVariants();
-      location.state.reloadVariants = false;
-    }
-  });
 
   const pageMarkup = useMemo(() => {
     if (loading) {
