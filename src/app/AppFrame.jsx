@@ -1,7 +1,8 @@
 import { 
   Frame,
   Toast,
-  Banner 
+  Banner,
+  List 
 } from "@shopify/polaris";
 import { useState, createContext } from "react";
 import { ConfirmDeleteModal } from "../components/common/ConfirmDeleteModal";
@@ -20,7 +21,7 @@ export const AppFrame = ({ children }) => {
     show: false,
     title: "",
     status: "info",
-    text: ""
+    content: ""
   };
   const defaultConfirmDeleteContext = {
     show: false,
@@ -41,11 +42,11 @@ export const AppFrame = ({ children }) => {
     });
   }
 
-  const showBanner = (title="", text="", status="info") => {
+  const showBanner = (title="", content="", status="info") => {
     setBannerContext({
       show: true,
       title,
-      text,
+      content,
       status
     });
   }
@@ -87,9 +88,18 @@ export const AppFrame = ({ children }) => {
             status={bannerContext.status}
             onDismiss={() => setBannerContext(defaultBannerContext)}
           >
-            <p>
-              {bannerContext.text}
-            </p>
+            {
+              (
+                Array.isArray(bannerContext.content)
+                && <List>
+                  {
+                    bannerContext.content.map((item, i) => 
+                    <List.Item key={i}>{item}</List.Item>)
+                  }
+                </List>
+              )
+              || <p>{bannerContext.content}</p>
+            }
           </Banner>
           : null
       }
