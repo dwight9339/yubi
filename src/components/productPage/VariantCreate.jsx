@@ -8,7 +8,7 @@ export const VariantCreate = () => {
   const navigate = useNavigate();
 
   const handleSuccess = () => {
-    navigate(`..`, {state: {reloadVariants: true}});
+    navigate(`..`, {state: {reload: true}});
   }
 
   return (
