@@ -24,7 +24,6 @@ export const stageImageUpload = () => {
       });
 
       if (!results.userErrors.length) {
-        console.log(`results: ${JSON.stringify(results)}`);
         try {
           const { stagedTargets } = results;
           const stagingTarget = stagedTargets[0];
@@ -44,11 +43,11 @@ export const stageImageUpload = () => {
         } catch (err) {
           console.error(`Image upload error: ${err}`);
 
-          throw("Image upload error");
+          throw([`${err}`]);
         } 
       } else {
-        console.log(`Image upload error: ${JSON.stringify(results.userErrors)}`);
-        throw("Image upload error");
+        console.error(`Image upload error: ${JSON.stringify(results.userErrors)}`);
+        throw(results.userErrors.map((error) => error.message));
       }
 
       return null;

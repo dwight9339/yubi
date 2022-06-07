@@ -45,7 +45,7 @@ export const useImageUpload = (parentResource) => {
 
       setImageSrc(result?.src);
     } catch(err) {
-      showBanner("Image upload error", "", "critical");
+      showBanner("Image upload error", err, "critical");
       setImageFile(undefined);
     } finally {
       setImageLoading(false);
