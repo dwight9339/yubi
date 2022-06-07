@@ -8,15 +8,17 @@ import {
 } from "@shopify/polaris"
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate } from "react-router-dom";
-import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
+import { useContext } from "react";
+import { ModalContext } from "../../app/AppFrame";
 
 export const VariantsList = ({ variants }) => {
   const navigate = useNavigate();
-  const deleteVariantHook = deleteVariant();
+  const { showConfirmDeleteModal } = useContext(ModalContext);
 
   const renderItem = (variant) => {
-    const { id, image, title, price } = variant;
+    const { id, image, title, price, product } = variant;
     const variantId = getIdFromGid(id);
+    const productId = getIdFromGid(product.id);
 
     return (
       <ResourceItem
@@ -29,8 +31,7 @@ export const VariantsList = ({ variants }) => {
           {
             content: "delete",
             onAction: async () => {
-              await deleteVariantHook(variant);
-              navigate(".", {state: {reloadVariants: true}});
+              showConfirmDeleteModal(variant, `/product/${productId}`);
             }
           }
         ]}

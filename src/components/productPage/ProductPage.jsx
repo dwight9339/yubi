@@ -36,7 +36,7 @@ export const ProductPage = () => {
       refetchVariants();
       location.state.reload = false;
     }
-  });
+  }, [location.state]);
 
   const outletContext = {
     product,
@@ -94,7 +94,7 @@ export const ProductPage = () => {
       breadcrumbs={[
         {
           content: "Products",
-          onAction: () => navigate("/"),
+          onAction: () => navigate("/", {state: {reload: true}}),
           accessibilityLabel: "Return to products list page"
         }
       ]}
