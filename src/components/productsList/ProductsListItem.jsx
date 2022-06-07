@@ -7,7 +7,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { getIdFromGid } from "../../utils/gidHelper";
-import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
+import { useContext } from "react";
+import { ModalContext } from "../../app/AppFrame";
 
 import { VariantsPreview } from "./VariantsPreview";
 
@@ -15,15 +16,9 @@ export const ProductsListItem = ({ product, variants }) => {
   const { id, title, featuredImage, totalVariants, hasOnlyDefaultVariant} = product;
   const productId = getIdFromGid(id);
   const navigate = useNavigate();
-  const deleteProductHook = deleteProduct();
+  const { showConfirmDeleteModal } = useContext(ModalContext);
 
   const [variantsPreviewOpen, setVariantsPreviewOpen] = useState(false);
-
-  const handleDelete = async () => {
-    await deleteProductHook(id);
-
-    navigate(".", {state: {reload: true}});
-  }
 
   return (
     <ResourceItem 
@@ -36,7 +31,9 @@ export const ProductsListItem = ({ product, variants }) => {
         },
         {
           content: "Delete",
-          onAction: handleDelete
+          onAction: () => {
+            showConfirmDeleteModal(product, "/products");
+          }
         }
       ]}
     >
