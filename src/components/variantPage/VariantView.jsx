@@ -8,18 +8,15 @@ import {
 } from "@shopify/polaris";
 import { useOutletContext } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 import { getIdFromGid } from "../../utils/gidHelper";
+import { useContext } from "react";
+import { ModalContext } from "../../app/AppFrame";
 
 export const VariantView = () => {
-  const deleteVariantHook = deleteVariant();
   const navigate = useNavigate();
   const { variant } = useOutletContext();
-  const handleDelete = async () => {
-      const productId = getIdFromGid(variant.product.id);
-      await deleteVariantHook(variant);
-      navigate(`/product/${productId}`, { state: { reloadVariants: true }});
-  }
+  const { showConfirmDeleteModal } = useContext(ModalContext);
+  const productId = getIdFromGid(variant.product.id);
 
   return (
     <Card
@@ -31,7 +28,9 @@ export const VariantView = () => {
         },
         {
           content: "Delete",
-          onAction: handleDelete
+          onAction: () => {
+            showConfirmDeleteModal(variant, `/product/${productId}`);
+          }
         }
       ]}
     >
