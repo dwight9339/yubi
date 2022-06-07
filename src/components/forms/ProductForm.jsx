@@ -15,7 +15,7 @@ import {
 export const ProductForm = ({ product, onSuccess }) => {
   const productUpdateHook = updateProduct();
   const productCreateHook = createProduct();
-  const { imageFile, imageSrc, imageLoading, onImageDrop } = useImageUpload();
+  const { imageSrc, imageLoading, component: imageDropZone } = useImageUpload(product);
 
   const [productTitle, setProductTitle] = useState(product?.title);
   const [productDescription, setProductDescription] = useState(product?.description);
@@ -108,26 +108,7 @@ export const ProductForm = ({ product, onSuccess }) => {
           />
         </FormLayout.Group>
         <FormLayout.Group>
-          <DropZone
-            type="image"
-            allowMultiple={false}
-            label="Image"
-            onDrop={onImageDrop}
-            customValidator={(file) => file.type.split("/")[0] == "image"}
-          >
-            {imageLoading ? (
-              <Spinner />
-            ) : (
-              <Thumbnail
-                size="large"
-                source={
-                  imageFile
-                    ? window.URL.createObjectURL(imageFile)
-                    : (product?.featuredImage?.url || "")
-                }
-              />
-            )}
-          </DropZone>
+          {imageDropZone}
         </FormLayout.Group>
         <Button
           primary
