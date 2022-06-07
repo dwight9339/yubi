@@ -23,7 +23,7 @@ export const stageImageUpload = () => {
         }
       });
 
-      if (!results.userErrors) {
+      if (!results.userErrors.length) {
         console.log(`results: ${JSON.stringify(results)}`);
         try {
           const { stagedTargets } = results;
