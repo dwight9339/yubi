@@ -1,10 +1,8 @@
 import { 
+  Card,
   Form,
   FormLayout,
   TextField,
-  DropZone,
-  Spinner,
-  Thumbnail,
   Button
 } from "@shopify/polaris";
 import { useState, useContext } from "react";
@@ -64,57 +62,68 @@ export const ProductForm = () => {
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit}
+    <Card
+      title={`${processType} ${product ? product.title : "product"}`}
+      actions={[
+        {
+          content: "Cancel",
+          accessibilityLabel: `Cancel product ${processType}`,
+          onAction: () => navigate(-1)
+        }
+      ]}
     >
-      <FormLayout>
-        <FormLayout.Group>
-          <TextField 
-            type="text"
-            label="Title"
-            value={productTitle}
-            onChange={setProductTitle}
-            autoComplete="off"
-          />
-        </FormLayout.Group>
-        <FormLayout.Group>
-          <TextField 
-            type="text"
-            label="Description"
-            value={productDescription}
-            onChange={setProductDescription}
-            multiline
-            autoComplete="off"
-          />
-        </FormLayout.Group>
-        <FormLayout.Group>
-          <TextField 
-            type="text"
-            label="Type"
-            value={productType}
-            onChange={setProductType}
-            autoComplete="off"
-          />
-          <TextField 
-            type="text"
-            label="Tags (Comma-separated)"
-            value={productTags}
-            onChange={setProductTags}
-            autoComplete="off"
-          />
-        </FormLayout.Group>
-        <FormLayout.Group>
-          {imageDropZone}
-        </FormLayout.Group>
-        <Button
-          primary
-          submit
-          loading={processing || imageLoading}
-          disabled={!productTitle}
-        >
-          {product ? "Update" : "Create"}
-        </Button>
-      </FormLayout>
-    </Form>
+      <Form
+        onSubmit={handleSubmit}
+      >
+        <FormLayout>
+          <FormLayout.Group>
+            <TextField 
+              type="text"
+              label="Title"
+              value={productTitle}
+              onChange={setProductTitle}
+              autoComplete="off"
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            <TextField 
+              type="text"
+              label="Description"
+              value={productDescription}
+              onChange={setProductDescription}
+              multiline
+              autoComplete="off"
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            <TextField 
+              type="text"
+              label="Type"
+              value={productType}
+              onChange={setProductType}
+              autoComplete="off"
+            />
+            <TextField 
+              type="text"
+              label="Tags (Comma-separated)"
+              value={productTags}
+              onChange={setProductTags}
+              autoComplete="off"
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            {imageDropZone}
+          </FormLayout.Group>
+          <Button
+            primary
+            submit
+            loading={processing || imageLoading}
+            disabled={!productTitle}
+          >
+            {product ? "Update" : "Create"}
+          </Button>
+        </FormLayout>
+      </Form>
+    </Card>
   )
 }
