@@ -28,7 +28,7 @@ export const useImageUpload = (parentResource) => {
     setImageLoading(true);
     const file = accepted[0];
 
-    if (file.size > 10e6) {
+    if (file.size > IMAGE_SIZE_LIMIT) {
       showBanner("Image size too large", "File size limited to 20MB", "warning");
       setImageLoading(false);
       return;

@@ -43,10 +43,15 @@ export const ProductForm = ({ product, onSuccess }) => {
   });
 
   const doUpdate = async () => {
-    const formData = getFormData();
-    const results = await productUpdateHook(formData);
+    try {
+      const formData = getFormData();
+      const results = await productUpdateHook(formData);
 
-    return results;
+      return results;
+    } catch (err) {
+      
+    }
+    
   };
 
   const doCreate = async () => {

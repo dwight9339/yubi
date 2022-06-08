@@ -3,20 +3,22 @@ import {
   Form,
   FormLayout,
   TextField,
-  DropZone,
-  Spinner,
-  Thumbnail,
   Button
 } from "@shopify/polaris";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useImageUpload } from "../../utils/hooks/useImageUpload";
-import { updateVariant } from "../../utils/apiHooks/updateVariant";
-import { createVariant } from "../../utils/apiHooks/createVariant";
+import { upsertVariant } from "../../utils/apiHooks/upsertVariant";
+import { getIdFromGid } from "../../utils/gidHelper";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { FeedbackContext } from "../../app/AppFrame";
 
-export const VariantForm = ({ variant, productId, onSuccess }) => {
-  const updateVariantHook = updateVariant();
-  const createVariantHook = createVariant();
-  const { imageFile, imageSrc, imageLoading, onImageDrop } = useImageUpload();
+export const VariantForm = () => {
+  const navigate = useNavigate();
+  const upsertVariantHook = upsertVariant();
+  const { showBanner, showToast } = useContext(FeedbackContext);
+  const { variant, product } = useOutletContext();
+  const { imageSrc, imageLoading, component: imageDropZone } = useImageUpload(variant);
+  const processType = variant ? "Update" : "Create"
 
   const [variantName, setVariantName] = useState(variant?.title);
   const [variantDescription, setVariantDescription] = useState(variant?.description?.value || "");
@@ -33,99 +35,80 @@ export const VariantForm = ({ variant, productId, onSuccess }) => {
     };
   };
 
-  const doUpdate = async () => {
-    const result = await updateVariantHook({
-        variantName,
-        variantDescription,
-        variantPrice,
-        imageData: getImageData(),
-        prevVariant: variant
-      });
-
-    return result;
-  }
-
-  const doCreate = async () => {
-    const result = await createVariantHook({
+  const handleSubmit = async() => {
+    const variantInput = {
       variantName,
       variantDescription,
       variantPrice,
       imageData: getImageData(),
-      productId
-    });
-    
-    return result;
-  }
-
-  const handleSubmit = async() => {
-    setProcessing(true);
-    const results = variant
-      ? await doUpdate()
-      : await doCreate();
-    setProcessing(false);
-
-    // To do: error checking
-    onSuccess(results);
+      productId: product?.id,
+      prevVariant: variant
+    }
+    try {
+      setProcessing(true);
+      const results = await upsertVariantHook(variantInput);
+      const variantId = getIdFromGid(results.id);
+      navigate(`/variant/${variantId}`, {state: {reload: Boolean(variant)}});
+      showToast(`${`${processType}d`} ${results.title}`);
+    } catch(err) {
+      const typeSafeError = Array.isArray(err) || typeof(err) === "string";
+      showBanner(`${processType} error`, typeSafeError ? err : "", "critical");
+      console.error(err);
+    } finally {
+      setProcessing(false);
+    }
   }
   
   return (
-    <Form
-      onSubmit={handleSubmit}
+    <Card
+      title={variant ? `Edit ${variant.title}` : "Create Variant"}
+      actions={[
+        {
+          content: "Cancel",
+          accessibilityLabel: `Cancel variant ${processType}`,
+          onAction: () => navigate(-1)
+        }
+      ]}
     >
-      <FormLayout>
-        <FormLayout.Group>
-          <TextField
-            type="text"
-            label="Name"
-            value={variantName}
-            onChange={setVariantName}
-          />
-          <TextField 
-            type="text"
-            label="Description"
-            value={variantDescription}
-            onChange={setVariantDescription}
-            multiline
-            autoComplete="off"
-          />
-          <TextField 
-            type="currency"
-            label="Price"
-            value={variantPrice}
-            onChange={setVariantPrice}
-            autoComplete="off"
-          />
-        </FormLayout.Group>
-        <FormLayout.Group>
-          <DropZone
-            type="image"
-            allowMultiple={false}
-            label="Image"
-            onDrop={onImageDrop}
-            customValidator={(file) => file.type.split("/")[0] == "image"}
+      <Form
+        onSubmit={handleSubmit}
+      >
+        <FormLayout>
+          <FormLayout.Group>
+            <TextField
+              type="text"
+              label="Name"
+              value={variantName}
+              onChange={setVariantName}
+            />
+            <TextField 
+              type="text"
+              label="Description"
+              value={variantDescription}
+              onChange={setVariantDescription}
+              multiline
+              autoComplete="off"
+            />
+            <TextField 
+              type="currency"
+              label="Price"
+              value={variantPrice}
+              onChange={setVariantPrice}
+              autoComplete="off"
+            />
+          </FormLayout.Group>
+          <FormLayout.Group>
+            {imageDropZone}
+          </FormLayout.Group>
+          <Button
+            primary
+            submit
+            loading={processing || imageLoading}
           >
-            {imageLoading ? (
-              <Spinner />
-            ) : (
-              <Thumbnail
-                size="large"
-                source={
-                  imageFile
-                    ? window.URL.createObjectURL(imageFile)
-                    : (variant?.image?.url || "")
-                }
-              />
-            )}
-          </DropZone>
-        </FormLayout.Group>
-        <Button
-          primary
-          submit
-          loading={processing || imageLoading}
-        >
-          {variant ? "Update" : "Create"}
-        </Button>
-      </FormLayout>
-    </Form>
+            {processType}
+          </Button>
+        </FormLayout>
+      </Form>
+    </Card>
   );
  };

@@ -13,29 +13,41 @@ export const createProduct = () => {
     productTags,
     imageData
   }) => {
-    const tags = `unique variants, ${productTags || ""}`;
-
-    const results = createProductMutation({
-      variables: {
-        input: {
-          title: productTitle,
-          descriptionHtml: productDescription,
-          productType,
-          tags,
-          images: imageData ? [imageData] : null,
-          metafields: [
-            {
-              namespace: METAFIELD_NAMESPACE.products,
-              key: METAFIELD_KEY.isUniqueVariantsProduct,
-              description: "Marks product as a unique variants product",
-              type: "boolean",
-              value: "true"
-            }
-          ]
+    try {
+      const tags = `unique variants, ${productTags || ""}`;
+      const results = createProductMutation({
+        variables: {
+          input: {
+            title: productTitle,
+            descriptionHtml: productDescription,
+            productType,
+            tags,
+            images: imageData ? [imageData] : null,
+            metafields: [
+              {
+                namespace: METAFIELD_NAMESPACE.products,
+                key: METAFIELD_KEY.isUniqueVariantsProduct,
+                description: "Marks product as a unique variants product",
+                type: "boolean",
+                value: "true"
+              }
+            ]
+          }
         }
-      }
-    });
+      });
 
-    return results;
+      const { productCreate } = results;
+
+      if (productCreate.userErrors.length) {
+        throw (productCreate.userErrors.map((error) => {error.message}));
+      }
+      
+      return results;
+    } catch (err) {
+      throw([`${err}`]);
+    }
+    
+
+    
   }, [createProductMutation]);
 };
