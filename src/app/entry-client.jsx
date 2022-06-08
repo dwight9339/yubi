@@ -29,8 +29,7 @@ import { ProductPage } from "../components/productPage/ProductPage";
 import { ProductView } from "../components/productPage/ProductView";
 import { ProductEdit } from "../components/productPage/ProductEdit";
 import { VariantPage } from "../components/variantPage/VariantPage";
-import { VariantCreate } from "../components/productPage/VariantCreate";
-import { VariantEdit } from "../components/variantPage/VariantEdit";
+import { VariantForm } from "../components/forms/VariantForm";
 import { VariantView } from "../components/variantPage/VariantView";
 
 function MyProvider({ children }) {
@@ -110,14 +109,14 @@ ReactDOM.render((
               <Route path="product">
                 <Route path=":productId" element={<ProductPage />}>
                   <Route index element={<ProductView />} />
-                  <Route path="new-variant" element={<VariantCreate />} />
+                  <Route path="new-variant" element={<VariantForm />} />
                   <Route path="edit" element={<ProductEdit />} /> 
                 </Route>
               </Route>
               <Route path="variant">
                 <Route path=":variantId" element={<VariantPage />}>
                   <Route index element={<VariantView />} />
-                  <Route path="edit" element={<VariantEdit />} />
+                  <Route path="edit" element={<VariantForm />} />
                 </Route>
               </Route>
             </Route>
