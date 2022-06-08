@@ -19,9 +19,13 @@ export const upsertVariant = () => {
     variantPrice,
     imageData,
     prevVariant,
-    productId
+    product
   }) => {
     try {
+      // If product only has a default variant, update that instead of creating a new one
+      if (product?.hasOnlyDefaultVariant) { 
+        prevVariant = product.variants.edges[0].node;
+      }
       let newImage;
 
       if (imageData) {
@@ -29,13 +33,13 @@ export const upsertVariant = () => {
           ? await updateProductImageMutation({
             variables: {
               image: imageData,
-              productId
+              productId: product.id
             }
           })
           : await createProductImageMutation({
             variables: {
               input: {
-                id: productId,
+                id: product.id,
                 images: [imageData]
               }
             }
@@ -52,31 +56,36 @@ export const upsertVariant = () => {
         newImage = productAppendImages?.newImages?.at(0);
       }
 
+      const variantInput = {
+        id: prevVariant?.id,
+        options: [variantName],
+        price: variantPrice,
+        imageId: newImage?.id,
+        metafields: [
+          {
+            id: prevVariant?.description?.id,
+            description: "Description for unique variant",
+            type: "multi_line_text_field",
+            namespace: METAFIELD_NAMESPACE.variants,
+            key: METAFIELD_KEY.variantDescription,
+            value: variantDescription
+          },
+          {
+            id: prevVariant?.isUv?.id,
+            type: "boolean",
+            description: "Marks variant as unique variant",
+            namespace: METAFIELD_NAMESPACE.variants,
+            key: METAFIELD_KEY.isUniqueVariant,
+            value: "true"
+          }
+        ]
+      }
+
       if (!prevVariant) {
+        variantInput.productId = product.id;
         const variantCreateResults = await createVariantMutation({
           variables: {
-            variantInput: {
-              options: [variantName],
-              price: variantPrice,
-              productId,
-              imageId: newImage?.id,
-              metafields: [
-                {
-                  description: "Description for unique variant",
-                  type: "multi_line_text_field",
-                  namespace: METAFIELD_NAMESPACE.variants,
-                  key: METAFIELD_KEY.variantDescription,
-                  value: variantDescription
-                },
-                {
-                  type: "boolean",
-                  description: "Marks variant as unique variant",
-                  namespace: METAFIELD_NAMESPACE.variants,
-                  key: METAFIELD_KEY.isUniqueVariant,
-                  value: "true"
-                },
-              ],
-            }
+            variantInput
           }
         });
 
@@ -88,30 +97,16 @@ export const upsertVariant = () => {
 
         return productVariantCreate.productVariant;
       } else if (
-        variantName !== prevVariant.name?.value
-        || variantDescription !== prevVariant.description?.value
+        product?.hasOnlyDefaultVariant
+        || variantName !== prevVariant?.name?.value
+        || variantDescription !== prevVariant?.description?.value
         || variantPrice !== prevVariant?.price
         || newImage
       ) {
 
         const variantUpdateResults = await updateVariantMutation({
           variables: {
-            input: {
-              id: prevVariant.id,
-              options: [variantName],
-              imageId: newImage?.id,
-              metafields: [
-                {
-                  type: "multi_line_text_field",
-                  description: "Unique variant description",
-                  namespace: METAFIELD_NAMESPACE.variants,
-                  key: METAFIELD_KEY.variantDescription,
-                  id: prevVariant.description?.id,
-                  value: variantDescription
-                }
-              ],
-              price: variantPrice
-            }
+            input: variantInput
           }
         });
 

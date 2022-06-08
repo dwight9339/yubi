@@ -41,7 +41,7 @@ export const VariantForm = () => {
       variantDescription,
       variantPrice,
       imageData: getImageData(),
-      productId: product?.id || variant.product.id,
+      product: product || variant.product,
       prevVariant: variant
     }
     try {

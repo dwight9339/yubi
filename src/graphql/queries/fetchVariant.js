@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+import { METAFIELD_NAMESPACE, METAFIELD_KEY } from "../../constants";
 
 export const FETCH_VARIANT = gql`
   query FetchVariant($id: ID!) {
@@ -11,8 +12,15 @@ export const FETCH_VARIANT = gql`
         altText
       }
       description: metafield(
-        namespace: "uvapp-variants",
-        key: "variant_description"
+        namespace: "${METAFIELD_NAMESPACE.variants}",
+        key: "${METAFIELD_KEY.variantDescription}"
+      ) {
+        id
+        value
+      }
+      isUv: metafield(
+        namespace: "${METAFIELD_NAMESPACE.variants}",
+        key: "${METAFIELD_KEY.isUniqueVariant}"
       ) {
         id
         value
