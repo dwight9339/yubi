@@ -18,6 +18,13 @@ export const FETCH_PRODUCT = gql`
         name
       }
       templateSuffix
+      variants(first: 1) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
     }
   }
 `;
