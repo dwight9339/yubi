@@ -127,7 +127,7 @@ export const upsertVariant = () => {
       if (Array.isArray(err)) {
         throw err;
       }
-      throw([`${err}`]);
+      throw([`${err.message || err}`]);
     }
   }, []);
 }

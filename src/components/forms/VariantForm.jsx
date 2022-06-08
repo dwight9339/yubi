@@ -41,7 +41,7 @@ export const VariantForm = () => {
       variantDescription,
       variantPrice,
       imageData: getImageData(),
-      productId: product?.id,
+      productId: product?.id || variant.product.id,
       prevVariant: variant
     }
     try {
@@ -79,12 +79,14 @@ export const VariantForm = () => {
               type="text"
               label="Name"
               value={variantName}
+              placeholder="Unique Variant"
               onChange={setVariantName}
             />
             <TextField 
               type="text"
               label="Description"
               value={variantDescription}
+              placeholder="A very special variant"
               onChange={setVariantDescription}
               multiline
               autoComplete="off"
@@ -92,6 +94,7 @@ export const VariantForm = () => {
             <TextField 
               type="currency"
               label="Price"
+              placeholder={variantPrice}
               value={variantPrice}
               onChange={setVariantPrice}
               autoComplete="off"
