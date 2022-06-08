@@ -5,9 +5,9 @@ export const productRequirementsAudit = (product) => {
   const hasUvTag = product.tags.includes(UV_TAG);
   const hasUvTemplate = product.templateSuffix === UV_TEMPLATE_SUFFIX;
 
-  console.log(`onlyTitleAsOption: ${onlyTitleAsOption}`);
-  console.log(`hasUvTag: ${hasUvTag}`);
-  console.log(`hasUvTemplate: ${hasUvTemplate}`);
+  // console.log(`onlyTitleAsOption: ${onlyTitleAsOption}`);
+  // console.log(`hasUvTag: ${hasUvTag}`);
+  // console.log(`hasUvTemplate: ${hasUvTemplate}`);
   
   return onlyTitleAsOption && hasUvTag && hasUvTemplate;
 }
