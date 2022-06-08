@@ -94,7 +94,7 @@ export const ProductPage = () => {
       breadcrumbs={[
         {
           content: "Products",
-          onAction: () => navigate("/", {state: {reload: true}}),
+          onAction: () => navigate("/products", {state: {reload: true}}),
           accessibilityLabel: "Return to products list page"
         }
       ]}
