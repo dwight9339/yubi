@@ -6,16 +6,21 @@ import {
   Spinner,
   Thumbnail,
   Button
- } from "@shopify/polaris";
- import { useState } from "react";
- import { useImageUpload } from "../../utils/hooks/useImageUpload";
- import { updateProduct } from "../../utils/apiHooks/updateProduct";
- import { createProduct } from "../../utils/apiHooks/createProduct";
+} from "@shopify/polaris";
+import { useState, useContext } from "react";
+import { useImageUpload } from "../../utils/hooks/useImageUpload";
+import { upsertProduct } from "../../utils/apiHooks/upsertProduct";
+import { getIdFromGid } from "../../utils/gidHelper";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { FeedbackContext } from "../../app/AppFrame";
 
-export const ProductForm = ({ product, onSuccess }) => {
-  const productUpdateHook = updateProduct();
-  const productCreateHook = createProduct();
+export const ProductForm = () => {
+  const upsertProductHook = upsertProduct();
+  const navigate = useNavigate();
+  const { showBanner, showToast } = useContext(FeedbackContext);
+  const { product } = useOutletContext();
   const { imageSrc, imageLoading, component: imageDropZone } = useImageUpload(product);
+  const processType = product ? "Update" : "Create";
 
   const [productTitle, setProductTitle] = useState(product?.title);
   const [productDescription, setProductDescription] = useState(product?.description);
@@ -33,43 +38,29 @@ export const ProductForm = ({ product, onSuccess }) => {
     };
   }
 
-  const getFormData = () => ({
-    productTitle,
-    productDescription,
-    productType,
-    productTags,
-    imageData: getImageData(),
-    prevProduct: product
-  });
-
-  const doUpdate = async () => {
-    try {
-      const formData = getFormData();
-      const results = await productUpdateHook(formData);
-
-      return results;
-    } catch (err) {
-      
-    }
-    
-  };
-
-  const doCreate = async () => {
-    const formData = getFormData();
-    const results = await productCreateHook(formData);
-
-    return results;
-  }
-
   const handleSubmit = async () => {
-    setProcessing(true);
-    const results = product
-      ? await doUpdate()
-      : await doCreate();
-    setProcessing(false);
+    const productInput = {
+      productTitle,
+      productDescription,
+      productType,
+      productTags,
+      imageData: getImageData(),
+      prevProduct: product
+    };
 
-    // To do: error checking
-    onSuccess(results);
+    try {
+      setProcessing(true);
+      const results = await upsertProductHook(productInput);
+      const productId = getIdFromGid(results.id);
+      navigate(`/product/${productId}`, {state: {reload: Boolean(product)}});
+      showToast(`${`${processType}d`} ${results.title}`);
+    } catch(err) {
+      const typeSafeError = Array.isArray(err) || typeof(err) === "string";
+      showBanner(`${processType} error`, (typeSafeError && err) || err.message || "", "critical");
+      console.error(err);
+    } finally {
+      setProcessing(false);
+    }
   }
 
   return (

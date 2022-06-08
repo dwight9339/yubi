@@ -5,6 +5,7 @@ export const CREATE_PRODUCT = gql`
     productCreate(input: $input) {
       product {
         id
+        title
       }
       userErrors {
         field
