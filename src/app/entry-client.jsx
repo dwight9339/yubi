@@ -13,7 +13,7 @@ import { Redirect } from "@shopify/app-bridge/actions";
 import { AppProvider as PolarisProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
-import ReactDOM from "react-dom";
+import createRoot from "react-dom/client";
 import {
   BrowserRouter,
   Routes,
@@ -42,10 +42,6 @@ function MyProvider({ children }) {
           },
           productVariants: {
             keyArgs: false,
-            // merge: (existing, incoming) => {
-            //   console.log(`Existing: ${JSON.stringify(existing)}`);
-            //   console.log(`Incoming: ${JSON.stringify(incoming)}`);
-            // }
           }
         }
       }
@@ -85,7 +81,10 @@ export function userLoggedInFetch(app) {
   };
 }
 
-ReactDOM.render((
+const container = document.getElementById("app");
+const root = createRoot(container);
+
+root.render((
   <PolarisProvider 
     i18n={translations}
   >
@@ -124,6 +123,6 @@ ReactDOM.render((
       </MyProvider>
     </AppBridgeProvider>
   </PolarisProvider>
-), document.getElementById("app"));
+));
 
 
