@@ -51,8 +51,7 @@ export const ProductsListPage = () => {
           context={{
             products,
             pageInfo,
-            fetchMore,
-            refetch
+            fetchMore
           }}
         />
       );

@@ -23,7 +23,7 @@ export const ProductsList = () => {
   const navigate = useNavigate();
   const uploadImageHook = stageImageUpload();
   const createProductHook = upsertProduct();
-  const { products, pageInfo, fetchMore, refetch } = useOutletContext();
+  const { products, pageInfo, fetchMore } = useOutletContext();
 
   const [productPickerOpen, setProductPickerOpen] = useState(false);
 
@@ -72,6 +72,11 @@ export const ProductsList = () => {
       content: "Create New",
       accessibilityLabel: "Create a new product",
       onAction: () => navigate("/products/new-product")
+    },
+    {
+      content: "Refresh",
+      accessibilityLabel: "Refresh items list",
+      onAction: () => navigate("/products", {state: {reload: true}})
     }
   ];
 
@@ -99,7 +104,7 @@ export const ProductsList = () => {
       content: "Random Product",
       onAction: async () => {
         await createRandomProduct();
-        window.location.reload();
+        navigate("/products", {state: {reload: true}});
       }
     });
   }
