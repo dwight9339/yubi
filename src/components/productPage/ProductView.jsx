@@ -9,10 +9,22 @@ import { VariantsList } from "./VariantsList";
 import { QUERY_PAGE_SIZE } from "../../constants";
 import { useContext } from "react";
 import { ModalContext } from "../../app/AppFrame";
+import { upsertVariant } from "../../utils/apiHooks/upsertVariant";
+import { stageImageUpload } from "../../utils/apiHooks/stageImageUpload";
+import { getIdFromGid } from "../../utils/gidHelper";
+import {
+  getRandomImageFile,
+  getRandomName,
+  generateRandomPrice,
+  getVariantDescription
+} from "../../utils/test/randomDataHelper";
 
 export const ProductView = () => {
-  const { showConfirmDeleteModal} = useContext(ModalContext);
   const navigate = useNavigate();
+  const createVariantHook = upsertVariant();
+  const uploadImageHook = stageImageUpload();
+  const { showConfirmDeleteModal} = useContext(ModalContext);
+ 
 
   const { 
     product, 
@@ -43,6 +55,45 @@ export const ProductView = () => {
     })
   }
 
+  const variantCardActions = [
+    {
+      content: "New variant",
+      onAction: () => navigate("new-variant")
+    }
+  ];
+
+  // Add random variant action in dev
+  const createRandomVariant = async () => {
+    const imageFile = await getRandomImageFile();
+    const name = await getRandomName(); 
+    const description = await getVariantDescription();
+
+    const imageUploadResult = await uploadImageHook(imageFile);
+    const variantData = {
+      variantName: name,
+      variantDescription: description,
+      variantPrice: generateRandomPrice(),
+      imageData: {
+        src: imageUploadResult.src,
+        altText: `Image of ${name}`
+      },
+      product
+    }
+
+    const productCreateResult = await createVariantHook(variantData);
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    variantCardActions.splice(0, 0, {
+      content: "Random variant",
+      onAction: async () => {
+        await createRandomVariant();
+        navigate(`/product/${getIdFromGid(product.id)}`,
+        {state: {reload: true}});
+      }
+    });
+  }
+
   return (
     <Stack
       distribution="fill"
@@ -68,12 +119,7 @@ export const ProductView = () => {
       </Card>
       <Card
         title="Variants"
-        actions={[
-          {
-            content: "New variant",
-            onAction: () => navigate("new-variant")
-          }
-        ]}
+        actions={variantCardActions}
       >
         <Card.Section>
           <Stack>

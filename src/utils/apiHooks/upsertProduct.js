@@ -1,7 +1,6 @@
 import { UPDATE_PRODUCT } from "../../graphql/mutations/updateProduct";
 import { CREATE_PRODUCT } from "../../graphql/mutations/createProduct";
 import { UPDATE_PRODUCT_IMAGE } from "../../graphql/mutations/updateProductImage";
-import { CREATE_PRODUCT_IMAGE } from "../../graphql/mutations/createProductImage";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 import { extractUserErrors } from "../errorHelper";
@@ -10,7 +9,6 @@ export const upsertProduct = () => {
   const [createProductMutation] = useMutation(CREATE_PRODUCT);
   const [updateProductMutation] = useMutation(UPDATE_PRODUCT);
   const [updateProductImageMutation] = useMutation(UPDATE_PRODUCT_IMAGE);
-  const [createProductImageMutation] = useMutation(CREATE_PRODUCT_IMAGE);
 
   return useCallback(async ({
     productTitle,
