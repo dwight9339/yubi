@@ -1,7 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
 import { STAGE_IMAGE } from "../../graphql/mutations/stageImage";
-import { encodeUrlParams } from "../queryStringHelper";
 import axios from "axios";
 
 export const stageImageUpload = () => {
@@ -28,9 +27,14 @@ export const stageImageUpload = () => {
           const { stagedTargets } = results;
           const stagingTarget = stagedTargets[0];
           const { url, parameters } = stagingTarget;
-          const key = parameters.filter((param) => param.name == "key")[0].value;
-          const urlParams = encodeUrlParams(parameters.slice(1));
-          const src = `${url}/${key}${urlParams}`;
+          const urlParams = new URLSearchParams(
+            Object.fromEntries(
+              parameters.map(({ name, value }) => [name, value])
+            )
+          );
+          const key = urlParams.get("key");
+          urlParams.delete("key");
+          const src = `${url}/${key}?${urlParams.toString()}`;
           const formData = new FormData();
           parameters.forEach(({ name: paramName, value }) =>
             formData.append(paramName, value)
