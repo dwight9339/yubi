@@ -13,7 +13,7 @@ import { Redirect } from "@shopify/app-bridge/actions";
 import { AppProvider as PolarisProvider } from "@shopify/polaris";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
-import createRoot from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
   Routes,
