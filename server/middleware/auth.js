@@ -9,7 +9,7 @@ export default function applyAuthMiddleware(app) {
         `/auth/toplevel?${new URLSearchParams(req.query).toString()}`
       );
     }
-
+    // Get offline token first if no offline session
     const offlineSesh = await Shopify.Utils.loadOfflineSession(req.query.shop);
 
     const redirectUrl = await Shopify.Auth.beginAuth(
@@ -50,19 +50,10 @@ export default function applyAuthMiddleware(app) {
         req.query
       );
 
-      const host = req.query.host;
-      app.set(
-        "active-shopify-shops",
-        Object.assign(app.get("active-shopify-shops"), {
-          [session.shop]: session.scope,
-        })
-      );
-
-      const offlineSesh = await Shopify.Utils.loadOfflineSession(session.shop);
-
-      if (offlineSesh) {
+      if (!session.isOnline) {
+        // Register webhooks with offline token
         const response = await Shopify.Webhooks.Registry.registerAll({
-          accessToken: offlineSesh.accessToken,
+          accessToken: session.accessToken,
           shop: session.shop
         });
   
@@ -72,9 +63,18 @@ export default function applyAuthMiddleware(app) {
           }
         });
 
-        res.redirect(`/?shop=${session.shop}&host=${host}`);
-      } else {
+        // Do second round of auth to get online token
         res.redirect(`/auth/?shop=${session.shop}`);
+      } else {
+        const host = req.query.host;
+        app.set(
+          "active-shopify-shops",
+          Object.assign(app.get("active-shopify-shops"), {
+            [session.shop]: session.scope,
+          })
+        );
+
+        res.redirect(`/?shop=${session.shop}&host=${host}`);
       }
     } catch (e) {
       switch (true) {
