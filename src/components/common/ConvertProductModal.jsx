@@ -5,9 +5,10 @@ import {
   TextStyle
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { convertProduct } from "../../utils/apiHooks/convertProduct";
 import { getIdFromGid } from "../../utils/gidHelper";
+import { FeedbackContext } from "../../app/AppFrame";
 
 export const ConvertProductModal = ({ 
   show,
@@ -16,15 +17,30 @@ export const ConvertProductModal = ({
 }) => {
   const navigate = useNavigate();
   const convertProductHook = convertProduct(getIdFromGid(product.id));
+  const { showBanner, showToast } = useContext(FeedbackContext);
 
   const [loading, setLoading] = useState(false);
 
   const handleConvert = async () => {
-    setLoading(true);
-    const results = await convertProductHook(product);
-    setLoading(false);
-
-    refetch();
+    try {
+      setLoading(true);
+      const results = await convertProductHook(product);
+      showToast("Product converted");
+      navigate(
+        `/product/${getIdFromGid(product.id)}`,
+        {state: {reload: true}}
+      );
+    } catch(err) {
+      showBanner(
+        "Product conversion error", 
+        Array.isArray(err) 
+          ? err
+          : `${err}`,
+        "critical"
+      )
+    } finally {
+      setLoading(false);
+    }
   }
 
   const handleClose = () => {

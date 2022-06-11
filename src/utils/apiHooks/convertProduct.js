@@ -1,86 +1,59 @@
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { useCallback } from "react";
-import { UPDATE_PRODUCT } from "../../graphql/mutations/updateProduct";
-import { DELETE_VARIANTS } from "../../graphql/mutations/deleteVariants";
-import { ADD_TAGS } from "../../graphql/mutations/addTags";
-import { DELETE_PRODUCT_IMAGES } from "../../graphql/mutations/deleteProductImages";
+import { 
+  CONVERT_PRODUCT,
+  CONVERT_PRODUCT_DELETE_VARIANTS
+} from "../../graphql/mutations/convertProduct";
 import { FETCH_VARIANTS_BY_PRODUCT } from "../../graphql/queries/fetchVariantsByProduct"
-import { UV_TAG, UV_TEMPLATE_SUFFIX } from "../../constants";
 
 export const convertProduct = (productId) => {
-  const [updateProductMutation] = useMutation(UPDATE_PRODUCT);
-  const [deleteVariantsMutation] = useMutation(DELETE_VARIANTS);
-  const [deleteProductImagesMutation] = useMutation(DELETE_PRODUCT_IMAGES);
-  const [addTagsMutation] = useMutation(ADD_TAGS);
   const [fetchVariantsQuery] = useLazyQuery(FETCH_VARIANTS_BY_PRODUCT(productId));
+  const [convertProductMutation] = useMutation(CONVERT_PRODUCT);
+  const [ConvertProductDeleteVariantsMutation] = useMutation(CONVERT_PRODUCT_DELETE_VARIANTS) 
 
   return useCallback(async (product) => {
-    const hasMultipleOptions = product.options.length > 1;
-    const noUvTag = !product.tags.includes(UV_TAG);
-    const nonUvTemplate = !(product.templateSuffix === UV_TEMPLATE_SUFFIX);
-    let results = {};
+    let variants;
 
-    if (hasMultipleOptions) {
-      const { data: { productVariants }} = await fetchVariantsQuery({
+    if (product.options.length > 1) {
+      const { data, errors} = await fetchVariantsQuery({
         variables: {
           first: 100
         }
       });
 
-      const variantsIds = productVariants.edges.map(({ node }) => node.id);
-      const variantImageIds = productVariants.edges.map(({ node }) => node.image?.id);
+      if (errors) {
+        console.error(`convertProduct hook - fetch variants error - ${errors}`);
+        throw errors.map((error) => error.message);
+      }
 
-      const variantDeletionResults = await deleteVariantsMutation({
+      const { productVariants, userErrors } = data;
+
+      if (userErrors) {
+        console.error(`convertProduct hook - fetch variants error - ${userErrors}`);
+        throw userErrors.map((error) => error.message);
+      }
+      variants = productVariants.edges.map(({ node }) => node);
+    }
+
+    const { data, errors } = variants?.length
+      ? await ConvertProductDeleteVariantsMutation({
         variables: {
           productId: product.id,
-          variantsIds
+          variantsIds: variants.map((variants) => variants.id)
         }
-      });
-
-      const variantImageDeletionResults = await deleteProductImagesMutation({
+      })
+      : await convertProductMutation({
         variables: {
-          productId: product.id,
-          imageIds: variantImageIds
+          productId: product.id
         }
       });
 
-      results = {
-        variantDeletionResults,
-        variantImageDeletionResults,
-        ...results
-      };
-    }
-
-    if (noUvTag) {
-      const tagAddResults = await addTagsMutation({
-        variables: {
-          resourceId: product.id,
-          tags: [UV_TAG]
-        }
-      });
-
-      results = {
-        tagAddResults,
-        ...results
-      };
-    }
-
-    if (nonUvTemplate) {
-      const productUpdateResults = await updateProductMutation({
-        variables: {
-          input: {
-            id: product.id,
-            templateSuffix: UV_TEMPLATE_SUFFIX
-          }
-        }
-      });
-
-      results = {
-        productUpdateResults,
-        ...results
-      };
-    }
-    
-    return results;
+      if (errors) {
+        console.error(`convertProduct hook - convert product error - ${errors}`);
+        throw errors.map((error) => error.message);
+      } else if (data.userErrors?.length) {
+        console.error(`convertProduct hook - convert product error - ${data.userErrors}`);
+        throw data.userErrors.map((error) => error.message);
+      }
   });
 };
