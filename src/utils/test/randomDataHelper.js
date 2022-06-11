@@ -7,7 +7,6 @@ function randomInt(min, max){
 export const getRandomImageFile = async () => {
   const hipsters = await axios.get("https://random-data-api.com/api/hipster/random_hipster_stuff");
   const theme = hipsters.data.words.join();
-  console.log(theme);
   const unsplashRandomPhotoUrl = `https://source.unsplash.com/random/500x500?${theme}`;
 
   try {
