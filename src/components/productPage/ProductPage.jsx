@@ -47,7 +47,7 @@ export const ProductPage = () => {
 
   const pageMarkup = useMemo(() => {
     if (loading) {
-      return <Spinner />
+      return <Spinner role="spinner" />
     }
 
     if (errors.productError || errors.variantsError) {
