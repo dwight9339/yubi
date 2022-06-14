@@ -67,7 +67,7 @@ export const VariantsList = ({ variants }) => {
         items={variants || []}
         renderItem={renderItem}
         emptyState={<h3>No variants</h3>}
-        data-testId="variants-list"
+        role="variants-list"
       />
     </Stack>
   )

@@ -1,5 +1,6 @@
 import { query } from "express";
 import { QUERY_PAGE_SIZE } from "../constants";
+import { DELETE_PRODUCT } from "../graphql/mutations/deleteProduct";
 import { FETCH_PRODUCT } from "../graphql/queries/fetchProduct";
 import { FETCH_VARIANTS_BY_PRODUCT } from "../graphql/queries/fetchVariantsByProduct";
 
@@ -95,6 +96,69 @@ export const PRODUCTS = {
         }
       }
     }
+  },
+  INVALID_NO_VARIANTS: {
+    id: "7737857573115",
+    gid: "gid://shopify/Product/7737857573115",
+    mock: {
+      request: {
+        query: FETCH_PRODUCT,
+        variables: {
+          id: "gid://shopify/Product/7737857573115"
+        }
+      },
+      result: {
+        "data": {
+          "product": {
+            "id": "gid://shopify/Product/7737857573115",
+            "title": "Invalid, No Variants",
+            "description": "Tu es un puerca",
+            "featuredImage": null,
+            "productType": "",
+            "tags": [],
+            "hasOnlyDefaultVariant": true,
+            "options": [
+              {
+                "name": "Title",
+              }
+            ],
+            "templateSuffix": "",
+            "variants": {
+              "edges": [
+                {
+                  "node": {
+                    "id": "gid://shopify/ProductVariant/43157801926907",
+                  },
+                }
+              ],
+            },
+          }
+        }
+      }
+    }
+  },
+  DELETE_SUCCESS: {
+    mock: (productId) => ({
+      request: {
+        query: DELETE_PRODUCT,
+        variables: {
+          id: `gid://shopify/Product/${productId}`
+        }
+      },
+      result: {
+        "data": {
+          "productDelete": {
+            "deletedProductId": `gid://shopify/Product/${productId}`,
+            "userErrors": []
+          }
+        }
+      }
+    })
+  },
+  CONVERT_SUCCESS: {
+    mock: (productId) => {
+      
+    }
   }
 }
 
@@ -108,14 +172,30 @@ export const VARIANTS_BY_PRODUCT = {
         }
       },
       result: {
-        data: {
+        "data": {
           "productVariants": {
-            "edges": [],
+            "edges": [
+              {
+                "node": {
+                  "id": "gid://shopify/ProductVariant/43157801926907",
+                  "title": "Default Title",
+                  "image": {
+                    "id": "gid://shopify/ProductImage/111112",
+                    "url": "https://source.unsplash.com/random/500x500",
+                    "altText": "Image of Regular Product"
+                  },
+                  "price": "0.00",
+                  "product": {
+                    "id": `gid://shopify/Product/${productId}`,
+                  },
+                },
+              }
+            ],
             "pageInfo": {
               "hasNextPage": false,
               "hasPreviousPage": false,
-              "startCursor": null,
-              "endCursor": null
+              "startCursor": "eyJsYXN0X2lkIjo0MzE1NzgwMTkyNjkwNywibGFzdF92YWx1ZSI6IjQzMTU3ODAxOTI2OTA3In0=",
+              "endCursor": "eyJsYXN0X2lkIjo0MzE1NzgwMTkyNjkwNywibGFzdF92YWx1ZSI6IjQzMTU3ODAxOTI2OTA3In0=",
             }
           }
         }
@@ -141,7 +221,7 @@ export const VARIANTS_BY_PRODUCT = {
                   "image": {
                     "id": "gid://shopify/ProductImage/37588571455739",
                     "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_photo_8f60d4cb-0d80-4ebb-8305-76996e742920.jpg?v=1654968670",
-                    "altText": null
+                    "altText": "Image of Test Variant"
                   },
                   "price": "0.00",
                   "product": {
