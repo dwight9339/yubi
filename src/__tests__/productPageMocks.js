@@ -1,8 +1,6 @@
-import { query } from "express";
 import { QUERY_PAGE_SIZE } from "../constants";
 import { DELETE_PRODUCT } from "../graphql/mutations/deleteProduct";
 import { FETCH_PRODUCT } from "../graphql/queries/fetchProduct";
-import { FETCH_PRODUCTS } from "../graphql/queries/fetchProducts";
 import { FETCH_VARIANT } from "../graphql/queries/fetchVariant";
 import { FETCH_VARIANTS_BY_PRODUCT } from "../graphql/queries/fetchVariantsByProduct";
 
@@ -164,31 +162,7 @@ export const PRODUCT = {
   }
 }
 
-export const PRODUCTS = {
-  NO_PRODUCTS: {
-    mock: {
-      request: {
-        query: FETCH_PRODUCTS,
-        variables: {
-          first: QUERY_PAGE_SIZE.products
-        }
-      },
-      result: {
-        "data": {
-          "products": {
-            "edges": [],
-            "pageInfo": {
-              "hasNextPage": false,
-              "hasPreviousPage": false,
-              "startCursor": null,
-              "endCursor": null,
-            },
-          }
-        }
-      }
-    }
-  }
-}
+
 
 export const VARIANTS_BY_PRODUCT = {
   NO_VARIANTS: {

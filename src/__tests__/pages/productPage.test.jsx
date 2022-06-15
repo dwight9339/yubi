@@ -4,10 +4,9 @@ import { MemoryRouter } from "react-router-dom";
 import { Routes } from "../../app/Routes";
 import { 
   PRODUCT,
-  PRODUCTS,
   VARIANT,
   VARIANTS_BY_PRODUCT
-} from "../mockData";
+} from "../productPageMocks";
 import { mockProvidersWrap } from "../test-utils";
 
 describe("Product Page", () => {

@@ -3,11 +3,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Routes } from "../../app/Routes";
 import { 
-  PRODUCT,
-  PRODUCTS,
-  VARIANT,
-  VARIANTS_BY_PRODUCT
-} from "../mockData";
+  PRODUCTS
+} from "../productsListMocks";
 import { mockProvidersWrap } from "../test-utils";
 
 describe("Products List Page", () => {
