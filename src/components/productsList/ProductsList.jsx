@@ -64,12 +64,12 @@ export const ProductsList = () => {
 
   const cardActions = [
     {
-      content: "Search Products",
+      content: "Search products",
       accessibilityLabel: "Search for existing products",
       onAction: () => setProductPickerOpen(!productPickerOpen)
     },
     {
-      content: "Create New",
+      content: "Create new product",
       accessibilityLabel: "Create a new product",
       onAction: () => navigate("/products/new-product")
     },
@@ -119,6 +119,9 @@ export const ProductsList = () => {
         showHidden={false}
         selectMultiple={false}
         onSelection={handlePickerSelection}
+        onCancel={() => {
+          setProductPickerOpen(false);
+        }}
       />
       <Card 
         actions={cardActions}

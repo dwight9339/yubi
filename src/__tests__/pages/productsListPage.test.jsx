@@ -54,8 +54,8 @@ describe("Products List Page", () => {
     await new Promise(resolve => setTimeout(resolve, 0)); 
 
     await expect(screen.findByText("No Unique Variants products yet")).resolves.toBeDefined();
-    await expect(screen.findByText("Search Products")).resolves.toBeDefined();
-    await expect(screen.findByText("Create New")).resolves.toBeDefined();
+    await expect(screen.findByText("Search products")).resolves.toBeDefined();
+    await expect(screen.findByText("Create new product")).resolves.toBeDefined();
     await expect(screen.findByText("Refresh")).resolves.toBeDefined();
   });
 
@@ -74,8 +74,8 @@ describe("Products List Page", () => {
     await new Promise(resolve => setTimeout(resolve, 0)); 
 
     // Check that page actions are visible 
-    await expect(screen.findByText("Search Products")).resolves.toBeDefined();
-    await expect(screen.findByText("Create New")).resolves.toBeDefined();
+    await expect(screen.findByText("Search products")).resolves.toBeDefined();
+    await expect(screen.findByText("Create new product")).resolves.toBeDefined();
     await expect(screen.findByText("Refresh")).resolves.toBeDefined();
 
     screen.logTestingPlaygroundURL();
@@ -91,5 +91,31 @@ describe("Products List Page", () => {
         expect(screen.queryByAltText(variant.image.altText)).toBeDefined();
       });
     });
+  });
+
+  test("New product button opens product form", async () => {
+    const { mock } = PRODUCTS.NO_PRODUCTS;
+
+    render(
+      <MemoryRouter
+        initialEntries={["/"]}
+      >
+        <Routes />
+      </MemoryRouter>
+    , {wrapper: mockProvidersWrap([mock])});
+
+    await new Promise(resolve => setTimeout(resolve, 0)); 
+
+    await expect(screen.findByText("Create product")).rejects.toThrowError();
+
+    const createProductButton = await screen.findByText(/Create new product/i);
+    fireEvent.click(createProductButton);
+
+    // Check that product form opens in create mode
+    await expect(screen.findByText("Create product")).resolves.toBeDefined();
+    await expect(screen.findByLabelText("Title")).resolves.toBeDefined();
+    await expect(screen.findByLabelText("Description")).resolves.toBeDefined();
+    await expect(screen.findByLabelText("Type")).resolves.toBeDefined();
+    await expect(screen.findByLabelText("Image")).resolves.toBeDefined();
   });
 });
