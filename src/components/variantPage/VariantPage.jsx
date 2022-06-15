@@ -30,7 +30,11 @@ export const VariantPage = () => {
   });
 
   const pageContent = useMemo(() => {
-    if (loading) return <Spinner />;
+    if (loading) return (
+      <div data-testid="spinner">
+        <Spinner />
+      </div>
+    );
     if (error) return (
       <TextContainer>
         <TextStyle variation="negative">
@@ -43,7 +47,13 @@ export const VariantPage = () => {
       return <Outlet context={{variant}} />;
     } 
 
-    return null;
+    return (
+      <Stack distribution="center">
+        <TextStyle variation="subdued">
+          Sorry, we couldn't find a variant with ID {variantId}. Are you sure it exists?
+        </TextStyle>
+      </Stack>
+    );
   }, [variant, loading, error]);
 
   return (
