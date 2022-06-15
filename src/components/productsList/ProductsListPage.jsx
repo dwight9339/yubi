@@ -32,7 +32,13 @@ export const ProductsListPage = () => {
 
   const pageContent = useMemo(() => {
     if (!products || loading) {
-      return <Spinner />;
+      return (
+        <div
+          data-test-id="spinner"
+        >
+          <Spinner />
+        </div>
+      );
     }
 
     if (error) {

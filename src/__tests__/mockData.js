@@ -169,7 +169,7 @@ export const PRODUCTS = {
     mock: {
       request: {
         query: FETCH_PRODUCTS,
-        variable: {
+        variables: {
           first: QUERY_PAGE_SIZE.products
         }
       },
