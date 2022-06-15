@@ -10,7 +10,8 @@
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=production node server/index.js",
     "start": "npm run serve",
-    "test": "vitest --reporter=verbose"
+    "test": "vitest --reporter=verbose",
+    "test-coverage": "vitest run --coverage"
   },
   "type": "module",
   "engines": {
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@faker-js/faker": "^7.2.0",
     "@testing-library/react": "^13.3.0",
+    "c8": "^7.11.3",
     "husky": "^7.0.4",
     "jsdom": "^19.0.0",
     "nodemon": "^2.0.15",
