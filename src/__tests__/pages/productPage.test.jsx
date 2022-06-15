@@ -1,14 +1,16 @@
-import { describe, test, expect, vi } from "vitest";
+import { describe, test, expect, vi, beforeAll, afterAll } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Routes } from "../../app/Routes";
 import { 
+  PRODUCT,
   PRODUCTS,
+  VARIANT,
   VARIANTS_BY_PRODUCT
 } from "../mockData";
 import { mockProvidersWrap } from "../test-utils";
 
-describe("Product Page", async () => {
+describe("Product Page", () => {
   beforeAll(() => {
     delete window.location;
     window.location = { 
@@ -18,8 +20,12 @@ describe("Product Page", async () => {
     };
   });
 
+  afterAll(() => {
+    window.location = location;
+  });
+
   test("Shows spinner when loading", async () => {
-    const { mock, id } = PRODUCTS.VALID_NO_VARIANTS; 
+    const { mock, id } = PRODUCT.VALID_NO_VARIANTS; 
     const { result: { data: { product } } } = mock;
 
     render(
@@ -33,7 +39,7 @@ describe("Product Page", async () => {
       </MemoryRouter>
     , {
       wrapper: mockProvidersWrap([
-        PRODUCTS.VALID_NO_VARIANTS.mock,
+        PRODUCT.VALID_NO_VARIANTS.mock,
         VARIANTS_BY_PRODUCT.NO_VARIANTS.mock(id)
       ])
     })
@@ -43,7 +49,7 @@ describe("Product Page", async () => {
 
   describe("Product with no variants", async () => {
     test("Loads correct components and content", async () => {
-      const { mock, id } = PRODUCTS.VALID_NO_VARIANTS; 
+      const { mock, id } = PRODUCT.VALID_NO_VARIANTS; 
       const { result: { data: { product } } } = mock;
 
       render(
@@ -57,7 +63,7 @@ describe("Product Page", async () => {
         </MemoryRouter>
       , {
         wrapper: mockProvidersWrap([
-          PRODUCTS.VALID_NO_VARIANTS.mock,
+          PRODUCT.VALID_NO_VARIANTS.mock,
           VARIANTS_BY_PRODUCT.NO_VARIANTS.mock(id)
         ])
       })
@@ -77,7 +83,7 @@ describe("Product Page", async () => {
 
   describe("Product with some variants", async () => {
     test("Loads correct components and content", async () => {
-      const { mock: productMock, id: productId } = PRODUCTS.VALID_W_VARIANTS; 
+      const { mock: productMock, id: productId } = PRODUCT.VALID_W_VARIANTS; 
       const { mock: variantsMock } = VARIANTS_BY_PRODUCT.PRODUCT_1_VARIANTS;
       const { result: { data: { product } } } = productMock;
       const { result: { data: { productVariants } } } = variantsMock(productId);
@@ -116,7 +122,7 @@ describe("Product Page", async () => {
 
   describe("Page actions", async () => {
     test("Product card edit button opens product edit form", async () => {
-      const { mock, id } = PRODUCTS.VALID_NO_VARIANTS; 
+      const { mock, id } = PRODUCT.VALID_NO_VARIANTS; 
       const { result: { data: { product } } } = mock;
 
       render(
@@ -130,7 +136,7 @@ describe("Product Page", async () => {
         </MemoryRouter>
       , {
         wrapper: mockProvidersWrap([
-          PRODUCTS.VALID_NO_VARIANTS.mock,
+          PRODUCT.VALID_NO_VARIANTS.mock,
           VARIANTS_BY_PRODUCT.NO_VARIANTS.mock(id)
         ])
       })
@@ -148,7 +154,7 @@ describe("Product Page", async () => {
     });
 
     test("New Variant button opens variant form", async () => {
-      const { mock, id } = PRODUCTS.VALID_NO_VARIANTS; 
+      const { mock, id } = PRODUCT.VALID_NO_VARIANTS; 
       const { result: { data: { product } } } = mock;
 
       render(
@@ -162,7 +168,7 @@ describe("Product Page", async () => {
         </MemoryRouter>
       , {
         wrapper: mockProvidersWrap([
-          PRODUCTS.VALID_NO_VARIANTS.mock,
+          PRODUCT.VALID_NO_VARIANTS.mock,
           VARIANTS_BY_PRODUCT.NO_VARIANTS.mock(id)
         ])
       })
@@ -180,7 +186,7 @@ describe("Product Page", async () => {
     });
 
     test("Product delete button opens confirm delete modal", async () => {
-      const { mock, id } = PRODUCTS.VALID_NO_VARIANTS; 
+      const { mock, id } = PRODUCT.VALID_NO_VARIANTS; 
       const { result: { data: { product } } } = mock;
 
       render(
@@ -194,7 +200,7 @@ describe("Product Page", async () => {
         </MemoryRouter>
       , {
         wrapper: mockProvidersWrap([
-          PRODUCTS.VALID_NO_VARIANTS.mock,
+          PRODUCT.VALID_NO_VARIANTS.mock,
           VARIANTS_BY_PRODUCT.NO_VARIANTS.mock(id)
         ])
       })
@@ -211,6 +217,90 @@ describe("Product Page", async () => {
       // Modal text shows after button click
       await expect(screen.findByText("Confirm delete")).resolves.toBeDefined();
       await expect(screen.findByText(`Are you sure you want to delete ${product.title}?`)).resolves.toBeDefined();
+    });
+
+    // test("Delete performs as expected", async () => {
+    //   const { mock, id } = PRODUCT.VALID_NO_VARIANTS; 
+    //   const { result: { data: { product } } } = mock;
+  
+    //   const { container } = render(
+    //     <MemoryRouter
+    //       initialEntries={[
+    //         "/",
+    //         `/product/${id}`
+    //       ]}
+    //     >
+    //       <Routes />
+    //     </MemoryRouter>
+    //   , {
+    //     wrapper: mockProvidersWrap([
+    //       PRODUCT.VALID_NO_VARIANTS.mock,
+    //       VARIANTS_BY_PRODUCT.NO_VARIANTS.mock(id),
+    //       PRODUCTS.NO_PRODUCTS.mock
+    //     ])
+    //   })
+      
+    //   await new Promise(resolve => setTimeout(resolve, 0));
+  
+    //   const deleteProductButton = await screen.findByText("Delete");
+    //   fireEvent.click(deleteProductButton);
+  
+    //   const deleteButton = container.querySelector(
+    //     '#PolarisPortalsContainer > div:nth-child(1) > div:nth-child(1) > div > div > div > div > div:nth-child(3) > div > div > div:nth-child(2) > div > div:nth-child(2)'
+    //   );
+
+    //   // screen.logTestingPlaygroundURL(deleteButton);
+    //   fireEvent.click(deleteButton);
+
+    //   await new Promise(resolve => setTimeout(resolve, 1000));
+      
+    //   // Confirm reroutes to /products
+    //   await expect(screen.findByText("Unique Variants Products")).resolves.toBeDefined();
+    //   await expect(screen.findByText("No Unique Variants products yet")).resolves.toBeDefined();
+    // });
+
+    test("Clicking variant list item correct variant page", async () => {
+      const { mock: productMock, id: productId } = PRODUCT.VALID_W_VARIANTS; 
+      const { mock: variantsMock } = VARIANTS_BY_PRODUCT.PRODUCT_1_VARIANTS;
+      const { mock: variantMock } = VARIANT.PRODUCT_1_FIRST_IN_LIST;
+      const { result: { data: { product } } } = productMock;
+      const { result: { data: { productVariants } } } = variantsMock(productId);
+      const { result: { data: { productVariant } } } = variantMock(productId);
+
+      render(
+      <MemoryRouter
+        initialEntries={[
+          "/",
+          `/product/${productId}`
+        ]}
+      >
+        <Routes />
+      </MemoryRouter>
+      , {
+        wrapper: mockProvidersWrap([
+          productMock,
+          variantsMock(productId),
+          variantMock(productId)
+        ])
+      });
+      
+      await new Promise(resolve => setTimeout(resolve, 0)); 
+  
+      const { title, price, image } = productVariants.edges[0].node;
+      const firstListItem = await screen.findByText(title);
+
+      fireEvent.click(firstListItem);
+
+      await new Promise(resolve => setTimeout(resolve, 0)); 
+
+      const { description } = productVariant;
+
+      // Check that variant page loads
+      await expect(screen.findByText("Price")).resolves.toBeDefined();
+      await expect(screen.findByText(title)).resolves.toBeDefined();
+      await expect(screen.findByText("Description")).resolves.toBeDefined();
+      await expect(screen.findByText(description.value)).resolves.toBeDefined();
+      await expect(screen.findByAltText(image.altText)).resolves.toBeDefined();
     });
   });
 });

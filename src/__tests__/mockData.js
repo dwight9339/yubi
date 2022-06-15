@@ -2,9 +2,11 @@ import { query } from "express";
 import { QUERY_PAGE_SIZE } from "../constants";
 import { DELETE_PRODUCT } from "../graphql/mutations/deleteProduct";
 import { FETCH_PRODUCT } from "../graphql/queries/fetchProduct";
+import { FETCH_PRODUCTS } from "../graphql/queries/fetchProducts";
+import { FETCH_VARIANT } from "../graphql/queries/fetchVariant";
 import { FETCH_VARIANTS_BY_PRODUCT } from "../graphql/queries/fetchVariantsByProduct";
 
-export const PRODUCTS = {
+export const PRODUCT = {
   VALID_W_VARIANTS: {
     id: "111111",
     gid: "gid://shopify/Product/111111",
@@ -157,7 +159,33 @@ export const PRODUCTS = {
   },
   CONVERT_SUCCESS: {
     mock: (productId) => {
-      
+
+    }
+  }
+}
+
+export const PRODUCTS = {
+  NO_PRODUCTS: {
+    mock: {
+      request: {
+        query: FETCH_PRODUCTS,
+        variable: {
+          first: QUERY_PAGE_SIZE.products
+        }
+      },
+      result: {
+        "data": {
+          "products": {
+            "edges": [],
+            "pageInfo": {
+              "hasNextPage": false,
+              "hasPreviousPage": false,
+              "startCursor": null,
+              "endCursor": null,
+            },
+          }
+        }
+      }
     }
   }
 }
@@ -296,6 +324,47 @@ export const VARIANTS_BY_PRODUCT = {
               "startCursor": "eyJsYXN0X2lkIjo0MzEzODkzMzg4MzEzMSwibGFzdF92YWx1ZSI6IjQzMTM4OTMzODgzMTMxIn0=",
               "endCursor": "eyJsYXN0X2lkIjo0MzEzOTAzNzc5MDQ1OSwibGFzdF92YWx1ZSI6IjQzMTM5MDM3NzkwNDU5In0="
             }
+          }
+        }
+      }
+    })
+  }
+}
+
+export const VARIANT = {
+  PRODUCT_1_FIRST_IN_LIST: {
+    gid: "gid://shopify/ProductVariant/43138933883131",
+    title: "Test Variant",
+    id: "43138933883131",
+    mock: (productId) => ({
+      request: {
+        query: FETCH_VARIANT,
+        variables: {
+          id: "gid://shopify/ProductVariant/43138933883131"
+        }
+      },
+      result: {
+        "data": {
+          "productVariant": {
+            "id": "gid://shopify/ProductVariant/43138933883131",
+            "title": "Test Variant",
+            "image": {
+              "id": "gid://shopify/ProductImage/37588571455739",
+              "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_photo_8f60d4cb-0d80-4ebb-8305-76996e742920.jpg?v=1654968670",
+              "altText": "Image of Test Variant"
+            },
+            "description": {
+              "id": "gid://shopify/Metafield/22771304530171",
+              "value": "Helvetica hashtag muggle magic mixtape selvage whatever pabst.",
+            },
+            "isUv": {
+              "id": "gid://shopify/Metafield/22771304562939",
+              "value": "true",
+            },
+            "price": "28.14",
+            "product": {
+              "id": `gid://shopify/Product/${productId}`,
+            },
           }
         }
       }
