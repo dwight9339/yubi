@@ -45,7 +45,7 @@ export const PRODUCTS = {
                   "id": "gid://shopify/Product/7738299875579",
                   "title": "Neutra Star",
                   "featuredImage": {
-                    "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_026a23b8-65eb-45aa-a72f-b1e6b625208b.jpg?v=1655304449",
+                    "url": "https://source.unsplash.com/random/500x500",
                     "altText": "Image of Neutra Star",
                   },
                   "totalVariants": 4,
@@ -57,7 +57,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160658510075",
                           "title": "Kombucha Postmodern Utopia",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_b670ccaf-5acc-431f-a9f8-9213bd1fecad.jpg?v=1655304930",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of Kombucha Postmodern Utopia",
                           },
                         },
@@ -67,7 +67,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160671584507",
                           "title": "Blacktop Town",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_2dc6ffbe-3cc0-4e77-ada8-f43cea757a23.jpg?v=1655304936",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of Blacktop Town",
                           },
                         },
@@ -77,7 +77,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160671846651",
                           "title": "Postmodern Pickled Look",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_772f0fed-5e75-4216-a57b-9f6d545896aa.jpg?v=1655304943",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of Postmodern Pickled Look",
                           },
                         },
@@ -91,7 +91,7 @@ export const PRODUCTS = {
                   "id": "gid://shopify/Product/7738300006651",
                   "title": "The Been",
                   "featuredImage": {
-                    "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_34215398-b0f1-40c3-b0b2-9aef1cfe69a6.jpg?v=1655304473",
+                    "url": "https://source.unsplash.com/random/500x500",
                     "altText": "Image of The Been",
                   },
                   "totalVariants": 2,
@@ -103,7 +103,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160659067131",
                           "title": "Veranda Kogi Coffee",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_d770835c-8241-4400-8a3c-0ce304d61fab.jpg?v=1655304972",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of Veranda Kogi Coffee",
                           },
                         },
@@ -113,7 +113,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160673845499",
                           "title": "Taxidermy Seattle Select",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_ddad8dec-fc62-4225-93cc-fa943d7e8177.jpg?v=1655304979",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of Taxidermy Seattle Select",
                           },
                         },
@@ -127,7 +127,7 @@ export const PRODUCTS = {
                   "id": "gid://shopify/Product/7738299613435",
                   "title": "Good-morning Look",
                   "featuredImage": {
-                    "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random.jpg?v=1655304415",
+                    "url": "https://source.unsplash.com/random/500x500",
                     "altText": "Image of Good-morning Look",
                   },
                   "totalVariants": 3,
@@ -139,7 +139,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160656052475",
                           "title": "American Listicle",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_c3628160-d8d5-4864-a9cc-faa6629d6f08.jpg?v=1655305006",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of American Listicle ",
                           },
                         },
@@ -149,7 +149,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160675254523",
                           "title": "Pitchfork Reg's Symphony",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_1c72efac-b902-4d70-9591-d3f05fb24af2.jpg?v=1655305012",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of Pitchfork Reg's Symphony",
                           },
                         },
@@ -159,7 +159,7 @@ export const PRODUCTS = {
                           "id": "gid://shopify/ProductVariant/43160675975419",
                           "title": "Artisan Captain's Cake",
                           "image": {
-                            "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_b10e1792-8b18-45c3-88a0-645587dcfbf5.jpg?v=1655305021",
+                            "url": "https://source.unsplash.com/random/500x500",
                             "altText": "Image of Artisan Captain's Cake",
                           },
                         },
@@ -199,7 +199,7 @@ export const PRODUCT = {
             "description": "Pork pancetta shank, beef shankle short ribs ham short loin picanha cow chuck tongue. Turducken brisket biltong rump porchetta. Spare ribs short ribs frankfurter, cow buffalo andouille biltong bacon corned beef jowl filet mignon ham pork. Picanha boudin kevin chuck corned beef fatback.",
             "featuredImage": {
               "id": "gid://shopify/ProductImage/37607951859963",
-              "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_026a23b8-65eb-45aa-a72f-b1e6b625208b.jpg?v=1655304449",
+              "url": "https://source.unsplash.com/random/500x500",
               "altText": "Image of Neutra Star",
             },
             "productType": "",

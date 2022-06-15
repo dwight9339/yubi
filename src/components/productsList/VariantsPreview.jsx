@@ -45,14 +45,16 @@ export const VariantsPreview = ({ productId, items, listOpen, toggleList }) => {
       <Stack
         distribution="trailing"
       >
-        <Button
-            icon={listOpen 
-              ? CaretUpMinor
-              : CaretDownMinor
-            }
-            size="slim"
-            onClick={toggleList}
-        />
+        <div data-testid={`variants-preview-toggle-${productId}`}>
+          <Button
+              icon={listOpen 
+                ? CaretUpMinor
+                : CaretDownMinor
+              }
+              size="slim"
+              onClick={toggleList}
+          />
+        </div>
       </Stack>
       <Collapsible
         id={`variants-preview-for-product-${productId}`}
