@@ -1,8 +1,8 @@
-import { QUERY_PAGE_SIZE } from "../constants";
-import { DELETE_PRODUCT } from "../graphql/mutations/deleteProduct";
-import { FETCH_PRODUCT } from "../graphql/queries/fetchProduct";
-import { FETCH_VARIANT } from "../graphql/queries/fetchVariant";
-import { FETCH_VARIANTS_BY_PRODUCT } from "../graphql/queries/fetchVariantsByProduct";
+import { QUERY_PAGE_SIZE } from "../../constants";
+import { DELETE_PRODUCT } from "../../graphql/mutations/deleteProduct";
+import { FETCH_PRODUCT } from "../../graphql/queries/fetchProduct";
+import { FETCH_VARIANT } from "../../graphql/queries/fetchVariant";
+import { FETCH_VARIANTS_BY_PRODUCT } from "../../graphql/queries/fetchVariantsByProduct";
 
 export const PRODUCT = {
   VALID_W_VARIANTS: {

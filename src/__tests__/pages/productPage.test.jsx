@@ -6,7 +6,7 @@ import {
   PRODUCT,
   VARIANT,
   VARIANTS_BY_PRODUCT
-} from "../productPageMocks";
+} from "../mocks/productPageMocks";
 import { mockProvidersWrap } from "../test-utils";
 
 describe("Product Page", () => {

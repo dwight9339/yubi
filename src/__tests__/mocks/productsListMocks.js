@@ -1,8 +1,8 @@
-import { QUERY_PAGE_SIZE } from "../constants"
-import { FETCH_PRODUCTS } from "../graphql/queries/fetchProducts"
-import { FETCH_PRODUCT } from "../graphql/queries/fetchProduct"
-import { FETCH_VARIANT } from "../graphql/queries/fetchVariant"
-import { FETCH_VARIANTS_BY_PRODUCT } from "../graphql/queries/fetchVariantsByProduct"
+import { QUERY_PAGE_SIZE } from "../../constants"
+import { FETCH_PRODUCTS } from "../../graphql/queries/fetchProducts"
+import { FETCH_PRODUCT } from "../../graphql/queries/fetchProduct"
+import { FETCH_VARIANT } from "../../graphql/queries/fetchVariant"
+import { FETCH_VARIANTS_BY_PRODUCT } from "../../graphql/queries/fetchVariantsByProduct"
 
 export const PRODUCTS = {
   NO_PRODUCTS: {
