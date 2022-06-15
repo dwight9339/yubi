@@ -315,3 +315,41 @@ export const VARIANTS_BY_PRODUCT = {
     }
   }
 }
+
+export const VARIANT = {
+  PRODUCT_1_VARIANT_1: {
+    mock: {
+      request: {
+        query: FETCH_VARIANT,
+        variables: {
+          id: "gid://shopify/ProductVariant/43160658510075"
+        }
+      },
+      result: {
+        "data": {
+          "productVariant": {
+            "id": "gid://shopify/ProductVariant/43160658510075",
+            "title": "Kombucha Postmodern Utopia",
+            "image": {
+              "id": "gid://shopify/ProductImage/37607988855035",
+              "url": "https://cdn.shopify.com/s/files/1/0626/9586/6619/products/random_b670ccaf-5acc-431f-a9f8-9213bd1fecad.jpg?v=1655304930",
+              "altText": "Image of Kombucha Postmodern Utopia",
+            },
+            "description": {
+              "id": "gid://shopify/Metafield/22771480625403",
+              "value": "Knausgaard poutine microdosing viral lomo.",
+            },
+            "isUv": {
+              "id": "gid://shopify/Metafield/22771480658171",
+              "value": "true",
+            },
+            "price": "94.16",
+            "product": {
+              "id": "gid://shopify/Product/7738299875579",
+            },
+          }
+        }
+      }
+    }
+  }
+}

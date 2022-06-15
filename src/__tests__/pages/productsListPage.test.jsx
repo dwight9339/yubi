@@ -5,10 +5,12 @@ import { Routes } from "../../app/Routes";
 import { 
   PRODUCT,
   PRODUCTS,
+  VARIANT,
   VARIANTS_BY_PRODUCT
 } from "../mocks/productsListMocks";
 import { mockProvidersWrap } from "../test-utils";
 import { QUERY_PAGE_SIZE } from "../../constants";
+import { getIdFromGid } from "../../utils/gidHelper";
 
 describe("Products List Page", () => {
   beforeAll(() => {
@@ -89,40 +91,5 @@ describe("Products List Page", () => {
         expect(screen.queryByAltText(variant.image.altText)).toBeDefined();
       });
     });
-  });
-
-  test ("Clicking product list item loads product page", async () => {
-    const { mock: productsMock } = PRODUCTS.SOME_PRODUCTS;
-    const { mock: productMock } = PRODUCT.PRODUCT_1;
-    const { mock: variantsMock } = VARIANTS_BY_PRODUCT.PRODUCT_1_VARIANTS;
-    const { result: { data: { products } } } = productsMock;
-    const { result: { data: { product } } } = productMock;
-
-    render(
-      <MemoryRouter
-        initialEntries={["/"]}
-      >
-        <Routes />
-      </MemoryRouter>
-    , {wrapper: mockProvidersWrap([
-      productsMock,
-      productMock,
-      variantsMock
-    ])});
-
-    await new Promise(resolve => setTimeout(resolve, 10)); 
-
-    const productListItem = screen.queryByText(product.title);
-    expect(productListItem).toBeDefined();
-
-    fireEvent.click(screen.getByText(product.title));
-
-    await new Promise(resolve => setTimeout(resolve, 0)); 
-
-    // Check product page loaded
-    expect(screen.queryByText("Product Info")).toBeDefined();
-
-    // Check correct product loaded
-    expect(screen.queryByText(product.title)).toBeDefined();
   });
 });
