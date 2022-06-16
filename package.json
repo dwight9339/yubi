@@ -10,8 +10,8 @@
     "preserve": "npm run build",
     "serve": "cross-env NODE_ENV=production node server/index.js",
     "start": "npm run serve",
-    "test": "vitest",
-    "test-coverage": "vitest run --coverage"
+    "test": "dotenv -e .env.test vitest",
+    "test-coverage": "dotenv -e .env.test vitest run --coverage"
   },
   "type": "module",
   "engines": {
@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
+    "dotenv-cli": "^5.1.0",
     "express": "^4.17.3",
     "graphql": "^16.3.0",
     "react": "^18.1.0",
