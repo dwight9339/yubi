@@ -8,7 +8,7 @@ const {
   USER_DB_COLLECTION_NAME: collection,
   USER_DB_DATA_SOURCE: dataSource
 } = process.env;
-const defaultUserSettings = {
+export const defaultUserSettings = {
   deleteUvOnPurchase: false,
   darkModeOn: false
 }
@@ -29,11 +29,9 @@ export const getUser = async (shopName) => {
     console.error(`DB access failure: ${err.message}`);
     return null;
   });
-  console.log(userRec.data.document);
-  return userRec.data.document;
-}
 
-getUser("test-shop.myshopify.com");
+  return userRec.data?.document || null;
+}
 
 
 export const putNewUser = async (shopName) => {
@@ -69,7 +67,9 @@ export const deactivateUser = async (shopName) => {
     collection,
     filter: {shopName},
     update: {
-      active: false
+      $set: {
+        active: false
+      }
     }
   }, {
     headers: {
@@ -92,7 +92,9 @@ export const reactivateUser = async (shopName) => {
     collection,
     filter: {shopName},
     update: {
-      active: true
+      $set: {
+        active: true
+      }
     }
   }, {
     headers: {
@@ -125,5 +127,31 @@ export const deleteUserData = async (shopName) => {
     return null;
   });
 
-  return reactivateResult.data;
+  return deleteResult.data;
+}
+
+export const updateUserSettings = async (shopName, settings={}) => {
+  const updateResult = await axios.post(`${endpoint}/action/updateOne`, {
+    dataSource,
+    database,
+    collection,
+    filter: {shopName},
+    update: {
+      $set: Object.fromEntries(
+        Object.entries(settings).map(([key, value]) => {
+          return [`settings.${key}`, value];
+      }))
+    }
+  }, {
+    headers: {
+      "Access-Control-Request-Headers": "*",
+      "Content-Type": "application/json",
+      "api-key": apiKey
+    }
+  }).catch((err) => {
+    console.error(`DB access failure: ${err.message}`);
+    return null;
+  });
+
+  return updateResult.data;
 }
