@@ -1,4 +1,10 @@
 import { Shopify } from "@shopify/shopify-api";
+import { 
+  getUser,
+  putNewUser,
+  reactivateUser,
+  defaultUserSettings
+} from "../helpers/userDBHelper.js";
 
 import topLevelAuthRedirect from "../helpers/top-level-auth-redirect.js";
 
@@ -67,14 +73,29 @@ export default function applyAuthMiddleware(app) {
         res.redirect(`/auth/?shop=${session.shop}`);
       } else {
         const host = req.query.host;
+        const user = await getUser(session.shop);
+        const userSettings = user?.settings || defaultUserSettings;
+        const redirectParams = new URLSearchParams({
+          shop: session.shop,
+          host
+        });
+
+        if (!user) {
+          const putResult = await putNewUser(session.shop);
+          redirectParams.append("newUser", true);
+        } else if (!user.active) {
+          const reactivateResult = await reactivateUser(session.shop);
+          redirectParams.append("returningUser", true);
+        }
+
         app.set(
           "active-shopify-shops",
           Object.assign(app.get("active-shopify-shops"), {
-            [session.shop]: session.scope,
+            [session.shop]: userSettings,
           })
         );
 
-        res.redirect(`/?shop=${session.shop}&host=${host}`);
+        res.redirect(`/?${redirectParams.toString()}`);
       }
     } catch (e) {
       switch (true) {

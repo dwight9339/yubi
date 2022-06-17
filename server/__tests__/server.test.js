@@ -1,3 +1,7 @@
+/**
+ * @vitest-environment node
+ */
+
 import request from "supertest";
 import { createHmac } from "crypto";
 import { Shopify } from "@shopify/shopify-api";
@@ -104,7 +108,7 @@ describe("shopify-app-node server", async () => {
   });
 
   describe("handles the callback correctly", () => {
-    test("Calls auth route again after receiving online token", async () => {
+    test("Calls auth route again after receiving offline token", async () => {
       const validateAuthCallback = vi
         .spyOn(Shopify.Auth, "validateAuthCallback")
         .mockImplementationOnce(() => ({
@@ -138,39 +142,6 @@ describe("shopify-app-node server", async () => {
         "/auth/?shop=test-shop"
       );
     });
-
-    test("Redirects to home page after obtaining online token", async () => {
-      const validateAuthCallback = vi
-        .spyOn(Shopify.Auth, "validateAuthCallback")
-        .mockImplementationOnce(() => ({
-          shop: "test-shop",
-          scope: "write_products",
-          isOnline: true
-        }));
-
-      const response = await request(app).get(
-        "/auth/callback?host=test-shop-host&shop=test-shop"
-      );
-
-      expect(validateAuthCallback).toHaveBeenLastCalledWith(
-        expect.anything(),
-        expect.anything(),
-        {
-          host: "test-shop-host",
-          shop: "test-shop",
-        }
-      );
-
-      expect(app.get("active-shopify-shops")).toEqual({
-        "test-shop": "write_products",
-      });
-
-      expect(response.status).toEqual(302);
-      expect(response.headers.location).toEqual(
-        "/?shop=test-shop&host=test-shop-host"
-      );
-    });
-    
 
     test("returns 400 if oauth is invalid", async () => {
       vi.spyOn(Shopify.Auth, "validateAuthCallback").mockImplementationOnce(
