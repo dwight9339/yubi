@@ -4,9 +4,11 @@ import {
   TextContainer, 
   TextStyle
 } from "@shopify/polaris";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { fetchProducts } from "../../utils/apiHooks/fetchProducts";
 import { Outlet, useLocation } from "react-router-dom";
+import { NewUserModal } from "../common/NewUserModal";
+import { ReturningUserModal } from "../common/ReturningUserModal";
 
 export const ProductsListPage = () => {
   const location = useLocation();

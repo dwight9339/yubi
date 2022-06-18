@@ -1,3 +1,7 @@
+/**
+ * @vitest-environment node
+ */
+
 import { Shopify } from "@shopify/shopify-api";
 import express from "express";
 import request from "supertest";

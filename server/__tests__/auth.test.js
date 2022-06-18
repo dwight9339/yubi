@@ -61,7 +61,7 @@ describe("Callback redirects to correct home page", async () => {
       }
     );
 
-    expect(app.get("active-shopify-shops")).toEqual({
+    expect(app.get("active-shopify-shops")).toMatchObject({
       "test-shop": defaultUserSettings,
     });
 
@@ -75,7 +75,7 @@ describe("Callback redirects to correct home page", async () => {
         newUser: "true"
       }
     );
-  });
+  }); 
 
   test("Redirects to welcome back home page if user rec exists and is inactive", async () => {
     const putResult = await putNewUser(testShopName);
@@ -113,7 +113,7 @@ describe("Callback redirects to correct home page", async () => {
       }
     );
 
-    expect(app.get("active-shopify-shops")).toEqual({
+    expect(app.get("active-shopify-shops")).toMatchObject({
       "test-shop": defaultUserSettings,
     });
 

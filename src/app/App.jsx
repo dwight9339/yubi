@@ -1,13 +1,31 @@
-import { Outlet } from "react-router-dom";
-import { Page, Stack} from "@shopify/polaris"
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { Stack } from "@shopify/polaris"
 import { useRoutePropagation } from "@shopify/app-bridge-react";
+import { useEffect, useState } from "react";
 import { AppFrame } from "./AppFrame";
+import { NewUserModal } from "../components/common/NewUserModal";
+import { ReturningUserModal } from "../components/common/ReturningUserModal";
 import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
 export const App = () => {
   const { width: windowWidth } = useWindowDimensions();
   const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+
+  const [showNewUserModal, setShowNewUserModal] = useState(false);
+  const [showReturningUserModal, setShowReturningUserModal] = useState(false);
+
+  useEffect(() => {
+    const newUser = urlParams.get("newUser");
+    const returningUser = urlParams.get("returningUser");
+
+    if (newUser) {
+      setShowNewUserModal(true);
+    }
+    if (returningUser) {
+      setShowReturningUserModal(true);
+    }
+  }, []);
 
   useRoutePropagation(location);
   
@@ -21,6 +39,14 @@ export const App = () => {
         }}
       >
         <AppFrame>
+          <NewUserModal 
+            show={showNewUserModal} 
+            onClose={() => setShowNewUserModal(false)}
+          />
+          <ReturningUserModal 
+            show={showReturningUserModal}
+            onClose={() => setShowReturningUserModal(false)}
+          />
           <Outlet />
         </AppFrame>
       </div>

@@ -155,3 +155,23 @@ export const updateUserSettings = async (shopName, settings={}) => {
 
   return updateResult.data;
 }
+
+export const getActiveUsers = async () => {
+  const users = await axios.post(`${endpoint}/action/find`, {
+    dataSource,
+    database,
+    collection,
+    filter: {active: true},
+  }, {
+    headers: {
+      "Access-Control-Request-Headers": "*",
+      "Content-Type": "application/json",
+      "api-key": apiKey
+    }
+  }).catch((err) => {
+    console.error(`DB access failure: ${err.message}`);
+    return null;
+  });
+  
+  return(users.data?.documents);
+}

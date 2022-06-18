@@ -12,7 +12,8 @@ import {
   reactivateUser,
   deleteUserData,
   updateUserSettings,
-  defaultUserSettings
+  defaultUserSettings,
+  getActiveUsers
 } from "../userDBHelper";
 
 describe("userDBHelper Functions", () => {
@@ -24,6 +25,21 @@ describe("userDBHelper Functions", () => {
     USER_DB_DATA_SOURCE: dataSource
   } = process.env;
   const testShopName = "test-shop.myshopify.com";
+  const randomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+  const randomChoice = (arr, n) => {
+    if (arr.length < n) throw "Must choose n <= array length";
+    if (arr.length === n) return arr;
+
+    let choices = [];
+    let arrLength = arr.length;
+
+    for (let i = 0; i < n; i++) {
+      choices.push(arr.splice(randomInt(0, arrLength), 1)[0]);
+      arrLength--;
+    }
+
+    return choices;
+  }
 
   beforeEach(async () => {
     await axios.post(`${endpoint}/action/updateOne`, {
@@ -187,6 +203,49 @@ describe("userDBHelper Functions", () => {
         matchedCount: 0,
         modifiedCount: 0
       });;
+    });
+  });
+
+  describe("getActiveUsers", () => {
+    test("Fetches all active users", async () => {
+      // Create random user entries
+      const numDummies = randomInt(0, 10);
+      let dummies = [];
+
+      for (let i = 1; i <= numDummies; i++) {
+        dummies.push({
+          shopName: `dummy${i}.myshopify.test`,
+          active: true,
+          settings: defaultUserSettings
+        });
+      }
+
+      const numDeactive = randomInt(0, numDummies);
+      for (let i = 0; i < numDeactive; i++) {
+        dummies[i].active = false;
+      }
+
+      const insertResult = await axios.post(`${endpoint}/action/insertMany`, {
+        dataSource,
+        database,
+        collection,
+        documents: dummies
+      }, {
+        headers: {
+          "Access-Control-Request-Headers": "*",
+          "Content-Type": "application/json",
+          "api-key": apiKey
+        }
+      }).catch((err) => {
+        throw err;
+      });
+      expect(insertResult.data).toMatchObject({
+        insertedIds: expect.anything()
+      });
+
+      const activeUsers = await getActiveUsers();
+
+      expect(activeUsers.length).toEqual(numDummies - numDeactive + 1);
     });
   });
 });

@@ -6,6 +6,7 @@ import {
 } from "@shopify/polaris";
 import { useState, createContext } from "react";
 import { ConfirmDeleteModal } from "../components/common/ConfirmDeleteModal";
+import { NewUserModal } from "../components/common/NewUserModal";
 
 export const FeedbackContext = createContext();
 export const ModalContext = createContext();
