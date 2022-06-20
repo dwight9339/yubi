@@ -7,6 +7,12 @@ export const fetchVariantsQuery = (variantIds) => {
         variant${i}: productVariant(id: "gid://shopify/ProductVariant/${variantId}") {
           id
           title
+          image {
+            id
+          }
+          product {
+            id
+          }
           deleteAfterPurchase: privateMetafield(
             namespace: "uvapp-variants",
             key: "delete_after_purchase"
@@ -33,4 +39,25 @@ export const deleteVariantQuery = (variantId) => {
       }
     }
   `;
+}
+
+export const deleteVariantWithImage = (variantId, productId, imageId) => {
+  return `
+    mutation {
+      productVariantDelete(id: "${variantId}") {
+        deletedProductVariantId
+        userErrors {
+          field
+          message
+        }
+      }
+      productDeleteImages(id: "${productId}", imageIds: ["${imageId}"]) {
+        deletedImageIds
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `; 
 }
