@@ -7,7 +7,7 @@ export const fetchVariantsQuery = (variantIds) => {
         variant${i}: productVariant(id: "gid://shopify/ProductVariant/${variantId}") {
           id
           title
-          deleteAfterPurchase: metafield(
+          deleteAfterPurchase: privateMetafield(
             namespace: "uvapp-variants",
             key: "delete_after_purchase"
           ) {
