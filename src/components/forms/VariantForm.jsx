@@ -24,12 +24,8 @@ export const VariantForm = () => {
   const [variantName, setVariantName] = useState(variant?.title);
   const [variantDescription, setVariantDescription] = useState(variant?.description?.value || "");
   const [variantPrice, setVariantPrice] = useState(variant?.price || 0);
-  const [deleteAfterPurchase, setDeleteAfterPurchase] = useState(false);
+  const [deleteAfterPurchase, setDeleteAfterPurchase] = useState(Boolean(variant?.deleteAfterPurchase));
   const [processing, setProcessing] = useState(false);
-
-  useEffect(() => {
-    console.log(`deleteAfterPurchase: ${deleteAfterPurchase}`);
-  }, [deleteAfterPurchase]);
 
   const getImageData = () => {
     if (!imageSrc) return null;

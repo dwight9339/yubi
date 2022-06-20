@@ -9,10 +9,13 @@ export const fetchVariant = (id) => {
     }
   });
 
-  const { variant } = useMemo(() => {
+  const variant = useMemo(() => {
     if (!data) return {variant: {}};
 
-    return { variant: data.productVariant };
+    const { productVariant } = data;
+    const variant = { ...productVariant }
+    variant.deleteAfterPurchase = variant.deleteAfterPurchase?.value === "true";
+    return variant;
   }, [data])
 
   return useMemo(() => ({ variant, loading, error, refetch }), [variant, loading, error, refetch]);

@@ -17,6 +17,7 @@ export const upsertVariant = () => {
     variantName,
     variantDescription,
     variantPrice,
+    deleteAfterPurchase,
     imageData,
     prevVariant,
     product
@@ -69,14 +70,16 @@ export const upsertVariant = () => {
             namespace: METAFIELD_NAMESPACE.variants,
             key: METAFIELD_KEY.variantDescription,
             value: variantDescription
-          },
+          }
+        ],
+        privateMetafields: [
           {
-            id: prevVariant?.isUv?.id,
-            type: "boolean",
-            description: "Marks variant as unique variant",
             namespace: METAFIELD_NAMESPACE.variants,
-            key: METAFIELD_KEY.isUniqueVariant,
-            value: "true"
+            key: METAFIELD_KEY.deleteAfterPurchase,
+            valueInput: {
+              value: `${deleteAfterPurchase}`,
+              valueType: "STRING"
+            }
           }
         ]
       }

@@ -18,11 +18,10 @@ export const FETCH_VARIANT = gql`
         id
         value
       }
-      isUv: metafield(
+      deleteAfterPurchase: privateMetafield(
         namespace: "${METAFIELD_NAMESPACE.variants}",
-        key: "${METAFIELD_KEY.isUniqueVariant}"
+        key: "${METAFIELD_KEY.deleteAfterPurchase}"
       ) {
-        id
         value
       }
       price
