@@ -3,9 +3,10 @@ import {
   Form,
   FormLayout,
   TextField,
-  Button
+  Button,
+  Checkbox
 } from "@shopify/polaris";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useImageUpload } from "../../utils/hooks/useImageUpload";
 import { upsertVariant } from "../../utils/apiHooks/upsertVariant";
 import { getIdFromGid } from "../../utils/gidHelper";
@@ -23,7 +24,12 @@ export const VariantForm = () => {
   const [variantName, setVariantName] = useState(variant?.title);
   const [variantDescription, setVariantDescription] = useState(variant?.description?.value || "");
   const [variantPrice, setVariantPrice] = useState(variant?.price || 0);
+  const [deleteAfterPurchase, setDeleteAfterPurchase] = useState(false);
   const [processing, setProcessing] = useState(false);
+
+  useEffect(() => {
+    console.log(`deleteAfterPurchase: ${deleteAfterPurchase}`);
+  }, [deleteAfterPurchase]);
 
   const getImageData = () => {
     if (!imageSrc) return null;
@@ -40,6 +46,7 @@ export const VariantForm = () => {
       variantName,
       variantDescription,
       variantPrice,
+      deleteAfterPurchase,
       imageData: getImageData(),
       product: product || variant.product,
       prevVariant: variant
@@ -102,6 +109,13 @@ export const VariantForm = () => {
           </FormLayout.Group>
           <FormLayout.Group>
             {imageDropZone}
+          </FormLayout.Group>
+          <FormLayout.Group>
+            <Checkbox
+              label="Delete after purchase"
+              checked={deleteAfterPurchase}
+              onChange={setDeleteAfterPurchase}
+            />
           </FormLayout.Group>
           <Button
             primary
