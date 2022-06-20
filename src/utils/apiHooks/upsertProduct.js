@@ -26,8 +26,7 @@ export const upsertProduct = () => {
         descriptionHtml: productDescription,
         productType,
         tags,
-        images: imageData && !imageData.id ? [imageData] : null,
-        templateSuffix: "unique-variants"
+        images: imageData && !imageData.id ? [imageData] : null
       };
       let results;
       

@@ -69,24 +69,15 @@ export const ConvertProductModal = ({
       <Modal.Section>
         <TextContainer>
           <TextStyle>
-            For the Unique Variants Manager app to play nice with a product, 
-            the product needs to
-            <ol>
-              <li>
-                Have only one product option. It can be called whatever you like. This is the field
-                that holds each unique variant's name.
-              </li>
-              <li>Have the tag "unique variants".</li>
-              <li>Use a designated product page template named "unique-variants".</li>
-            </ol>
-            Would you like to update this product to make it compatible?
+            It looks like this product is incompatible with Unique Variants Manager.
+            To be compatible, it must have only one option for variant name. Would 
+            you like to convert this product to make it compatible?
           </TextStyle>
         </TextContainer>
         <br />
         <TextContainer>
           <TextStyle variation="warning">
-            Warning: If this product has variants with settings for multiple options (e.g. settings for size <em>and</em> color), then this operation will
-            delete all existing variants for the product.
+            Warning: This will delete all variants that currently exist on the product.
           </TextStyle>
         </TextContainer>
       </Modal.Section>

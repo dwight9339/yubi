@@ -6,8 +6,8 @@ import {
   UV_TEMPLATE_SUFFIX
 } from "../../constants";
 
-export const CONVERT_PRODUCT_DELETE_VARIANTS = gql`
-  mutation ConvertProductDeleteVariants(
+export const CONVERT_PRODUCT = gql`
+  mutation ConvertProduct(
     $productId: ID!,
     $variantsIds: [ID!]!
   ) {
@@ -17,26 +17,6 @@ export const CONVERT_PRODUCT_DELETE_VARIANTS = gql`
         message
       }
     }
-    tagsAdd(id: $productId, tags: ["${UV_TAG}"]) {
-      userErrors {
-        field
-        message
-      }
-    }
-    productUpdate(input: {
-      id: $productId,
-      templateSuffix: "${UV_TEMPLATE_SUFFIX}",
-    }) {
-      userErrors {
-        field
-        message
-      }
-    }
-  }
-`;
-
-export const CONVERT_PRODUCT = gql`
-  mutation ConvertProduct($productId: ID!) {
     tagsAdd(id: $productId, tags: ["${UV_TAG}"]) {
       userErrors {
         field

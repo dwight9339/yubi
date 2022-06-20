@@ -17,7 +17,6 @@ export const FETCH_PRODUCT = gql`
       options {
         name
       }
-      templateSuffix
       variants(first: 1) {
         edges {
           node {

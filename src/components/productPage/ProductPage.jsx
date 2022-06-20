@@ -5,11 +5,11 @@ import {
   TextStyle
 } from "@shopify/polaris"
 import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useEffect } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
-import { productRequirementsAudit } from "../../utils/productHelper";
 import { ConvertProductModal } from "../common/ConvertProductModal";
+import { UV_TAG } from "../../constants";
 
 export const ProductPage = () => {
   const navigate = useNavigate();
@@ -37,6 +37,10 @@ export const ProductPage = () => {
       location.state.reload = false;
     }
   });
+
+  const checkValidProduct = () => {
+    return product.options.length === 1;
+  }
 
   const outletContext = {
     product,
@@ -68,8 +72,6 @@ export const ProductPage = () => {
     }
 
     if (product) {
-      const productAuditFailed = !productRequirementsAudit(product);
-
       return (
         <>
           <ConvertProductModal
@@ -82,7 +84,7 @@ export const ProductPage = () => {
                 }
               });
             }}
-            show={productAuditFailed}
+            show={!checkValidProduct()}
           />
           <Outlet context={outletContext} />
         </>
