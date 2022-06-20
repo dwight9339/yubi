@@ -43,8 +43,7 @@ Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
 const deleteUvs = (client, uvIds) => {
   uvIds.forEach(async (variantId) => {
     const result = await client.query({data: deleteVariantQuery(variantId)});
-
-    console.log(`Delete result: ${JSON.stringify(result)}`);
+    console.log(`Delete variant result: ${JSON.stringify(result.body)}`);
   });
 }
 
@@ -52,18 +51,22 @@ Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
   path: "/webhooks",
   webhookHandler: async (topic, shop, body) => {
     const rawData = JSON.parse(body);
-    const { confirmed, line_items: lineItems } = rawData;
+    const { line_items: lineItems } = rawData;
     const variantIds = lineItems.map((entry) => entry.variant_id);
-    const offlineSesh = await Shopify.Utils.loadOfflineSession(shop);
-    const client = new Shopify.Clients.Graphql(shop, offlineSesh.accessToken);
-    const fetchResult = await client.query({data: fetchVariantsQuery(variantIds)});
-    const uvIds = Object.entries(fetchResult.body.data)
-      .filter(([key, value]) => value.isUv)
-      .map(([key, value]) => value.id);
-    deleteUvs(client, uvIds);
-    
-    console.log(`Order confirmed: ${confirmed}`);
-    console.log(`Variants in order: ${variantIds}`);
+
+    try {
+      const offlineSesh = await Shopify.Utils.loadOfflineSession(shop);
+      const client = new Shopify.Clients.Graphql(shop, offlineSesh.accessToken);
+      const fetchResult = await client.query({data: fetchVariantsQuery(variantIds)});
+      console.log(`Order create webhook - fetch result: ${JSON.stringify(fetchResult.body)}`);
+      const uvIds = Object.entries(fetchResult.body.data)
+        .filter(([key, value]) => value.deleteAfterPurchase?.value === "true")
+        .map(([key, value]) => value.id);
+      console.log(`uvIds: ${uvIds}`);
+      deleteUvs(client, uvIds);
+    } catch(err) {
+      console.error(`shop: ${shop} - orders create webhook variant delete error - ${err}`);
+    }
   }
 });
 
