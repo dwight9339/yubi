@@ -5,11 +5,12 @@ import {
   TextStyle
 } from "@shopify/polaris"
 import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
 import { ConvertProductModal } from "../common/ConvertProductModal";
 import { UV_TAG } from "../../constants";
+import { AddUvTagModal } from "../common/AddUvTagModal";
 
 export const ProductPage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,14 @@ export const ProductPage = () => {
     refetchProduct,
     refetchVariants
   } = fetchProduct(generateProductGid(productId));
+  const [overrideTagModal, setOverrideTagModal] = useState(false);
+  const isValidProduct = useMemo(() => {
+    return product?.options?.length === 1;
+  }, [product]);
+  const hasUvTag = useMemo(() => {
+    return product?.tags?.includes(UV_TAG);
+  }, [product]);
+
 
   useEffect(() => {
     if (!location.state) return;
@@ -37,10 +46,6 @@ export const ProductPage = () => {
       location.state.reload = false;
     }
   });
-
-  const checkValidProduct = () => {
-    return product.options.length === 1;
-  }
 
   const outletContext = {
     product,
@@ -84,7 +89,12 @@ export const ProductPage = () => {
                 }
               });
             }}
-            show={!checkValidProduct()}
+            show={!isValidProduct}
+          />
+          <AddUvTagModal
+            productId={product.id}
+            show={isValidProduct && !hasUvTag && !overrideTagModal}
+            onClose={() => setOverrideTagModal(true)}
           />
           <Outlet context={outletContext} />
         </>
@@ -92,7 +102,7 @@ export const ProductPage = () => {
     }
 
     return null;
-  }, [product, variants, pageInfo, loading, errors]);
+  }, [product, variants, pageInfo, loading, errors, overrideTagModal]);
 
   return (
     <Page
