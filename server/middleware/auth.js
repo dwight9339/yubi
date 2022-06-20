@@ -15,15 +15,13 @@ export default function applyAuthMiddleware(app) {
         `/auth/toplevel?${new URLSearchParams(req.query).toString()}`
       );
     }
-    // Get offline token first if no offline session
-    const offlineSesh = await Shopify.Utils.loadOfflineSession(req.query.shop);
 
     const redirectUrl = await Shopify.Auth.beginAuth(
       req,
       res,
       req.query.shop,
       "/auth/callback",
-      Boolean(offlineSesh)
+      Boolean(req.query.secondRound)
     );
 
     res.redirect(redirectUrl);
@@ -57,22 +55,25 @@ export default function applyAuthMiddleware(app) {
       );
 
       if (!session.isOnline) {
-        // Register webhooks with offline token
+        // Do second round of auth to get online token
+        res.redirect(`/auth/?shop=${session.shop}&secondRound=true`);
+      } else {
+        const host = req.query.host;
+        const offlineSesh = await Shopify.Utils.loadOfflineSession(session.shop);
+
+        // Register webhooks
         const response = await Shopify.Webhooks.Registry.registerAll({
-          accessToken: session.accessToken,
+          accessToken: offlineSesh.accessToken,
           shop: session.shop
         });
-  
+
         Object.keys(response).forEach((key) => {
           if (!response[key].success) {
-            console.error(`Unable to register webhook for topic ${key}`);
+            console.error(`shop: ${session.shop} - Auth callback - Unable to register webhook for topic ${key}`);
           }
         });
 
-        // Do second round of auth to get online token
-        res.redirect(`/auth/?shop=${session.shop}`);
-      } else {
-        const host = req.query.host;
+        // Update user document from DB
         const user = await getUser(session.shop);
         const userSettings = user?.settings || defaultUserSettings;
         const redirectParams = new URLSearchParams({
