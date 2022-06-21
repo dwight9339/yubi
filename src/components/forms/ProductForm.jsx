@@ -11,6 +11,7 @@ import { upsertProduct } from "../../utils/apiHooks/upsertProduct";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { FeedbackContext } from "../../app/AppFrame";
+import { GENERIC_ERROR_TEXT } from "../../constants";
 
 export const ProductForm = () => {
   const upsertProductHook = upsertProduct();
@@ -53,9 +54,8 @@ export const ProductForm = () => {
       navigate(`/product/${productId}`, {state: {reload: Boolean(product)}});
       showToast(`${`${processType}d`} ${results.title}`);
     } catch(err) {
-      const typeSafeError = Array.isArray(err) || typeof(err) === "string";
-      showBanner(`${processType} error`, (typeSafeError && err) || err.message || "", "critical");
-      console.error(err);
+      showBanner(`${processType} error`, GENERIC_ERROR_TEXT, "critical");
+      console.error(`product upsert error - ${err}`);
     } finally {
       setProcessing(false);
     }
