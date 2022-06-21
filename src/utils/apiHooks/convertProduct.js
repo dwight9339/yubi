@@ -16,9 +16,6 @@ export const convertProduct = (productId) => {
       },
       onCompleted: ({ productVariants }) => {
         variantsIds = productVariants.edges.map(({ node }) => node.id);
-      },
-      onError: (err) => {
-        throw err;
       }
     });
     await convertProductMutation({
