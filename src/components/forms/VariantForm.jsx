@@ -116,7 +116,12 @@ export const VariantForm = () => {
           <Button
             primary
             submit
-            loading={processing || imageLoading}
+            loading={processing}
+            disabled={
+              !variantName
+              || variantName === ""
+              || imageLoading
+            }
           >
             {processType}
           </Button>
