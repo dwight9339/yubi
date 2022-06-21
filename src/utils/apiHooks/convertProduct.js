@@ -2,6 +2,7 @@ import { useMutation, useLazyQuery } from "@apollo/client";
 import { useCallback } from "react";
 import { CONVERT_PRODUCT } from "../../graphql/mutations/convertProduct";
 import { FETCH_VARIANTS_BY_PRODUCT } from "../../graphql/queries/fetchVariantsByProduct"
+import { handleUserErrors } from "../errorHelper";
 
 export const convertProduct = (productId) => {
   const [fetchVariantsQuery] = useLazyQuery(FETCH_VARIANTS_BY_PRODUCT(productId));
@@ -25,19 +26,7 @@ export const convertProduct = (productId) => {
         productId: product.id,
         variantsIds
       },
-      onCompleted: (data) => {
-        const errors = [];
-        Object.entries(data).forEach(([key, value]) => {
-          errors.push(...value.userErrors
-            .filter(({ message }) => !errors.includes(message))
-            .map(({ message }) => message)
-          );
-        });
-
-        if (errors.length) {
-          throw errors;
-        }
-      }
+      onCompleted: handleUserErrors
     });
   });
 };
