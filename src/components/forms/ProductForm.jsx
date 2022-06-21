@@ -117,8 +117,12 @@ export const ProductForm = () => {
           <Button
             primary
             submit
-            loading={processing || imageLoading}
-            disabled={!productTitle}
+            loading={processing}
+            disabled={
+              !productTitle
+              || productTitle === ""
+              || imageLoading
+            }
           >
             {product ? "Update" : "Create"}
           </Button>
