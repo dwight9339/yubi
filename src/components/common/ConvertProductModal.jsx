@@ -40,10 +40,6 @@ export const ConvertProductModal = ({
       await convertProductHook(product);
       showToast("Product converted");
       refetch();
-      // navigate(
-      //   `/product/${getIdFromGid(product.id)}`,
-      //   {state: {reload: true}}
-      // );
     } catch(err) {
       console.error(`Product conversion error - ${err || err.message}`);
       setShowError(true);

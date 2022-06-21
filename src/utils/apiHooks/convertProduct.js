@@ -16,14 +16,27 @@ export const convertProduct = (productId) => {
       onCompleted: ({ productVariants }) => {
         variantsIds = productVariants.edges.map(({ node }) => node.id);
       },
-      onError: ({ graphQlErrors, networkError }) => {
-        throw graphQlErrors || networkError;
+      onError: (err) => {
+        throw err;
       }
     });
     await convertProductMutation({
       variables: {
         productId: product.id,
         variantsIds
+      },
+      onCompleted: (data) => {
+        const errors = [];
+        Object.entries(data).forEach(([key, value]) => {
+          errors.push(...value.userErrors
+            .filter(({ message }) => !errors.includes(message))
+            .map(({ message }) => message)
+          );
+        });
+
+        if (errors.length) {
+          throw errors;
+        }
       }
     });
   });
