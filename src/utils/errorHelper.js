@@ -12,3 +12,11 @@ export const handleUserErrors = (data) => {
     throw errors;
   }
 }
+
+export const sanitizeErrorText = (err) => {
+  if (Array.isArray(err)) {
+    return err.map((error) => `${error}`);
+  }
+
+  return [`${err}`];
+}

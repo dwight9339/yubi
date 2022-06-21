@@ -11,12 +11,12 @@ import { upsertProduct } from "../../utils/apiHooks/upsertProduct";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { FeedbackContext } from "../../app/AppFrame";
-import { GENERIC_ERROR_TEXT } from "../../constants";
+import { sanitizeErrorText } from "../../utils/errorHelper";
 
 export const ProductForm = () => {
   const upsertProductHook = upsertProduct();
   const navigate = useNavigate();
-  const { showBanner, showToast } = useContext(FeedbackContext);
+  const { showErrorBanner, showToast } = useContext(FeedbackContext);
   const { product } = useOutletContext();
   const { imageSrc, imageLoading, component: imageDropZone } = useImageUpload(product);
   const processType = product ? "Update" : "Create";
@@ -54,7 +54,7 @@ export const ProductForm = () => {
       navigate(`/product/${productId}`, {state: {reload: Boolean(product)}});
       showToast(`${`${processType}d`} ${results.title}`);
     } catch(err) {
-      showBanner(`${processType} error`, GENERIC_ERROR_TEXT, "critical");
+      showErrorBanner(`${processType} error`, sanitizeErrorText(err));
       console.error(`product upsert error - ${err}`);
     } finally {
       setProcessing(false);

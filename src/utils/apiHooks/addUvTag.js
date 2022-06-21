@@ -10,7 +10,7 @@ export const addUvTag = () => {
   return useCallback(async (productId) => {
     await addTagsMutation({
       variables: {
-        resourceId: "gid://shopify/Product/777",
+        resourceId: productId,
         tags: [UV_TAG]
       },
       onCompleted: handleUserErrors

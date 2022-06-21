@@ -13,11 +13,11 @@ import {
 } from "@shopify/polaris";
 import { FeedbackContext } from "../../app/AppFrame";
 import {SUPPORTED_IMAGE_TYPES } from "../../constants";
-
+import { sanitizeErrorText } from "../errorHelper";
 
 export const useImageUpload = (parentResource) => {
   const stageImageHook = stageImageUpload();
-  const { showBanner } = useContext(FeedbackContext);
+  const { showErrorBanner } = useContext(FeedbackContext);
 
   const [imageFile, setImageFile] = useState();
   const [imageSrc, setImageSrc] = useState();
@@ -32,11 +32,11 @@ export const useImageUpload = (parentResource) => {
     if (!imageFile) return;
 
     try {
+      setImageLoading(true);
       const src = await stageImageHook(imageFile);
-
       setImageSrc(src);
     } catch(err) {
-      showBanner("Image upload error", err, "critical");
+      showErrorBanner("Image upload error", sanitizeErrorText(err));
       setImageFile(undefined);
     } finally {
       setImageLoading(false);

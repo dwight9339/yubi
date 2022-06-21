@@ -6,7 +6,7 @@ import {
 } from "@shopify/polaris";
 import { useState, createContext } from "react";
 import { ConfirmDeleteModal } from "../components/common/ConfirmDeleteModal";
-import { NewUserModal } from "../components/common/NewUserModal";
+import { GENERIC_ERROR_TEXT } from "../constants";
 
 export const FeedbackContext = createContext();
 export const ModalContext = createContext();
@@ -43,13 +43,23 @@ export const AppFrame = ({ children }) => {
     });
   }
 
-  const showBanner = (title="", content="", status="info") => {
+  const showBanner = (title="", content="", status="info", error=false) => {
     setBannerContext({
       show: true,
       title,
       content,
       status
     });
+  }
+
+  const showErrorBanner = (title="", errors=[]) => {
+    setBannerContext({
+      show: true,
+      title,
+      content: errors,
+      error: true,
+      status: "critical"
+    })
   }
 
   const showConfirmDeleteModal = (target, redirectUrl) => {
@@ -89,6 +99,7 @@ export const AppFrame = ({ children }) => {
             status={bannerContext.status}
             onDismiss={() => setBannerContext(defaultBannerContext)}
           >
+            {bannerContext.error && <p>{GENERIC_ERROR_TEXT}</p>}
             {
               (
                 Array.isArray(bannerContext.content)
@@ -106,7 +117,8 @@ export const AppFrame = ({ children }) => {
       }
       <FeedbackContext.Provider value={{
         showToast,
-        showBanner
+        showBanner,
+        showErrorBanner
       }}>
         <ModalContext.Provider value={{
           showConfirmDeleteModal

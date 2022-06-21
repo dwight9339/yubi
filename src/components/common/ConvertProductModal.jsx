@@ -9,7 +9,8 @@ import { useState, useContext, useMemo } from "react";
 import { convertProduct } from "../../utils/apiHooks/convertProduct";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { FeedbackContext } from "../../app/AppFrame";
-import { GENERIC_ERROR_TEXT } from "../../constants";
+import { useModalErrorBanner } from "../../utils/hooks/useModalErrorBanner";
+import { sanitizeErrorText } from "../../utils/errorHelper";
 
 export const ConvertProductModal = ({ 
   show,
@@ -19,30 +20,19 @@ export const ConvertProductModal = ({
   const navigate = useNavigate();
   const convertProductHook = convertProduct(getIdFromGid(product.id));
   const { showToast } = useContext(FeedbackContext);
+  const { errorBanner, showErrorBanner } = useModalErrorBanner();
 
   const [loading, setLoading] = useState(false);
-  const [showError, setShowError] = useState(false);
-
-  const errorBanner = useMemo(() => {
-    if (!showError) return null;
-
-    return (
-      <Banner status="critical">
-        <p>{GENERIC_ERROR_TEXT}</p>
-      </Banner>
-    )
-  }, [showError]);
 
   const handleConvert = async () => {
     try {
-      setShowError(false);
       setLoading(true);
       await convertProductHook(product);
       showToast("Product converted");
       refetch();
     } catch(err) {
       console.error(`Product conversion error - ${err || err.message}`);
-      setShowError(true);
+      showErrorBanner(sanitizeErrorText(err));
     } finally {
       setLoading(false);
     }

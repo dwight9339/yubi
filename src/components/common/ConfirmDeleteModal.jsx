@@ -7,8 +7,9 @@ import {
 import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
 import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 import { useNavigate } from "react-router-dom";
-import { useState, useMemo } from "react";
-import { GENERIC_ERROR_TEXT } from "../../constants";
+import { useState } from "react";
+import { sanitizeErrorText } from "../../utils/errorHelper";
+import { useModalErrorBanner } from "../../utils/hooks/useModalErrorBanner";
 
 export const ConfirmDeleteModal = ({
   show,
@@ -23,16 +24,9 @@ export const ConfirmDeleteModal = ({
 
   const [processing, setProcessing] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [errors, setErrors] = useState([]);
 
-  const errorBanner = useMemo(() => {
-    if (!showError) return null;
-
-    return (
-      <Banner status="critical">
-        <p>{GENERIC_ERROR_TEXT}</p>
-      </Banner>
-    );
-  }, [showError]);
+  const { errorBanner, showErrorBanner } = useModalErrorBanner();
 
   const handleDelete = async () => {
     try {
@@ -47,7 +41,7 @@ export const ConfirmDeleteModal = ({
       navigate(redirectUrl, {state: {reload: true}});
       showToast(`Deleted ${target.title}`)
     } catch (err) {
-      setShowError(true);
+      showErrorBanner(sanitizeErrorText(err));
       console.error(`delete error - ${err}`);
     } finally {
       setProcessing(false);

@@ -12,12 +12,12 @@ import { upsertVariant } from "../../utils/apiHooks/upsertVariant";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { FeedbackContext } from "../../app/AppFrame";
-import { GENERIC_ERROR_TEXT } from "../../constants";
+import { sanitizeErrorText } from "../../utils/errorHelper";
 
 export const VariantForm = () => {
   const navigate = useNavigate();
   const upsertVariantHook = upsertVariant();
-  const { showBanner, showToast } = useContext(FeedbackContext);
+  const { showErrorBanner, showToast } = useContext(FeedbackContext);
   const { variant, product } = useOutletContext();
   const { imageSrc, imageLoading, component: imageDropZone } = useImageUpload(variant);
   const processType = variant ? "Update" : "Create"
@@ -55,7 +55,7 @@ export const VariantForm = () => {
       navigate(`/variant/${variantId}`, {state: {reload: Boolean(variant)}});
       showToast(`${`${processType}d`} ${results.title}`);
     } catch(err) {
-      showBanner(`${processType} error`, GENERIC_ERROR_TEXT, "critical");
+      showErrorBanner(`${processType} error`, sanitizeErrorText(err));
       console.error(`variant upsert error - ${err}`);
     } finally {
       setProcessing(false);
