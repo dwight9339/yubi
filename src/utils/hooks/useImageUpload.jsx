@@ -12,7 +12,8 @@ import {
   Thumbnail
 } from "@shopify/polaris";
 import { FeedbackContext } from "../../app/AppFrame";
-import { IMAGE_SIZE_LIMIT, SUPPORTED_IMAGE_TYPES } from "../../constants";
+import {SUPPORTED_IMAGE_TYPES } from "../../constants";
+
 
 export const useImageUpload = (parentResource) => {
   const stageImageHook = stageImageUpload();
@@ -24,26 +25,16 @@ export const useImageUpload = (parentResource) => {
 
   const onDrop = useCallback((files, accepted) => {
     if (!accepted.length) return;
-
-    setImageLoading(true);
-    const file = accepted[0];
-
-    if (file.size > IMAGE_SIZE_LIMIT) {
-      showBanner("Image size too large", "File size limited to 20MB", "warning");
-      setImageLoading(false);
-      return;
-    }
-
-    setImageFile(file);
+    setImageFile(accepted[0]);
   });
 
   const uploadImage = async () => {
     if (!imageFile) return;
 
     try {
-      const result = await stageImageHook(imageFile);
+      const src = await stageImageHook(imageFile);
 
-      setImageSrc(result?.src);
+      setImageSrc(src);
     } catch(err) {
       showBanner("Image upload error", err, "critical");
       setImageFile(undefined);
