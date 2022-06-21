@@ -88,6 +88,7 @@ export const ProductPage = () => {
             productId={product.id}
             show={isValidProduct && !hasUvTag && !overrideTagModal}
             onClose={() => setOverrideTagModal(true)}
+            refetch={refetchProduct}
           />
           <Outlet context={outletContext} />
         </>

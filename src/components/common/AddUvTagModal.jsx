@@ -6,34 +6,25 @@ import {
 import { addUvTag } from "../../utils/apiHooks/addUvTag";
 import { useState, useContext, useMemo } from "react";
 import { FeedbackContext } from "../../app/AppFrame";
-import { GENERIC_ERROR_TEXT } from "../../constants";
+import { useModalErrorBanner } from "../../utils/hooks/useModalErrorBanner";
+import { sanitizeErrorText } from "../../utils/errorHelper";
 
-export const AddUvTagModal = ({ show, onClose, productId }) => {
+export const AddUvTagModal = ({ show, onClose, productId, refetch }) => {
   const addTagHook = addUvTag();
   const { showToast } = useContext(FeedbackContext);
-  const [showError, setShowError] = useState(false);
+  const { errorBanner, showErrorBanner } = useModalErrorBanner();
+
   const [processing, setProcessing] = useState(false);
 
-  const errorBanner = useMemo(() => {
-    if (!showError) return null;
-
-    return (
-      <Banner status="critical">
-        <p>{GENERIC_ERROR_TEXT}</p>
-      </Banner>
-    );
-  }, [showError])
-
   const doAddTag = async () => {
-    setShowError(false);
     setProcessing(true);
     try {
       await addTagHook(productId);
-      onClose();
+      refetch();
       showToast("'unique variants' tag added");
     } catch(err) {
       console.error(`UV tag add error - ${err}`);
-      setShowError(true);
+      showErrorBanner(sanitizeErrorText(err));
     } finally {
       setProcessing(false);
     }
