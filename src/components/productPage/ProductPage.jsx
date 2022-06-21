@@ -81,14 +81,7 @@ export const ProductPage = () => {
         <>
           <ConvertProductModal
             product={product}
-            refetch={() => {
-              navigate(".", {
-                state: {
-                  reloadProduct: true, 
-                  reloadVariants: true
-                }
-              });
-            }}
+            refetch={refetchProduct}
             show={!isValidProduct}
           />
           <AddUvTagModal

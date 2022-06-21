@@ -8,23 +8,23 @@ export const convertProduct = (productId) => {
   const [convertProductMutation] = useMutation(CONVERT_PRODUCT);
 
   return useCallback(async (product) => {
-    try {
-      const variantsResult = await fetchVariantsQuery({
-        variables: {
-          first: 100
-        }
-      });
-      const { productVariants, userErrors: variantsErrors } = variantsResult.data;
-      const variants = productVariants.edges.map(({ node }) => node);
-  
-      const conversionResult = await convertProductMutation({
-        variables: {
-          productId: product.id,
-          variantsIds: variants.map((variant) => variant.id)
-        }
-      });
-    } catch(err) {
-      throw `Product conversion error - ${err}`;
-    }
+    let variantsIds;
+    await fetchVariantsQuery({
+      variables: {
+        first: 100
+      },
+      onCompleted: ({ productVariants }) => {
+        variantsIds = productVariants.edges.map(({ node }) => node.id);
+      },
+      onError: ({ graphQlErrors, networkError }) => {
+        throw graphQlErrors || networkError;
+      }
+    });
+    await convertProductMutation({
+      variables: {
+        productId: product.id,
+        variantsIds
+      }
+    });
   });
 };
