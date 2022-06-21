@@ -1,41 +1,30 @@
-import { DELETE_VARIANT } from "../../graphql/mutations/deleteVariant";
-import { DELETE_PRODUCT_IMAGES } from "../../graphql/mutations/deleteProductImages";
+import { 
+  DELETE_VARIANT, 
+  DELETE_VARIANT_AND_IMAGE
+} from "../../graphql/mutations/deleteVariant";
 import { useMutation } from "@apollo/client";
 import { useCallback } from "react";
+import { handleUserErrors } from "../errorHelper";
 
 export const deleteVariant = () => {
-  const [deleteVariantMutation] = useMutation(DELETE_VARIANT);
-  const [deleteProductImagesMutation] = useMutation(DELETE_PRODUCT_IMAGES);
+  const [deleteVariant] = useMutation(DELETE_VARIANT);
+  const [deleteVariantAndImage] = useMutation(DELETE_VARIANT_AND_IMAGE);
 
-  return useCallback(async (variant) => {
-    let results = {};
-
-    if (variant.image) {
-      const imageDeleteResults = await deleteProductImagesMutation({
+  return useCallback(async ({ id, image, product }) => {
+    image
+      ? await deleteVariantAndImage({
         variables: {
-          productId: variant.product.id,
-          imageIds: [variant.image.id]
-        }
+          variantId: id,
+          productId: product.id,
+          imageId: image.id
+        },
+        onCompleted: handleUserErrors
+      })
+      : await deleteVariant({
+        variables: {
+          id
+        },
+        onCompleted: handleUserErrors
       });
-
-      results = {
-        imageDeleteResults,
-        ...results
-      };
-    }
-
-
-    const variantDeleteResults = await deleteVariantMutation({
-      variables: {
-        id: variant.id
-      }
-    });
-
-    results = {
-      variantDeleteResults,
-      ...results
-    };
-
-    return results;
-  }, [deleteVariantMutation, deleteProductImagesMutation]);
+  });
 };
