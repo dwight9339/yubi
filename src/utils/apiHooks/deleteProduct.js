@@ -6,14 +6,17 @@ export const deleteProduct = () => {
   const [deleteProductMutation] = useMutation(DELETE_PRODUCT);
 
   return useCallback(async (id) => {
-    const results = deleteProductMutation({
+    await deleteProductMutation({
       variables: {
         input: {
           id
         }
+      },
+      onCompleted: ({ productDelete: { userErrors } }) => {
+        if (userErrors.length) {
+          throw userErrors.map((error) => error.message);
+        }
       }
     });
-
-    return results;
   }, [deleteProductMutation]);
 };

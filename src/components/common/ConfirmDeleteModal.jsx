@@ -1,45 +1,56 @@
 import { 
   Modal,
   TextContainer,
-  TextStyle
+  TextStyle,
+  Banner
 } from "@shopify/polaris";
 import { deleteProduct } from "../../utils/apiHooks/deleteProduct";
 import { deleteVariant } from "../../utils/apiHooks/deleteVariant";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { GENERIC_ERROR_TEXT } from "../../constants";
 
 export const ConfirmDeleteModal = ({
   show,
   target,
   redirectUrl,
   handleClose,
-  showToast,
-  showBanner
+  showToast
 }) => {
   const navigate = useNavigate();
   const deleteProductHook = deleteProduct();
   const deleteVariantHook = deleteVariant();
 
   const [processing, setProcessing] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const errorBanner = useMemo(() => {
+    if (!showError) return null;
+
+    return (
+      <Banner status="critical">
+        <p>{GENERIC_ERROR_TEXT}</p>
+      </Banner>
+    );
+  }, [showError]);
 
   const handleDelete = async () => {
     try {
+      setShowError(false);
       setProcessing(true);
       if (target.__typename === "Product") {
         await deleteProductHook(target.id);
       } else if (target.__typename === "ProductVariant") {
         await deleteVariantHook(target);
       }
-      
-      setProcessing(false);
       handleClose();
       navigate(redirectUrl, {state: {reload: true}});
       showToast(`Deleted ${target.title}`)
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      setShowError(true);
+      console.error(`delete error - ${err}`);
+    } finally {
       setProcessing(false);
-      showBanner("Unable to delete", `Could not delete ${target.title}`, "critical");
-      handleClose();
     }
   }
 
@@ -64,6 +75,7 @@ export const ConfirmDeleteModal = ({
       onClose={handleClose}
       
     >
+      {errorBanner}
       <Modal.Section>
         <TextContainer>
           <TextStyle>
