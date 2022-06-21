@@ -12,6 +12,7 @@ import { upsertVariant } from "../../utils/apiHooks/upsertVariant";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { FeedbackContext } from "../../app/AppFrame";
+import { GENERIC_ERROR_TEXT } from "../../constants";
 
 export const VariantForm = () => {
   const navigate = useNavigate();
@@ -54,9 +55,8 @@ export const VariantForm = () => {
       navigate(`/variant/${variantId}`, {state: {reload: Boolean(variant)}});
       showToast(`${`${processType}d`} ${results.title}`);
     } catch(err) {
-      const typeSafeError = Array.isArray(err) || typeof(err) === "string";
-      showBanner(`${processType} error`, typeSafeError ? err : "", "critical");
-      console.error(err);
+      showBanner(`${processType} error`, GENERIC_ERROR_TEXT, "critical");
+      console.error(`variant upsert error - ${err}`);
     } finally {
       setProcessing(false);
     }
