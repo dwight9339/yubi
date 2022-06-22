@@ -38,10 +38,6 @@
     border-width: {{ block.settings.border_width }}px;
     border-color: {{ block.settings.border_color }};
   }
-
-  .variant-info-container {
-    margin-bottom: {{ block.settings.variant_info_margin_bottom }}px;
-  }
   
   /* Webkit scrollbar styling */
   .variant-selection-grid-container::-webkit-scrollbar {
@@ -82,18 +78,6 @@
 {% endstyle %}
 
 <variant-picker data-id="{{ block.id }}">
-
-  <div class="variant-info-container">
-    {% assign variant_info = product.selected_variant.metafields.uvapp-variants %}
-    <div class="variant-name">
-      <h2>Variant Name</h2>
-      {{ variant_info.variant_name }}
-    </div>
-    <div class="variant-description">
-      <h2>Variant Description</h2>
-      {{ variant_info.variant_description }}
-    </div>
-  </div>
   <table class="variant-selection-grid-table">
     <tbody class="variant-selection-grid-container">
       {% tablerow variant in product.variants cols: block.settings.num_cols %}
@@ -157,16 +141,6 @@
       "id": "border_color",
       "label": "Border color",
       "default": "#000000"
-    },
-    {
-      "type": "range",
-      "id": "variant_info_margin_bottom",
-      "label": "Variant info bottom margin",
-      "min": 5,
-      "max": 50,
-      "step": 1,
-      "unit": "px",
-      "default": 10
     },
     {
       "type": "range",

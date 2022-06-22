@@ -1,0 +1,255 @@
+{% style %}
+  .variant-info-block-heading {
+    font-weight: {{ block.settings.block_heading_weight }};
+    font-size: {{ block.settings.block_heading_size }}em;
+  }
+
+  .variant-info-name-heading {
+    font-size: {{ block.settings.name_heading_size }}em;
+    font-weight: {{ block.settings.name_heading_weight }};
+  }
+
+  .variant-info-name-text {
+    font-size: {{ block.settings.name_size }}em;
+    font-weight: {{ block.settings.name_weight }};
+  }
+
+  .variant-info-description-heading {
+    font-size: {{ block.settings.description_heading_size }}em;
+    font-weight: {{ block.settings.description_heading_weight }};
+  }
+{% endstyle %}
+
+{% if product.selected_variant == nil or block.settings.always_show_product_description %}
+  {{ product.description }}
+{% endif %}
+{% if product.selected_variant %}
+<div class="variant-info-container">
+  {% if block.settings.show_block_heading %}
+    <div class="variant-info-block-heading">{{ block.settings.block_heading_text }}</div>
+  {% endif %}
+  
+  {% if block.settings.show_name %}
+    <div class="variant-info-name-container">
+      {% if block.settings.show_name_heading %}
+        <div class="variant-info-name-heading">{{ block.settings.name_heading_text }}</div>
+      {% endif %}
+      <div class="variant-info-name-text">{{ product.selected_variant.title }}</div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_description %}
+    {% assign variant_description = product.selected_variant.metafields.uvapp-variants.variant_description %}
+    <div class="variant-info-description-container">
+      {% if block.settings.show_description_heading %}
+        <div class="variant-info-description-heading">{{ block.settings.description_heading_text }}</div>
+      {% endif %}
+      <div class="variant-info-description-text">{{ variant_description }}</div>
+    </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Unique Variant Info",
+  "templates": ["product"],
+  "target": "section",
+  "stylesheet": "variant-picker.css",
+  "javascript": "variant-picker.js",
+  "settings": [
+    // Show generic description
+    {
+      "type": "checkbox",
+      "label": "Always show generic product description",
+      "id": "always_show_product_description"
+    },
+
+    // Block heading options
+    {
+      "type": "header",
+      "content": "Block heading"
+    },
+    {
+      "type": "checkbox",
+      "label": "Show block heading",
+      "id": "show_block_heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "label": "Block heading text",
+      "id": "block_heading_text",
+      "default": "Variant Info"
+    },
+    {
+      "type": "select",
+      "label": "Font weight",
+      "id": "block_heading_weight",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "bold",
+          "label": "Bold"
+        },
+        {
+          "value": "lighter",
+          "label": "Light"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "label": "Font size",
+      "id": "block_heading_size",
+      "min": 0.7,
+      "max": 2,
+      "step": 0.1,
+      "unit": "em",
+      "default": 1
+    },
+
+    // Name options
+    {
+      "type": "header",
+      "content": "Name"
+    },
+    {
+      "type": "checkbox",
+      "label": "Show name",
+      "id": "show_name",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "label": "Show name heading",
+      "id": "show_name_heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "label": "Name heading text",
+      "id": "name_heading_text",
+      "default": "Variant Name"
+    },
+    {
+      "type": "select",
+      "label": "Heading font weight",
+      "id": "name_heading_weight",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "bold",
+          "label": "Bold"
+        },
+        {
+          "value": "lighter",
+          "label": "Light"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "label": "Heading font size",
+      "id": "name_heading_size",
+      "min": 0.7,
+      "max": 2,
+      "step": 0.1,
+      "unit": "em",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "label": "Name font weight",
+      "id": "name_weight",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "bold",
+          "label": "Bold"
+        },
+        {
+          "value": "lighter",
+          "label": "Light"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "label": "Name font size",
+      "id": "name_size",
+      "min": 0.7,
+      "max": 2,
+      "step": 0.1,
+      "unit": "em",
+      "default": 1
+    },
+
+    // Description options
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "checkbox",
+      "label": "Show description",
+      "id": "show_description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "label": "Show description heading",
+      "id": "show_description_heading",
+      "default": true
+    },
+    {
+      "type": "text",
+      "label": "Description heading text",
+      "id": "description_heading_text",
+      "default": "Variant Description"
+    },
+    {
+      "type": "select",
+      "label": "Heading font weight",
+      "id": "description_heading_weight",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "bold",
+          "label": "Bold"
+        },
+        {
+          "value": "lighter",
+          "label": "Light"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "label": "Heading font size",
+      "id": "description_heading_size",
+      "min": 0.7,
+      "max": 2,
+      "step": 0.1,
+      "unit": "em",
+      "default": 1
+    }
+  ]
+}
+{% endschema %}

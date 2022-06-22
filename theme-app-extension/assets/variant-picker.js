@@ -17,9 +17,9 @@ class variantPicker extends HTMLElement {
   }
 
   setSelectedVariant({ currentTarget }) {
-    const { variantId, variantImageId } = currentTarget.dataset;
-    const url = `${window.location.pathname}?variant=${variantId}`;
-    window.location.search = `variant=${variantId}`;
+    const { variantId } = currentTarget.dataset;
+    // const url = `${window.location.pathname}?variant=${variantId}`;
+    window.location.search = `?variant=${variantId}`;
   }
 }
 
