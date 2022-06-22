@@ -70,7 +70,7 @@ export const ProductsListPage = () => {
 
   return (
     <Page
-      title="Unique Variants Products"
+      title="Products"
     >
       {pageContent}
     </Page>

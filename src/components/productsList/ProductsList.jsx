@@ -130,7 +130,7 @@ export const ProductsList = () => {
       <Card 
         actions={cardActions}
       >
-        <Card.Section title="Unique Variants Products">
+        <Card.Section>
           <Stack distribution="fill">
             <ResourceList
               resourceName={{
