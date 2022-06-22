@@ -10,9 +10,11 @@ import { getIdFromGid } from "../../utils/gidHelper";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ModalContext } from "../../app/AppFrame";
+import { useCurrencyFormatter } from "../../utils/hooks/useCurrencyFormatter";
 
 export const VariantsList = ({ variants }) => {
   const navigate = useNavigate();
+  const formatCurrency = useCurrencyFormatter();
   const { showConfirmDeleteModal } = useContext(ModalContext);
 
   const renderItem = (variant) => {
@@ -47,7 +49,7 @@ export const VariantsList = ({ variants }) => {
           </Stack.Item>
           <Stack.Item>
             <TextContainer>
-              ${price}
+              {formatCurrency(price)}
             </TextContainer>
           </Stack.Item>
         </Stack>

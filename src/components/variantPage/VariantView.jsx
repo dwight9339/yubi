@@ -11,9 +11,11 @@ import { useNavigate } from "react-router";
 import { getIdFromGid } from "../../utils/gidHelper";
 import { useContext } from "react";
 import { ModalContext } from "../../app/AppFrame";
+import { useCurrencyFormatter } from "../../utils/hooks/useCurrencyFormatter";
 
 export const VariantView = () => {
   const navigate = useNavigate();
+  const formatCurrency = useCurrencyFormatter();
   const { variant } = useOutletContext();
   const { showConfirmDeleteModal } = useContext(ModalContext);
   const productId = getIdFromGid(variant.product.id);
@@ -62,7 +64,7 @@ export const VariantView = () => {
             </Subheading>
             <TextContainer>
               <TextStyle>
-                ${variant.price}
+                {formatCurrency(variant.price)}
               </TextStyle>
             </TextContainer>
             <Subheading>
