@@ -122,7 +122,7 @@ export const ProductView = () => {
         actions={variantCardActions}
       >
         <Card.Section>
-          <Stack>
+          <Stack distribution="fill">
             <VariantsList 
               variants={
                 product.hasOnlyDefaultVariant 

@@ -37,8 +37,8 @@ export const VariantsList = ({ variants }) => {
         ]}
         onClick={() => navigate(`/variant/${variantId}`)}
       >
-        <Stack distribution="fill">
-          <Stack.Item>
+        <Stack>
+          <Stack.Item fill>
             <Thumbnail
               source={image ? image.url : ""}
               alt={image ? image.altText : ""}
@@ -47,7 +47,7 @@ export const VariantsList = ({ variants }) => {
           </Stack.Item>
           <Stack.Item>
             <TextContainer>
-              {price}
+              ${price}
             </TextContainer>
           </Stack.Item>
         </Stack>
