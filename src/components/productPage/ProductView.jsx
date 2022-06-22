@@ -117,6 +117,11 @@ export const ProductView = () => {
           <ProductInfo product={product} />
         </Stack>
       </Card>
+      <div
+        style={{
+          maxWidth: "500px"
+        }}
+      >
       <Card
         title="Variants"
         actions={variantCardActions}
@@ -141,6 +146,7 @@ export const ProductView = () => {
           />
         </Card.Section>
       </Card>
+      </div>
     </Stack>
   );
 }
