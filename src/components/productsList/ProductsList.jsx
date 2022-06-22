@@ -140,7 +140,7 @@ export const ProductsList = () => {
           </Stack>
         </Card.Section> 
         <Card.Section>
-            <Pagination
+          <Pagination
             hasNext={pageInfo && pageInfo.hasNextPage}
             hasPrevious={pageInfo && pageInfo.hasPreviousPage}
             onNext={getNextPage}
