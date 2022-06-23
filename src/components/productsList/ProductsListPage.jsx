@@ -1,12 +1,12 @@
 import {
   Page,
-  Spinner,
   TextContainer, 
   TextStyle
 } from "@shopify/polaris";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useEffect} from "react";
 import { fetchProducts } from "../../utils/apiHooks/fetchProducts";
 import { Outlet, useLocation } from "react-router-dom";
+import { LoadingPage } from "../common/LoadingPage";
 
 export const ProductsListPage = () => {
   const location = useLocation();
@@ -32,13 +32,7 @@ export const ProductsListPage = () => {
 
   const pageContent = useMemo(() => {
     if (!products || loading) {
-      return (
-        <div
-          data-test-id="spinner"
-        >
-          <Spinner />
-        </div>
-      );
+      return <LoadingPage />;
     }
 
     if (error) {
@@ -53,13 +47,17 @@ export const ProductsListPage = () => {
 
     if (products) {
       return (
-        <Outlet
-          context={{
-            products,
-            pageInfo,
-            fetchMore
-          }}
-        />
+        <Page
+          title="Products"
+        >
+          <Outlet
+            context={{
+              products,
+              pageInfo,
+              fetchMore
+            }}
+          />
+        </Page>
       );
     }
 
@@ -67,10 +65,12 @@ export const ProductsListPage = () => {
   }, [products, pageInfo, loading, error]);
 
   return (
-    <Page
-      title="Products"
+    <div
+      style={{
+        maxWidth: "600px"
+      }}
     >
       {pageContent}
-    </Page>
+    </div>
   );
 };

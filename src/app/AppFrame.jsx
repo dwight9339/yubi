@@ -2,7 +2,7 @@ import {
   Frame,
   Toast,
   Banner,
-  List 
+  List
 } from "@shopify/polaris";
 import { useState, createContext } from "react";
 import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
@@ -70,6 +70,8 @@ export const AppFrame = ({ children }) => {
     });
   }
 
+  const toggleProgressBar = () => setShowProgressBar(!showProgressBar);
+
   return (
     <Frame>
       <ConfirmDeleteModal
@@ -115,6 +117,7 @@ export const AppFrame = ({ children }) => {
           </Banner>
           : null
       }
+      
       <FeedbackContext.Provider value={{
         showToast,
         showBanner,

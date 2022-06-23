@@ -10,6 +10,7 @@ import { useLocation, useNavigate, useParams, Outlet } from "react-router-dom";
 import { generateVariantGid, getIdFromGid } from "../../utils/gidHelper";
 
 import { useMemo, useEffect } from "react";
+import { LoadingPage } from "../common/LoadingPage";
 
 export const VariantPage = () => {
   const location = useLocation();
@@ -30,11 +31,7 @@ export const VariantPage = () => {
   });
 
   const pageContent = useMemo(() => {
-    if (loading) return (
-      <div data-testid="spinner">
-        <Spinner />
-      </div>
-    );
+    if (loading) return <LoadingPage />;
     if (error) return (
       <TextContainer>
         <TextStyle variation="negative">
@@ -44,37 +41,33 @@ export const VariantPage = () => {
     )
 
     if (variant) {
-      return <Outlet context={{variant}} />;
+      return (
+        <Page
+          title="Variant"
+          breadcrumbs={variant ? [
+            {
+              content: "Product",
+              onAction: () => {
+                const productId = getIdFromGid(variant.product.id);
+                navigate(`/product/${productId}`);
+              },
+              accessibilityLabel: "Return to product page"
+            }
+          ] : []}
+        >
+          <Stack
+            distribution="fill"
+          >
+            <Outlet context={{variant}} />
+          </Stack>
+        </Page>
+      );
     } 
-
-    return (
-      <Stack distribution="center">
-        <TextStyle variation="subdued">
-          Sorry, we couldn't find a variant with ID {variantId}. Are you sure it exists?
-        </TextStyle>
-      </Stack>
-    );
   }, [variant, loading, error]);
 
   return (
-    <Page
-      title="Variant"
-      breadcrumbs={variant ? [
-        {
-          content: "Product",
-          onAction: () => {
-            const productId = getIdFromGid(variant.product.id);
-            navigate(`/product/${productId}`);
-          },
-          accessibilityLabel: "Return to product page"
-        }
-      ] : []}
-    >
-      <Stack
-        distribution="fill"
-      >
-        {pageContent}
-      </Stack>
-    </Page>
+    <>
+      {pageContent}
+    </>
   );
 };

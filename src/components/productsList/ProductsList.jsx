@@ -72,11 +72,7 @@ export const ProductsList = () => {
   ];
 
   return (
-    <div
-      style={{
-        maxWidth: "500px"
-      }}
-    >
+    <>
       <ResourcePicker 
         resourceType="Product"
         open={productPickerOpen}
@@ -114,6 +110,6 @@ export const ProductsList = () => {
           />
         </Card.Section>
       </Card>
-    </div>
+    </>
   );
 };

@@ -11,6 +11,7 @@ import { generateProductGid } from "../../utils/gidHelper";
 import { ConvertProductModal } from "../modals/ConvertProductModal";
 import { UV_TAG } from "../../constants";
 import { AddUvTagModal } from "../modals/AddUvTagModal";
+import { LoadingPage } from "../common/LoadingPage";
 
 export const ProductPage = () => {
   const navigate = useNavigate();
@@ -56,11 +57,7 @@ export const ProductPage = () => {
 
   const pageMarkup = useMemo(() => {
     if (loading) {
-      return (
-        <div data-testid="spinner">
-          <Spinner />
-        </div>
-      )
+      return <LoadingPage />;
     }
 
     if (errors.productError || errors.variantsError) {
@@ -78,7 +75,16 @@ export const ProductPage = () => {
 
     if (product) {
       return (
-        <>
+        <Page
+          title="Product"
+          breadcrumbs={[
+            {
+              content: "Products",
+              onAction: () => navigate("/products", {state: {reload: true}}),
+              accessibilityLabel: "Return to products list page"
+            }
+          ]}
+        >
           <ConvertProductModal
             product={product}
             refetch={refetchProduct}
@@ -91,7 +97,7 @@ export const ProductPage = () => {
             refetch={refetchProduct}
           />
           <Outlet context={outletContext} />
-        </>
+        </Page>
       )
     }
 
@@ -99,18 +105,8 @@ export const ProductPage = () => {
   }, [product, variants, pageInfo, loading, errors, overrideTagModal]);
 
   return (
-    <Page
-      title="Product"
-      breadcrumbs={[
-        {
-          content: "Products",
-          onAction: () => navigate("/products", {state: {reload: true}}),
-          accessibilityLabel: "Return to products list page"
-        }
-      ]}
-    >
-      
+    <>
       {pageMarkup}
-    </Page>
-  );;
+    </> 
+  );
 };
