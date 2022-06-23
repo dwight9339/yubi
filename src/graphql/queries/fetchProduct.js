@@ -10,6 +10,8 @@ export const FETCH_PRODUCT = gql`
         id
         url
         altText
+        height
+        width
       }
       productType
       tags

@@ -47,8 +47,7 @@ export const ResourceInfo = ({ resource, deleteRedirect }) => {
       <Card.Section secondary>
         <Stack distribution="center">
           <ProductPhoto 
-            url={image.url}
-            altText={image.altText}
+            image={image}
             cardWidth={cardWidth}
           />
         </Stack>

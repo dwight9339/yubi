@@ -10,6 +10,8 @@ export const FETCH_VARIANT = gql`
         id
         url
         altText
+        height
+        width
       }
       description: metafield(
         namespace: "${METAFIELD_NAMESPACE.variants}",
