@@ -1,12 +1,11 @@
-import { useMemo, useEffect } from "react";
-
-export const ProductPhoto = ({url, altText}) => {
+export const ProductPhoto = ({url, altText, cardWidth}) => {
+  const picWidth = cardWidth * 0.95;
 
   return (
     <div
       style={{
-        width: "500px",
-        height: "500px",
+        width: `${picWidth}px`,
+        height: `${picWidth}px`,
         backgroundImage: `url(${url})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",

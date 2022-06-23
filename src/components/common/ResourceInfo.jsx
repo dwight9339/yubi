@@ -1,17 +1,32 @@
 import { 
   Card,
-  Layout,
+  Stack,
   Heading,
   TextContainer,
   TextStyle
 } from "@shopify/polaris";
 import { ProductPhoto } from "../common/ProductPhoto";
+import { 
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 
 export const ResourceInfo = ({ resource, deleteRedirect }) => {
   const image = resource.image || resource.featuredImage;
   const description = resource.description || resource.description.value;
+  const ref = useRef(null);
+
+  const [cardWidth, setCardWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    setCardWidth(ref.current.offsetWidth);
+  }, []);
 
   return (
+    <div
+      ref={ref}
+    >
     <Card
       title={resource.title}
       actions={[
@@ -28,10 +43,13 @@ export const ResourceInfo = ({ resource, deleteRedirect }) => {
       ]}
     >
       <Card.Section secondary>
-        <ProductPhoto 
-          url={image.url}
-          altText={image.altText}
-        />
+        <Stack distribution="center">
+          <ProductPhoto 
+            url={image.url}
+            altText={image.altText}
+            cardWidth={cardWidth}
+          />
+        </Stack>
       </Card.Section>
       <Card.Section>
         <TextContainer>
@@ -40,5 +58,6 @@ export const ResourceInfo = ({ resource, deleteRedirect }) => {
         </TextContainer>
       </Card.Section>
     </Card>
+    </div>
   );
 }
