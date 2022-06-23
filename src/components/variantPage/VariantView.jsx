@@ -12,7 +12,7 @@ export const VariantView = () => {
     <ResourceInfo
       resource={variant}
       details={{
-        Description: variant.description.value,
+        Description: variant.description?.value || "",
         Price: formatCurrency(variant.price)
       }}
       deleteRedirect={`/product/${productId}`}
