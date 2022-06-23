@@ -14,7 +14,7 @@ export const VariantView = () => {
   return (
     <div
       style={{
-        width: `${windowWidth * 0.8}px`,
+        width: `${windowWidth}px`,
         maxWidth: "600px"
       }}
     >
