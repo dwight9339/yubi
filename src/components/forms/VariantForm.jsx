@@ -73,60 +73,71 @@ export const VariantForm = () => {
         }
       ]}
     >
-      <Form
-        onSubmit={handleSubmit}
+      <div
+        style={{
+          width: "90%",
+          margin: "auto",
+          paddingBottom: "20px",
+          paddingTop: "10px"
+        }}
       >
-        <FormLayout>
-          <FormLayout.Group>
-            <TextField
-              type="text"
-              label="Name"
-              value={variantName}
-              placeholder="Unique Variant"
-              onChange={setVariantName}
-            />
-            <TextField 
-              type="text"
-              label="Description"
-              value={variantDescription}
-              placeholder="A very special variant"
-              onChange={setVariantDescription}
-              multiline
-              autoComplete="off"
-            />
-            <TextField 
-              type="currency"
-              label="Price"
-              placeholder={variantPrice}
-              value={variantPrice}
-              onChange={setVariantPrice}
-              autoComplete="off"
-            />
-          </FormLayout.Group>
-          <FormLayout.Group>
-            {imageDropZone}
-          </FormLayout.Group>
-          <FormLayout.Group>
-            <Checkbox
-              label="Delete after purchase"
-              checked={deleteAfterPurchase}
-              onChange={setDeleteAfterPurchase}
-            />
-          </FormLayout.Group>
-          <Button
-            primary
-            submit
-            loading={processing}
-            disabled={
-              !variantName
-              || variantName === ""
-              || imageLoading
-            }
-          >
-            {processType}
-          </Button>
-        </FormLayout>
-      </Form>
+        <Form
+          onSubmit={handleSubmit}
+        >
+          <FormLayout>
+            <FormLayout.Group>
+              <TextField
+                type="text"
+                label="Name"
+                value={variantName}
+                placeholder="Unique Variant"
+                onChange={setVariantName}
+              />
+              <TextField 
+                type="currency"
+                label="Price"
+                placeholder={variantPrice}
+                value={variantPrice}
+                onChange={setVariantPrice}
+                autoComplete="off"
+              />
+            </FormLayout.Group>
+            <FormLayout.Group>
+              <TextField 
+                  type="text"
+                  label="Description"
+                  value={variantDescription}
+                  placeholder="A very special variant"
+                  onChange={setVariantDescription}
+                  multiline
+                  autoComplete="off"
+                />
+            </FormLayout.Group>
+            <FormLayout.Group>
+              {imageDropZone}
+            </FormLayout.Group>
+            <FormLayout.Group>
+              <Checkbox
+                label="Delete after purchase"
+                checked={deleteAfterPurchase}
+                onChange={setDeleteAfterPurchase}
+              />
+            </FormLayout.Group>
+            <Button
+              primary
+              submit
+              loading={processing}
+              disabled={
+                !variantName
+                || variantName === ""
+                || imageLoading
+              }
+            >
+              {processType}
+            </Button>
+          </FormLayout>
+        </Form>
+      </div>
     </Card>
   );
  };
