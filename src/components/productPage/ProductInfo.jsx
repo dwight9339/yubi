@@ -3,21 +3,21 @@ import {
   Heading,
   TextContainer,
   TextStyle,
-  Subheading
+  List
 } from "@shopify/polaris";
 
 export const ProductInfo = ({ product }) => {
   return (
+  <div
+    style={{
+      maxWidth: "90%",
+      margin: "auto",
+      paddingBottom: "20px"
+    }}
+  >
     <Layout>
-      <Layout.Section secondary>
-        <div
-          style={{
-            width: "90%"
-          }}
-        >
-          <Heading>
-            {product.title}
-          </Heading>
+      <Layout.Section oneThird>
+        <TextContainer>
           <img
             src={product?.featuredImage?.url}
             alt={product?.featuredImage?.altText}
@@ -26,24 +26,25 @@ export const ProductInfo = ({ product }) => {
               overflow: "hidden"
             }}
           />
-        </div>
+        </TextContainer>
       </Layout.Section>
-      <Layout.Section>
-        <div
-          style={{
-            width: "90%"
-          }}
-        >
-          <Subheading>
-            Description
-          </Subheading>
+      <Layout.Section oneThird>
           <TextContainer>
-            <TextStyle>
-              {product.description}
-            </TextStyle>
+            <Heading>Description</Heading>
+            <TextStyle>{product.description}</TextStyle>
           </TextContainer>
-        </div>
+      </Layout.Section>
+      <Layout.Section oneThird>
+        <TextContainer>
+            <Heading>Tags</Heading>
+            <List>
+              {product.tags.map((tag, i) => {
+                return <List.Item key={i}>{tag}</List.Item>
+              })}
+            </List>
+          </TextContainer>
       </Layout.Section>
     </Layout>
+  </div>
   );
 }

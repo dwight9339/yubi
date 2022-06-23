@@ -98,25 +98,30 @@ export const ProductView = () => {
     <Stack
       distribution="fill"
     >
-      <Card
-        title="Product Info"
-        actions={[
-          {
-            content: "Edit",
-            onAction: () => navigate("edit")
-          },
-          {
-            content: "Delete",
-            onAction: () => {
-              showConfirmDeleteModal(product, "/");
-            }
-          }
-        ]}
+      <div
+        style={{
+          maxWidth: "800px"
+        }}
       >
-        <Stack>
-          <ProductInfo product={product} />
-        </Stack>
-      </Card>
+        <Card title={product.title}
+          actions={[
+            {
+              content: "Edit",
+              onAction: () => navigate("edit")
+            },
+            {
+              content: "Delete",
+              onAction: () => {
+                showConfirmDeleteModal(product, "/");
+              }
+            }
+          ]}
+        >
+          <Stack>
+            <ProductInfo product={product} />
+          </Stack>
+        </Card>
+      </div>
       <div
         style={{
           maxWidth: "500px"
