@@ -5,11 +5,8 @@ import {
   Layout
 } from "@shopify/polaris";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { ProductInfo } from "./ProductInfo";
 import { VariantsList } from "./VariantsList";
 import { QUERY_PAGE_SIZE } from "../../constants";
-import { useContext } from "react";
-import { ModalContext } from "../../app/AppFrame";
 import { upsertVariant } from "../../utils/apiHooks/upsertVariant";
 import { stageImageUpload } from "../../utils/apiHooks/stageImageUpload";
 import { getIdFromGid } from "../../utils/gidHelper";
@@ -24,9 +21,7 @@ import {
 export const ProductView = () => {
   const navigate = useNavigate();
   const createVariantHook = upsertVariant();
-  const uploadImageHook = stageImageUpload();
-  const { showConfirmDeleteModal} = useContext(ModalContext);
- 
+  const uploadImageHook = stageImageUpload(); 
 
   const { 
     product, 
