@@ -1,7 +1,8 @@
 import {
   Card,
   Stack,
-  Pagination
+  Pagination,
+  Layout
 } from "@shopify/polaris";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { ProductInfo } from "./ProductInfo";
@@ -12,6 +13,7 @@ import { ModalContext } from "../../app/AppFrame";
 import { upsertVariant } from "../../utils/apiHooks/upsertVariant";
 import { stageImageUpload } from "../../utils/apiHooks/stageImageUpload";
 import { getIdFromGid } from "../../utils/gidHelper";
+import { ResourceInfo } from "../common/ResourceInfo";
 import {
   getRandomImageFile,
   getRandomName,
@@ -98,60 +100,37 @@ export const ProductView = () => {
     <Stack
       distribution="fill"
     >
-      <div
-        style={{
-          maxWidth: "800px"
-        }}
-      >
-        <Card title={product.title}
-          actions={[
-            {
-              content: "Edit",
-              onAction: () => navigate("edit")
-            },
-            {
-              content: "Delete",
-              onAction: () => {
-                showConfirmDeleteModal(product, "/");
-              }
-            }
-          ]}
-        >
-          <Stack>
-            <ProductInfo product={product} />
-          </Stack>
-        </Card>
-      </div>
-      <div
-        style={{
-          maxWidth: "500px"
-        }}
-      >
-      <Card
-        title="Variants"
-        actions={variantCardActions}
-      >
-        <Card.Section>
-          <Stack distribution="fill">
-            <VariantsList 
-              variants={
-                product.hasOnlyDefaultVariant 
-                  ? []
-                  : variants.filter((variant) => variant.title !== "Default Title")
-              } 
-            />
-          </Stack>
-        </Card.Section>
-        <Card.Section>
-          <Pagination
-            hasNext={pageInfo.hasNextPage}
-            hasPrevious={pageInfo.hasPreviousPage}
-            onNext={getNextPage}
-            onPrevious={getPrevPage}
-          />
-        </Card.Section>
-      </Card>
-      </div>
+      <Layout>
+        <Layout.Section>
+          <ResourceInfo resource={product} />
+        </Layout.Section>
+        <Layout.Section secondary>
+          <Card
+            title="Variants"
+            actions={variantCardActions}
+          >
+            <Card.Section>
+              <Stack distribution="fill">
+                <VariantsList 
+                  variants={
+                    product.hasOnlyDefaultVariant 
+                      ? []
+                      : variants.filter((variant) => variant.title !== "Default Title")
+                  } 
+                />
+              </Stack>
+            </Card.Section>
+            <Card.Section>
+              <Pagination
+                hasNext={pageInfo.hasNextPage}
+                hasPrevious={pageInfo.hasPreviousPage}
+                onNext={getNextPage}
+                onPrevious={getPrevPage}
+              />
+            </Card.Section>
+          </Card>
+        </Layout.Section>
+      </Layout>
     </Stack>
   );
 }

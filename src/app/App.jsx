@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 import { AppFrame } from "./AppFrame";
 import { NewUserModal } from "../components/modals/NewUserModal";
 import { ReturningUserModal } from "../components/modals/ReturningUserModal";
-import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
 export const App = () => {
-  const { width: windowWidth } = useWindowDimensions();
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
 
@@ -34,8 +32,7 @@ export const App = () => {
       distribution="center"
     >
       <div
-        style={{
-          width: windowWidth * 0.8
+        style={{ 
         }}
       >
         <AppFrame>
