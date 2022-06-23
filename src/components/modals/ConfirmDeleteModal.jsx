@@ -23,14 +23,11 @@ export const ConfirmDeleteModal = ({
   const deleteVariantHook = deleteVariant();
 
   const [processing, setProcessing] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const [errors, setErrors] = useState([]);
 
   const { errorBanner, showErrorBanner } = useModalErrorBanner();
 
   const handleDelete = async () => {
     try {
-      setShowError(false);
       setProcessing(true);
       if (target.__typename === "Product") {
         await deleteProductHook(target.id);
