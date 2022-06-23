@@ -5,7 +5,7 @@ import {
   List 
 } from "@shopify/polaris";
 import { useState, createContext } from "react";
-import { ConfirmDeleteModal } from "../components/common/ConfirmDeleteModal";
+import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
 import { GENERIC_ERROR_TEXT } from "../constants";
 
 export const FeedbackContext = createContext();

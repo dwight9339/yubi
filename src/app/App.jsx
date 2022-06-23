@@ -3,8 +3,8 @@ import { Stack } from "@shopify/polaris"
 import { useRoutePropagation } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 import { AppFrame } from "./AppFrame";
-import { NewUserModal } from "../components/common/NewUserModal";
-import { ReturningUserModal } from "../components/common/ReturningUserModal";
+import { NewUserModal } from "../components/modals/NewUserModal";
+import { ReturningUserModal } from "../components/modals/ReturningUserModal";
 import useWindowDimensions from "../utils/hooks/useWindowDimensions";
 
 export const App = () => {

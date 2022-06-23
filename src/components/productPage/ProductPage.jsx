@@ -8,9 +8,9 @@ import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
 import { useMemo, useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { generateProductGid } from "../../utils/gidHelper";
-import { ConvertProductModal } from "../common/ConvertProductModal";
+import { ConvertProductModal } from "../modals/ConvertProductModal";
 import { UV_TAG } from "../../constants";
-import { AddUvTagModal } from "../common/AddUvTagModal";
+import { AddUvTagModal } from "../modals/AddUvTagModal";
 
 export const ProductPage = () => {
   const navigate = useNavigate();
