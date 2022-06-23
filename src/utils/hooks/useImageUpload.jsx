@@ -4,12 +4,11 @@ import {
   useCallback, 
   useEffect, 
   useMemo, 
-  useContext 
+  useContext
 } from "react";
 import { 
   DropZone,
-  Spinner,
-  Thumbnail
+  Spinner
 } from "@shopify/polaris";
 import { FeedbackContext } from "../../app/AppFrame";
 import {SUPPORTED_IMAGE_TYPES } from "../../constants";
@@ -53,6 +52,33 @@ export const useImageUpload = (parentResource) => {
     uploadImage();
   }, [imageFile]);
 
+  const dropZoneContent = useMemo(() => {
+    if (!(imageLoading || imageFile)) {
+      return <p>Drop image or click to browse</p>;
+    } else if (imageLoading) {
+      return <Spinner />;
+    } else {
+      return <div
+        style={{
+          width: `250px`,
+          height: `250px`,
+          backgroundImage: `url(${
+            imageFile
+              ? window.URL.createObjectURL(imageFile)
+              : (
+                  parentResource?.featuredImage?.url 
+                  || parentResource?.image?.url
+                  || ""
+                )
+          })`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "contain",
+        }}
+      ></div>
+    }
+  }, [imageLoading, imageFile])
+
   const component = useMemo(() =>
     <DropZone
       type="image"
@@ -61,22 +87,16 @@ export const useImageUpload = (parentResource) => {
       onDrop={onDrop}
       customValidator={validator}
     >
-      {imageLoading ? (
-        <Spinner />
-      ) : (
-        <Thumbnail
-          size="large"
-          source={
-            imageFile
-              ? window.URL.createObjectURL(imageFile)
-              : (
-                  parentResource?.featuredImage?.url 
-                  || parentResource?.image?.url
-                  || ""
-                )
-          }
-        />
-      )}
+      <div
+        style={{
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        {dropZoneContent}
+      </div>
     </DropZone>
   , [imageLoading, imageFile]);
 
