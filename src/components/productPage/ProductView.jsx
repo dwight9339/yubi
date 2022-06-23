@@ -43,7 +43,7 @@ export const ProductView = () => {
 
   const variantCardActions = [
     {
-      content: "New variant",
+      content: "Create new variant",
       onAction: () => navigate("new-variant")
     }
   ];
