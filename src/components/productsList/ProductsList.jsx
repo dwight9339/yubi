@@ -11,18 +11,9 @@ import { ProductsListEmptyState } from "./ProductsListEmptyState";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { getIdFromGid } from "../../utils/gidHelper";
-import { upsertProduct } from "../../utils/apiHooks/upsertProduct";
-import { stageImageUpload } from "../../utils/apiHooks/stageImageUpload";
-import {
-  getRandomImageFile,
-  getRandomName,
-  getLoremIpsum
-} from "../../utils/test/randomDataHelper";
 
 export const ProductsList = () => {
   const navigate = useNavigate();
-  const uploadImageHook = stageImageUpload();
-  const createProductHook = upsertProduct();
   const { products, pageInfo, fetchMore } = useOutletContext();
 
   const [productPickerOpen, setProductPickerOpen] = useState(false);
@@ -79,35 +70,6 @@ export const ProductsList = () => {
       onAction: () => navigate("/products", {state: {reload: true}})
     }
   ];
-
-  // Add random product button in dev
-  const createRandomProduct = async () => {
-    const imageFile = await getRandomImageFile();
-    const name = await getRandomName();
-    const loremIpsum = await getLoremIpsum();
-
-    const imageUploadResult = await uploadImageHook(imageFile);
-    const productData = {
-      productTitle: name,
-      productDescription: loremIpsum,
-      imageData: {
-        src: imageUploadResult.src,
-        altText: `Image of ${name}`
-      }
-    };
-
-    const productCreateResult = await createProductHook(productData);
-  }
-
-  if (process.env.NODE_ENV !== "production") {
-    cardActions.splice(0, 0, {
-      content: "Random Product",
-      onAction: async () => {
-        await createRandomProduct();
-        navigate("/products", {state: {reload: true}});
-      }
-    });
-  }
 
   return (
     <div
