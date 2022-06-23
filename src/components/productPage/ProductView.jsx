@@ -102,7 +102,14 @@ export const ProductView = () => {
     >
       <Layout>
         <Layout.Section>
-          <ResourceInfo resource={product} />
+          <ResourceInfo 
+            resource={product} 
+            details={{
+              Description: product.description,
+              Tags: product.tags
+            }}
+            deleteRedirect="/products"
+          />
         </Layout.Section>
         <Layout.Section secondary>
           <Card

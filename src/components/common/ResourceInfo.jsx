@@ -3,21 +3,24 @@ import {
   Stack,
   Heading,
   TextContainer,
-  TextStyle
+  Tag
 } from "@shopify/polaris";
 import { ProductPhoto } from "../common/ProductPhoto";
 import { 
   useLayoutEffect,
   useRef,
-  useState
+  useState,
+  useContext
 } from "react";
 import { useNavigate } from "react-router-dom";
+import { ModalContext } from "../../app/AppFrame";
 
-export const ResourceInfo = ({ resource, deleteRedirect }) => {
+export const ResourceInfo = ({ resource, details, deleteRedirect }) => {
   const image = resource.image || resource.featuredImage;
-  const description = resource.description || resource.description.value;
   const ref = useRef(null);
   const navigate = useNavigate();
+
+  const { showConfirmDeleteModal } = useContext(ModalContext);
 
   const [cardWidth, setCardWidth] = useState(0);
 
@@ -52,12 +55,24 @@ export const ResourceInfo = ({ resource, deleteRedirect }) => {
           />
         </Stack>
       </Card.Section>
-      <Card.Section>
-        <TextContainer>
-          <Heading>Description</Heading>
-          <TextStyle>{description}</TextStyle>
-        </TextContainer>
-      </Card.Section>
+      {Object.entries(details).map(([key, value], i) => {
+        return (
+          <Card.Section key={i}>
+            <TextContainer>
+              <Heading>{key}</Heading>
+              {
+                Array.isArray(value) 
+                  ? value.map((item, i) => {
+                    return (
+                      <Tag key={i}>{item}</Tag>
+                    )
+                  })
+                  : value
+              }
+            </TextContainer>
+          </Card.Section>
+        )
+      })}
     </Card>
     </div>
   );
