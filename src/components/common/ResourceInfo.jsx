@@ -11,11 +11,13 @@ import {
   useRef,
   useState
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ResourceInfo = ({ resource, deleteRedirect }) => {
   const image = resource.image || resource.featuredImage;
   const description = resource.description || resource.description.value;
   const ref = useRef(null);
+  const navigate = useNavigate();
 
   const [cardWidth, setCardWidth] = useState(0);
 
