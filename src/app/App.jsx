@@ -1,5 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { Stack } from "@shopify/polaris"
+import { 
+  Stack
+} from "@shopify/polaris"
 import { useRoutePropagation } from "@shopify/app-bridge-react";
 import { useEffect, useState } from "react";
 import { AppFrame } from "./AppFrame";
@@ -33,6 +35,7 @@ export const App = () => {
     >
       <div
         style={{ 
+          width: "100%"
         }}
       >
         <AppFrame>

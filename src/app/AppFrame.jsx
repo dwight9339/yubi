@@ -2,8 +2,14 @@ import {
   Frame,
   Toast,
   Banner,
-  List
+  List,
+  Button,
+  Popover,
+  ActionList
 } from "@shopify/polaris";
+import {
+  QuestionMarkInverseMajor
+} from '@shopify/polaris-icons';
 import { useState, createContext } from "react";
 import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
 import { GENERIC_ERROR_TEXT } from "../constants";
@@ -33,6 +39,7 @@ export const AppFrame = ({ children }) => {
   const [toastContext, setToastContext] = useState(defaultToastContext);
   const [bannerContext, setBannerContext] = useState(defaultBannerContext);
   const [confirmDeleteContext, setConfirmDeleteContext] = useState(defaultConfirmDeleteContext);
+  const [helpMenuOpen, setHelpMenuOpen] = useState(false);
 
   const showToast = (content="", duration=3000, error=false) => {
     setToastContext({
@@ -70,7 +77,7 @@ export const AppFrame = ({ children }) => {
     });
   }
 
-  const toggleProgressBar = () => setShowProgressBar(!showProgressBar);
+  const toggleHelpMenuOpen = () => setHelpMenuOpen(!helpMenuOpen);
 
   return (
     <Frame>
@@ -117,7 +124,36 @@ export const AppFrame = ({ children }) => {
           </Banner>
           : null
       }
-      
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "flex-end",
+          paddingTop: "10px"
+        }}
+      >
+        
+        <Popover
+          activator={
+            <Button
+              plain
+              icon={QuestionMarkInverseMajor}
+              onClick={toggleHelpMenuOpen}
+            />
+          }
+          active={helpMenuOpen}
+          onClose={() => setHelpMenuOpen(false)}
+        >
+          <ActionList
+            actionRole="menuItem"
+            items={[
+              {
+                content: "Contact Us"
+              }
+            ]}
+          />
+        </Popover>
+      </div>
       <FeedbackContext.Provider value={{
         showToast,
         showBanner,
