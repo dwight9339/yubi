@@ -6,9 +6,9 @@ import {
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { getIdFromGid } from "../../utils/gidHelper";
+import { getIdFromGid } from "../../../utils/gidHelper";
 import { useContext } from "react";
-import { ModalContext } from "../../app/AppFrame";
+import { ModalContext } from "../../../app/AppFrame";
 
 import { VariantsPreview } from "./VariantsPreview";
 

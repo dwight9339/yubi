@@ -5,7 +5,7 @@ import {
   TextStyle,
   List
 } from "@shopify/polaris";
-import { ProductPhoto } from "../common/ProductPhoto";
+import { ProductPhoto } from "../../common/ProductPhoto";
 
 export const ProductInfo = ({ product }) => {
   return (

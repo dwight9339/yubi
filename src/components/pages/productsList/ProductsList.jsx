@@ -5,12 +5,12 @@ import {
   Stack
 } from "@shopify/polaris"
 import { ProductsListItem } from "./ProductsListItem";
-import { QUERY_PAGE_SIZE } from "../../constants";
+import { QUERY_PAGE_SIZE } from "../../../constants";
 import { ResourcePicker } from "@shopify/app-bridge-react";
 import { ProductsListEmptyState } from "./ProductsListEmptyState";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { getIdFromGid } from "../../utils/gidHelper";
+import { getIdFromGid } from "../../../utils/gidHelper";
 
 export const ProductsList = () => {
   const navigate = useNavigate();

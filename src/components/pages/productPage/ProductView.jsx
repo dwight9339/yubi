@@ -6,8 +6,8 @@ import {
 } from "@shopify/polaris";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { VariantsList } from "./VariantsList";
-import { QUERY_PAGE_SIZE } from "../../constants";
-import { ResourceInfo } from "../common/ResourceInfo";
+import { QUERY_PAGE_SIZE } from "../../../constants";
+import { ResourceInfo } from "../../common/ResourceInfo";
 
 export const ProductView = () => {
   const navigate = useNavigate();

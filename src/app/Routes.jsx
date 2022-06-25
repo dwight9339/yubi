@@ -1,13 +1,13 @@
 import { Routes as ReactRoutes, Route, Navigate } from "react-router-dom"
 import { App } from "./App";
-import { ProductsListPage } from "../components/productsList/ProductsListPage";
-import { ProductsList } from "../components/productsList/ProductsList";
-import { ProductPage } from "../components/productPage/ProductPage";
-import { ProductView } from "../components/productPage/ProductView";
+import { ProductsListPage } from "../components/pages/productsList/ProductsListPage";
+import { ProductsList } from "../components/pages/productsList/ProductsList";
+import { ProductPage } from "../components/pages/productPage/ProductPage";
+import { ProductView } from "../components/pages/productPage/ProductView";
 import { ProductForm } from "../components/forms/ProductForm";
-import { VariantPage } from "../components/variantPage/VariantPage";
+import { VariantPage } from "../components/pages/variantPage/VariantPage";
 import { VariantForm } from "../components/forms/VariantForm";
-import { VariantView } from "../components/variantPage/VariantView";
+import { VariantView } from "../components/pages/variantPage/VariantView";
 
 export const Routes = () => {
   return (

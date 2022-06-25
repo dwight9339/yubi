@@ -1,9 +1,9 @@
-import { getIdFromGid } from "../../utils/gidHelper";
-import { useCurrencyFormatter } from "../../utils/hooks/useCurrencyFormatter";
-import { ResourceInfo } from "../common/ResourceInfo";
+import { getIdFromGid } from "../../../utils/gidHelper";
+import { useCurrencyFormatter } from "../../../utils/hooks/useCurrencyFormatter";
+import { ResourceInfo } from "../../common/ResourceInfo";
 import { useOutletContext } from "react-router-dom";
 
-import useWindowDimensions from "../../utils/hooks/useWindowDimensions";
+import useWindowDimensions from "../../../utils/hooks/useWindowDimensions";
 
 export const VariantView = () => {
   const formatCurrency = useCurrencyFormatter();

@@ -6,11 +6,11 @@ import {
   Thumbnail,
   Heading
 } from "@shopify/polaris"
-import { getIdFromGid } from "../../utils/gidHelper";
+import { getIdFromGid } from "../../../utils/gidHelper";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { ModalContext } from "../../app/AppFrame";
-import { useCurrencyFormatter } from "../../utils/hooks/useCurrencyFormatter";
+import { ModalContext } from "../../../app/AppFrame";
+import { useCurrencyFormatter } from "../../../utils/hooks/useCurrencyFormatter";
 
 export const VariantsList = ({ variants }) => {
   const navigate = useNavigate();

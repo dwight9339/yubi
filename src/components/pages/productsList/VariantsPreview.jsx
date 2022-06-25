@@ -8,7 +8,7 @@ import {
 } from "@shopify/polaris";
 import { CaretUpMinor, CaretDownMinor } from "@shopify/polaris-icons";
 import { useNavigate } from "react-router-dom";
-import { getIdFromGid } from "../../utils/gidHelper";
+import { getIdFromGid } from "../../../utils/gidHelper";
 
 export const VariantsPreview = ({ productId, items, listOpen, toggleList }) => {
   const navigate = useNavigate();

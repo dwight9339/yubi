@@ -11,6 +11,7 @@ import {
   QuestionMarkInverseMajor
 } from '@shopify/polaris-icons';
 import { useState, createContext } from "react";
+import { Navigate } from "react-router-dom";
 import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
 import { GENERIC_ERROR_TEXT } from "../constants";
 
@@ -148,7 +149,8 @@ export const AppFrame = ({ children }) => {
             actionRole="menuItem"
             items={[
               {
-                content: "Contact Us"
+                content: "Contact Us",
+                onAction: () => Navigate("/contact")
               }
             ]}
           />

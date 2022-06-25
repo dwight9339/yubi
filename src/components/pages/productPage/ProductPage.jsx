@@ -4,14 +4,14 @@ import {
   TextContainer,
   TextStyle
 } from "@shopify/polaris"
-import { fetchProduct } from "../../utils/apiHooks/fetchProduct";
+import { fetchProduct } from "../../../utils/apiHooks/fetchProduct";
 import { useMemo, useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation, Outlet } from "react-router-dom";
-import { generateProductGid } from "../../utils/gidHelper";
-import { ConvertProductModal } from "../modals/ConvertProductModal";
-import { UV_TAG } from "../../constants";
-import { AddUvTagModal } from "../modals/AddUvTagModal";
-import { LoadingPage } from "../common/LoadingPage";
+import { generateProductGid } from "../../../utils/gidHelper";
+import { ConvertProductModal } from "../../modals/ConvertProductModal";
+import { UV_TAG } from "../../../constants";
+import { AddUvTagModal } from "../../modals/AddUvTagModal";
+import { LoadingPage } from "../../common/LoadingPage";
 
 export const ProductPage = () => {
   const navigate = useNavigate();

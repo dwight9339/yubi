@@ -5,12 +5,12 @@ import {
   TextContainer,
   TextStyle
 } from "@shopify/polaris";
-import { fetchVariant } from "../../utils/apiHooks/fetchVariant";
+import { fetchVariant } from "../../../utils/apiHooks/fetchVariant";
 import { useLocation, useNavigate, useParams, Outlet } from "react-router-dom";
-import { generateVariantGid, getIdFromGid } from "../../utils/gidHelper";
+import { generateVariantGid, getIdFromGid } from "../../../utils/gidHelper";
 
 import { useMemo, useEffect } from "react";
-import { LoadingPage } from "../common/LoadingPage";
+import { LoadingPage } from "../../common/LoadingPage";
 
 export const VariantPage = () => {
   const location = useLocation();
