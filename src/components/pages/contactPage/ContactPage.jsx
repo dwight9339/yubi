@@ -92,7 +92,7 @@ export const ContactPage = () => {
               </FormLayout.Group>
               <FormLayout.Group>
                 <TextField
-                  Label="Message"
+                  label="Message"
                   multiline
                   value={messageBody}
                   onChange={setMessageBody}
