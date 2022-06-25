@@ -152,7 +152,10 @@ export const AppFrame = ({ children }) => {
             items={[
               {
                 content: "Contact Us",
-                onAction: () => navigate("/contact")
+                onAction: () => {
+                  navigate("/contact");
+                  setHelpMenuOpen(false);
+                }
               }
             ]}
           />
