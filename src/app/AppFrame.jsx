@@ -11,7 +11,7 @@ import {
   QuestionMarkInverseMajor
 } from '@shopify/polaris-icons';
 import { useState, createContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
 import { GENERIC_ERROR_TEXT } from "../constants";
 
@@ -19,6 +19,8 @@ export const FeedbackContext = createContext();
 export const ModalContext = createContext();
 
 export const AppFrame = ({ children }) => {
+  const navigate = useNavigate();
+
   const defaultToastContext = {
     show: false,
     content: "",
@@ -150,7 +152,7 @@ export const AppFrame = ({ children }) => {
             items={[
               {
                 content: "Contact Us",
-                onAction: () => Navigate("/contact")
+                onAction: () => navigate("/contact")
               }
             ]}
           />

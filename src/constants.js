@@ -30,3 +30,9 @@ export const UV_TEMPLATE_SUFFIX = "unique-variants";
 export const IMAGE_SIZE_LIMIT = 20.971e6; // In bytes
 export const SUPPORTED_IMAGE_TYPES = ["jpeg", "png", "gif"]
 export const GENERIC_ERROR_TEXT = "We've encountered an error. Please try again. If the problem persists, please file a support ticket."
+
+
+// EmailJS
+export const EMAILJS_SERVICE_ID = "service_rl72ant"
+export const EMAILJS_TEMPLATE_ID = "template_4qefc5m"
+export const EMAILJS_USER_ID = "DzkUysR94eWcNmp5j"
