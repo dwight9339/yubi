@@ -95,7 +95,6 @@ export const VariantForm = () => {
               <TextField 
                 type="currency"
                 label="Price"
-                placeholder={variantPrice.toFixed(2)}
                 value={variantPrice}
                 onChange={setVariantPrice}
                 autoComplete="off"
