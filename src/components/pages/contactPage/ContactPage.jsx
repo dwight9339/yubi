@@ -72,8 +72,7 @@ export const ContactPage = () => {
               <FormLayout.Group>
                 <TextContainer>
                   <TextStyle>
-                    Have an issue? Please include a screenshot to help use diagnose 
-                    the problem.
+                    Have an issue? Please be as detailed as possible and include any error text.
                   </TextStyle>
                 </TextContainer>
               </FormLayout.Group>
