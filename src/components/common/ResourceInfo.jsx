@@ -60,15 +60,26 @@ export const ResourceInfo = ({ resource, details, deleteRedirect }) => {
           <Card.Section key={i}>
             <TextContainer>
               <Heading>{key}</Heading>
-              {
-                Array.isArray(value) 
-                  ? value.map((item, i) => {
-                    return (
-                      <Tag key={i}>{item}</Tag>
-                    )
-                  })
-                  : value
-              }
+              <div
+                style={{
+                }}
+              >
+                {
+                  Array.isArray(value) 
+                    ? value.map((item, i) => {
+                      return (
+                        <div
+                          style={{
+                            margin: "2px"
+                          }}
+                        >
+                          <Tag key={i}>{item}</Tag>
+                        </div> 
+                      )
+                    })
+                    : value
+                }
+              </div>
             </TextContainer>
           </Card.Section>
         )
