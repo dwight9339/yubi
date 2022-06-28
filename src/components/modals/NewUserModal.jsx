@@ -2,34 +2,46 @@ import {
   Modal,
   Heading
 } from "@shopify/polaris";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import { paragraphs, images, pages } from "../../assets/walkthroughData.json";
-
-const PageImage = ({ image }) => {
-  return (
-    <img
-      src={image.src}
-      alt={image.alt}
-    />
-  )
-}
+import { ProductPhoto } from "../common/ProductPhoto";
 
 const PageContents = ({ page }) => {
+  const ref = useRef(null);
+  const [cardWidth, setCardWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    setCardWidth(ref.current.offsetWidth);
+  }, []);
+
   return (
-    <>
+    <div
+      ref={ref}
+    >
       {
         page.map(([elementType, element]) => {
+          let elementComponent = null;
+
           if (elementType === "header") {
-            return <Heading>{element}</Heading>;
+            elementComponent = <Heading>{element}</Heading>;
           } else if (elementType === "paragraph") {
-            return <p>{paragraphs[element]}</p>;
+            elementComponent = <p>{paragraphs[element]}</p>;
           } else if (elementType === "image") {
-            return <PageImage image={images[element]} />;
+            elementComponent = <ProductPhoto image={images[element]} cardWidth={cardWidth} />;
           }
+
+          return (
+            <div
+              style={{
+                marginTop: "10px"
+              }}
+            >
+              {elementComponent}
+            </div>
+          )
         })
       }
-    </>
+    </div>
   )
 }
 
