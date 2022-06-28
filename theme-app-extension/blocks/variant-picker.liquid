@@ -82,7 +82,7 @@
     <tbody class="variant-selection-grid-container">
       {% tablerow variant in product.variants cols: block.settings.num_cols %}
         <div class="variant-selection-grid-item variant-thumbnail" data-variant-id="{{ variant.id }}" data-selected="{{ variant.selected }}">
-          {{ variant | image_url: width: block.settings.thumbnail_width, height: block.settings.thumbnail_width, crop: "center" | image_tag }}
+          {{ variant | image_url: width: block.settings.thumbnail_width, height: block.settings.thumbnail_width, crop: block.settings.thumbnail_crop | image_tag }}
         </div>
       {% endtablerow %}
     </tbody>
@@ -151,6 +151,33 @@
       "step": 50,
       "unit": "px",
       "default": 800
+    },
+    {
+      "type": "select",
+      "label": "Thumbnail crop",
+      "id": "thumbnail_crop",
+      "options": [
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Top",
+          "value": "top"
+        },
+        {
+          "label": "Bottom",
+          "value": "bottom"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        },
+        {
+          "label": "Left",
+          "value": "left"
+        }
+      ]
     },
     // Scrollbar settings
     {
