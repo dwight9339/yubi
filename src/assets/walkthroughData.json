@@ -1,0 +1,112 @@
+{
+  "paragraphs": {
+    "intro": "Welcome to Unique Variants Manager! This app helps you create and manage groups of unique products as variants of a generic parent product. Let’s do a quick walkthrough with a real-world example.",
+    "example_setup": "Say you’ve just finished a batch of hand-carved wooden spoons, each with its own unique style and personality, and now you’re ready to share them with the world. Rather than create a product page for each individual spoon, it’s much easier and more efficient to create a parent product with a general description and list each spoon as a variant. That way we can use the parent product’s description to talk about the similarities of the spoons (wooden, spoony, and hand-crafted with love) and a description metafield on each variant to talk about what makes each one unique (roasted mahogany with tiny knot on the handle). This also helps improve site SEO since we’re not constantly adding and removing new product pages for our one-of-a-kind handicrafts and we now have a landing page for customers looking for a particular type of product.",
+    "first_glance": "After opening the app for the first time, you'll see an empty products list. Any products marked with the 'unique variants' tag will appear in this list.",
+    "create_product": "To create a new product click “Create new product” on the products list page. Fill out the form with details about your parent product. We can add a generic image for the product to be shown on collection pages.",
+    "submit_product": "Click “Create” to submit.",
+    "product_info_page_expo": "Next we’ll see the product info page for our newly created parent product. Let’s go ahead and start adding our spoons!", 
+    "create_variant":"Click “Create new variant” and fill out the form. We can create a unique name and description for this particular spoon. Don’t forget to include a picture!",
+    "delete_after_purchase_checkbox": "Toward the bottom of the form we see the option “Delete after purchase”. Checking this will enable webhook that deletes this variant when a customer places a confirmed order for it.",
+    "submit_new_variant": "Click Create.",
+    "variants_list_expo": "We see the spoon has been added to the product’s list of variants. Let’s repeat the previous step to add the rest of our spoons.",
+    "app_blocks_expo": "Head over to the theme customizer. Click the page dropdown at the top, select Products, then click “Create template”. Name it Unique Variants and click Create template again.",
+    "create_new_product_page_template": "Looking at the product information section, you’ll see the standard variant picker which lists all available product options. In this case, it shows the names we’ve given each of our unique spoon variants. Unique Variants Manager stores these variant names as values for an option called Title. This way works for displaying our variants but this app also includes a special variant picker which displays thumbnail images of our variants rather than just their names.",
+    "remove_standard_blocks": "To use this, first remove the standard variant picker block by selecting Variant picker under the Product information section, then click remove block at the bottom of the block settings section.",
+    "add_custom_blocks": "Then, click add block in the Product information section and select Unique Variant Picker from the Apps section to add our unique variant picker block. Click and drag to place it between the Price and Quantity selector blocks where the old variant picker block was located. Now you should see a grid of thumbnails showing off your spoons! Feel free to tweak the block settings at this point to get the grid looking just right.",
+    "variant_blocks_overview": "Clicking a different variant populates each block with that variant’s details.",
+    "variant_picker_block_explanation": "",
+    "variant_info_block_explanation": "",
+    "conclusion": "Congratulations, you’re all set up to start selling your one-of-a-kind products!"
+  },
+  "images": {
+    "empty_products_list": {
+      "src": "https://i.imgur.com/Invt2cp.jpg",
+      "alt": "Screenshot of empty products list"
+    },
+    "filled_product_form": {
+      "src": "https://i.imgur.com/ptChvMr.jpg",
+      "alt": "Screenshot of filled out product form"
+    },
+    "product_page_no_variants": {
+      "src": "https://i.imgur.com/oMybzfO.jpg",
+      "alt": "Screenshot of new product page"
+    },
+    "filled_variant_form": {
+      "src": "https://i.imgur.com/F6mOvyA.png",
+      "alt": "Screenshot of filled out variant form"
+    },
+    "product_page_w_variants": {
+      "src": "https://i.imgur.com/9B2kHe9.jpg",
+      "alt": "Screenshot of product page with several variants in variants list"
+    },
+    "theme_customizer_create_template": {
+      "src": "https://i.imgur.com/L3Gg94x.png",
+      "alt": "Screenshot of filled out template creation modal"
+    },
+    "theme_customizer_add_block": {
+      "src": "https://i.imgur.com/MJE0Ypw.jpg",
+      "alt": "Screenshot of theme editor with product page open and add block option selected under the product information section"
+    },
+    "theme_customizer_select_unique_variant_picker": {
+      "src": "https://i.imgur.com/WTMYR7h.jpg",
+      "alt": "Screenshot of theme editor with product page open with unique variant picker block selected"
+    },
+    "theme_customizer_picker_and_info_blocks_added": {
+      "src": "https://i.imgur.com/FhWivJW.jpg",
+      "alt": "Screenshot of theme editor with product page open showing unique variant picker and unique variant info blocks underneath product information section"
+    },
+    "theme_customizer_variant_selected": {
+      "src": "https://i.imgur.com/yRT6PW2.jpg",
+      "alt": "Screenshot of theme editor with product page open showing result after clicking variant thumbnail in the selector with variant info block options bar open"
+    },
+    "store_preview": {
+      "src": "https://i.imgur.com/xzv5rGq.jpg",
+      "alt": "Screenshot of store with product page open"
+    }
+  },
+  "pages": [
+    [
+      ["paragraph", "intro"]
+    ],
+    [
+      ["paragraph", "example_setup"]
+    ],
+    [
+      ["header", "Creating products"],
+      ["paragraph", "first_glance"],
+      ["image", "empty_products_list"],
+      ["paragraph", "create_product"],
+      ["image", "filled_product_form"],
+      ["paragraph", "submit_product"]
+    ],
+    [
+      ["header", "Adding variants"],
+      ["paragraph", "product_page_expo"],
+      ["image", "product_page_no_variants"],
+      ["paragraph", "variants_list_expo"],
+      ["paragraph", "create_variant"],
+      ["image", "filled_variant_form"],
+      ["paragraph", "delete_after_purchase_checkbox"],
+      ["paragraph", "submit_variant"]
+    ],
+    [
+      ["header", "Using included app blocks"],
+      ["paragraph", "app_blocks_expo"],
+      ["paragraph", "create_new_product_page_template"],
+      ["image", "theme_customizer_create_template"],
+      ["paragraph", "remove_standard_blocks"],
+      ["paragraph", "add_custom_blocks"],
+      ["image", "theme_customizer_select_unique_variant_picker"],
+      ["image", "theme_customizer_picker_and_info_blocks_added"]
+    ],
+    [
+      ["header", "App blocks explained"],
+      ["paragraph", "variant_blocks_overview"],
+      ["image", "theme_customizer_variant_selected"]
+    ],
+    [
+      ["paragraph", "conclusion"]
+    ]
+  ]
+}
