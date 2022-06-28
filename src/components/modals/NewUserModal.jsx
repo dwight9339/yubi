@@ -19,7 +19,7 @@ const PageContents = ({ page }) => {
       ref={ref}
     >
       {
-        page.map(([elementType, element]) => {
+        page.map(([elementType, element], i) => {
           let elementComponent = null;
 
           if (elementType === "header") {
@@ -33,7 +33,7 @@ const PageContents = ({ page }) => {
           return (
             <div
               style={{
-                marginTop: "10px"
+                marginTop: i === 0 ? "0px" : "10px"
               }}
             >
               {elementComponent}
