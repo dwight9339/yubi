@@ -33,6 +33,6 @@ export const GENERIC_ERROR_TEXT = "We've encountered an error. Please try again.
 
 
 // EmailJS
-export const EMAILJS_SERVICE_ID = "service_rl72ant"
-export const EMAILJS_TEMPLATE_ID = "template_4qefc5m"
-export const EMAILJS_USER_ID = "DzkUysR94eWcNmp5j"
+export const EMAILJS_SERVICE_ID = <INSERT SERVICE ID>
+export const EMAILJS_TEMPLATE_ID = <INSERT TEMPLATE ID>
+export const EMAILJS_USER_ID = <INSERT API PUBLIC KEY>
