@@ -1,0 +1,75 @@
+{
+  "sections": [
+    {
+      "title": "Introduction",
+      "contents": [
+        {
+          "type": "list",
+          "data": [
+            "Manage groups of similar-but-unique products as variants of a parent product",
+            "Allow products to share copy",
+            "Improve SEO by grouping products under a single shared address",
+            "Have variants be automatically deleted after purchase",
+            "Let customers browse variants visually with the thumbnail grid variant picker app block",
+            "Dynamically update product page text based on the currently selected variant with the variant info app block"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Products",
+      "subsections": [
+        {
+          "title": "Browsing Products",
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "Products with the tag 'unique variants' will appear in the Products List on the home page of the app. To search for products not listed, click 'Search products' at the top of the Products list. This will open a product search modal where you can find any active product in your store."
+            }
+          ]
+        },
+        {
+          "title": "Converting Products",
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "For a product to be used as a parent product, it needs to have only one (if any) options defined. Opening the page of a product that does not meet this requirement will cause the product conversion prompt to appear. When a product is converted, all of its existing variants are deleted and the product is updated with the 'unique variants' tag so that it will appear in the Products List. If you choose not to accept the conversion, nothing will be changed and you will be returned to the home page of the app."
+            }
+          ] 
+        },
+        {
+          "title": "Viewing Products",
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "Information about a product, including its name, description, tags, and a list of variants, can be viewed on the product's Product Info page. You can navigate to a product's Product Info page by clicking it in the Products List or by selecting it in the product search modal."
+            }
+          ]
+        },
+        {
+          "title": "Editing Products",
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "Product information can be updated on the Product Edit page. You can navigate to a product's Product Edit page by selecting the Edit quick action that appears when hovering over a product's list entry in the Products List or by selecting the Edit action at the top of the product's info card on the product's Product Info page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Variants",
+      "subsections": [
+        {
+          "title": "Browsing Variants",
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "A list of variants for a particular product can be viewed on the product's Product Info page. Clicking any variant's entry in this list will navigate you to the variant's Variant Info page. Clicking the Edit quick action for a variant will navigate you to that variant's edit page. Clicking the Delete quick action for a variant will open a prompt to delete the selected variant. Additionally, a preview of the first three of a product's variants can be viewed by opening the Variants Preview section of a product list item in the Products List on the home page of the app."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
