@@ -9,6 +9,7 @@ import { VariantPage } from "../components/pages/variantPage/VariantPage";
 import { VariantForm } from "../components/forms/VariantForm";
 import { VariantView } from "../components/pages/variantPage/VariantView";
 import { ContactPage } from "../components/pages/contactPage/ContactPage";
+import { DocumentationPage } from "../components/pages/documentationPage/DocumentationPage";
 
 export const Routes = () => {
   return (
@@ -33,6 +34,7 @@ export const Routes = () => {
           </Route>
         </Route>
         <Route path="contact" element={<ContactPage />} />
+        <Route path="documentation" element={<DocumentationPage />} />
       </Route>
     </ReactRoutes>
   );
