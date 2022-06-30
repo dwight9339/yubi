@@ -3,7 +3,7 @@ import {
   Card
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sections } from "../../../assets/documentationData.json";
 
 import { TableOfContents } from "./TableOfContents";
@@ -13,16 +13,22 @@ export const DocumentationPage = () => {
   const navigate = useNavigate();
 
   const [currentSection, setCurrentSection] = useState(sections[0]);
-  const [selectedSubsection, setSelectedSubsection] = useState(null);
+  const [currentSubsection, setCurrentSubsection] = useState(null);
+  const [anchor, setAnchor] = useState(null);
 
   const updateSection = (sectionTitle) => {
-    setSelectedSubsection(null);
-    setCurrentSection(sections.find((section) => section.title === sectionTitle));
+    setCurrentSection(sections.find(({ title }) => title === sectionTitle));
   }
 
-  const updateSubsection = (subsectionTitle) => {
-    setSelectedSubsection(subsectionTitle);
-  }
+  useEffect(() => {
+    console.log(`currentSubsection: ${currentSubsection}`);
+  }, [currentSubsection]);
+
+  useEffect(() => {
+    if (!anchor) return;
+
+    document.getElementById(anchor).scrollIntoView();
+  }, [anchor]);
 
   return (
     <Page
@@ -44,15 +50,37 @@ export const DocumentationPage = () => {
         >
           <TableOfContents 
             sections={sections} 
-            updateSelection={updateSection}
+            currentSection={currentSection.title}
+            onNavClick={({ sectionTitle }) => {
+              updateSection(sectionTitle)
+              setCurrentSubsection(null);
+            }}
+            onSubnavClick={({ subsectionTitle }) => {
+              setCurrentSubsection(subsectionTitle);
+              setAnchor(subsectionTitle);
+            }}
           />
-          <PageContents
-            section={currentSection}
-            selectedSubsection={selectedSubsection}
-          />
+          <div
+            style={{
+              padding: "10px",
+              maxHeight: "600px",
+              overflowY: "scroll"
+            }}
+          >
+            <PageContents
+              section={currentSection}
+            />
+          </div>
           <TableOfContents 
             sections={currentSection.subsections} 
-            updateSelection={updateSubsection}
+            currentSection={currentSubsection}
+            onNavClick={({ sectionTitle }) => {
+              setCurrentSubsection(sectionTitle);
+              setAnchor(sectionTitle);
+            }}
+            onSubnavClick={({ subsectionTitle }) => {
+              setAnchor(subsectionTitle);
+            }}
           />
         </div>
       </Card>

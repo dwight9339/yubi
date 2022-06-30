@@ -13,7 +13,7 @@ import {
 
 import { ContentItem } from "./ContentItem";
 
-export const PageContents = ({ section, selectedSubsection }) => {
+export const PageContents = ({ section }) => {
   if (!section) return null;
 
   const ref = useRef(null);
@@ -29,11 +29,11 @@ export const PageContents = ({ section, selectedSubsection }) => {
     <div
       ref={ref}
       style={{
-        padding: "15px"
+        padding: "10px"
       }}
     >
       <TextContainer>
-        <Heading>{section.title}</Heading>
+        <Heading id={section.title}>{section.title}</Heading>
         {section.contents && section.contents.map((item, i) => {
           return <ContentItem 
             item={item} 
@@ -42,25 +42,9 @@ export const PageContents = ({ section, selectedSubsection }) => {
           />;
         })}
       </TextContainer>
-      {section.subsections && section.subsections.map(({ title, contents }, i) => {
+      {section.subsections && section.subsections.map((subsection, i) => {
         return (
-          <div 
-            key={i}
-            style={{
-              marginTop: "20px"
-            }}
-          >
-            <TextContainer>
-              <Subheading>{title}</Subheading>
-              {contents.map((item, j) => {
-                return <ContentItem 
-                  item={item} 
-                  key={j} 
-                  sectionWidth={sectionWidth}
-                />;
-              })}
-            </TextContainer>
-          </div>
+          <PageContents section={subsection} key={i} />
         );
       })}  
     </div>

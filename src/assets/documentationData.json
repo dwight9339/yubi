@@ -235,7 +235,18 @@
         },
         {
           "title": "Settings",
-          "contents": []
+          "contents": [],
+          "subsections": [
+            {
+              "title": "Columns",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the number of columns in the thumbnail grid"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
