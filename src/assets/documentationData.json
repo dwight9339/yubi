@@ -245,6 +245,138 @@
                   "data": "Sets the number of columns in the thumbnail grid"
                 }
               ]
+            },
+            {
+              "title": "Thumbnail padding",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the space between thumbnail images"
+                }
+              ]
+            },
+            {
+              "title": "Thumbnail width",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the width of each thumbnail image. Note: Since thumbnail images are square, this also adjusts the height."
+                }
+              ]
+            },
+            {
+              "title": "Thumbnail border width",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the thickness of the border that appears on the thumbnail image of the selected variant and on each thumbnail on mouse hover."
+                }
+              ]
+            },
+            {
+              "title": "Thumbnail border color",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the color of the border that appears on the thumbnail image of the selected variant and on each thumbnail on mouse hover."
+                }
+              ]
+            },
+            {
+              "title": "Thumbnail grid max height",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets maximum height of the thumbnail grid before it becomes scrollable."
+                }
+              ]
+            },
+            {
+              "title": "Thumbnail crop",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Decides which part of the product image will be kept if the image becomes cropped. Note: To prevent cropping, use square product images"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Scrollbar settings",
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "The scrollbar settings adjust the appearance of the scrollbar element that appears when the thumbnail grid's height exceeds the Thumbnail grid max height setting."
+            },
+            {
+              "type": "paragraph",
+              "data": "Scrollbar settings may produce different results depending on the browser used. Please test in multiple browsers for best results. Certain scrollbar settings are only applicable to Webkit browsers such as Chrome and Safari. These settings are marked as 'Webkit only'."
+            }
+          ],
+          "subsections": [
+            {
+              "title": "Show scrollbar",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Toggles whether a scrollbar is shown when scrolling thumbnail grid section."
+                }
+              ]
+            },
+            {
+              "title": "Thumb color",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the color of the thumb element of the scrollbar."
+                }
+              ]
+            },
+            {
+              "title": "Track color",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the color of the track element of the scrollbar."
+                }
+              ]
+            },
+            {
+              "title": "Width",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Modifies the width of the scrollbar. This setting is only applicable in Firefox."
+                }
+              ]
+            },
+            {
+              "title": "Webkit width",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Modifies the width of the scrollbar. Only applicable in Webkit browsers."
+                }
+              ]
+            },
+            {
+              "title": "Corner radius",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the degree of rounding on the corners of the scrollbar's thumb and track elements. Only applicable in Webkit browsers."
+                }
+              ]
+            },
+            {
+              "title": "Disappear scrollbar",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Causes the scrollbar to become invisible whenever the mouse leaves the thumbnail grid element."
+                }
+              ]
             }
           ]
         }
