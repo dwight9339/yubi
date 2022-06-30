@@ -20,38 +20,87 @@
       "title": "Products",
       "subsections": [
         {
-          "title": "Browsing Products",
+          "title": "Browsing products",
           "contents": [
             {
               "type": "paragraph",
-              "data": "Products with the tag 'unique variants' will appear in the Products List on the home page of the app. To search for products not listed, click 'Search products' at the top of the Products list. This will open a product search modal where you can find any active product in your store."
+              "data": "Products with the tag 'unique variants' will appear in the Products List on the home page of the app."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/RZQAH6x.png",
+                "altText": "Screenshot of products list page",
+                "width": 453,
+                "height": 622
+              }
+            },
+            {
+              "type": "paragraph",
+              "data": "To search for products not listed, click 'Search products' at the top of the Products list. This will open a product search modal where you can find any active product in your store."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/kWNmhQo.png",
+                "altText": "Screenshot of product search modal",
+                "width": 752,
+                "height": 683
+              }
             }
           ]
         },
         {
-          "title": "Converting Products",
+          "title": "Converting products",
           "contents": [
             {
               "type": "paragraph",
               "data": "For a product to be used as a parent product, it needs to have only one (if any) options defined. Opening the page of a product that does not meet this requirement will cause the product conversion prompt to appear. When a product is converted, all of its existing variants are deleted and the product is updated with the 'unique variants' tag so that it will appear in the Products List. If you choose not to accept the conversion, nothing will be changed and you will be returned to the home page of the app."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/lz8qYQO.png",
+                "altText": "Screenshot of product info page with product conversion prompt open",
+                "width": 996,
+                "height": 793
+              }
             }
           ] 
         },
         {
-          "title": "Viewing Products",
+          "title": "Viewing products",
           "contents": [
             {
               "type": "paragraph",
               "data": "Information about a product, including its name, description, tags, and a list of variants, can be viewed on the product's Product Info page. You can navigate to a product's Product Info page by clicking it in the Products List or by selecting it in the product search modal."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/jXTKSSw.png",
+                "altText": "Screenshot of product info page",
+                "width": 980,
+                "height": 813 
+              }
             }
           ]
         },
         {
-          "title": "Editing Products",
+          "title": "Editing products",
           "contents": [
             {
               "type": "paragraph",
               "data": "Product information can be updated on the Product Edit page. You can navigate to a product's Product Edit page by selecting the Edit quick action that appears when hovering over a product's list entry in the Products List or by selecting the Edit action at the top of the product's info card on the product's Product Info page"
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/DMDaITq.png",
+                "altText": "Screenshot of product edit page",
+                "width": 502,
+                "height": 814
+              }
             }
           ]
         }
@@ -61,22 +110,132 @@
       "title": "Variants",
       "subsections": [
         {
-          "title": "Browsing Variants",
+          "title": "Browsing variants",
           "contents": [
             {
               "type": "paragraph",
-              "data": "A list of variants for a particular product can be viewed on the product's Product Info page. Clicking any variant's entry in this list will navigate you to the variant's Variant Info page. Clicking the Edit quick action for a variant will navigate you to that variant's edit page. Clicking the Delete quick action for a variant will open a prompt to delete the selected variant. Additionally, a preview of the first three of a product's variants can be viewed by opening the Variants Preview section of a product list item in the Products List on the home page of the app."
+              "data": "A list of variants for a particular product can be viewed on the product's Product Info page. Clicking any variant's entry in this list will navigate you to the variant's Variant Info page. Clicking the Edit quick action for a variant will navigate you to that variant's edit page. Clicking the Delete quick action for a variant will open a prompt to delete the selected variant."
             },
             {
               "type": "image",
               "data": {
-                "url": "https://i.imgur.com/wcAmrNv.png",
+                "url": "https://i.imgur.com/PJfpE1r.png",
+                "altText": "Screenshot showing variants list on product info page",
+                "width": 980,
+                "height": 813
+              }
+            },
+            {
+              "type": "paragraph",
+              "data": "Additionally, a preview of the first three of a product's variants can be viewed by opening the Variants Preview section of a product list item in the Products List on the home page of the app."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/LCK8jCt.png",
                 "altText": "Screenshot showing variants preview section for a product",
                 "width": 621,
                 "height": 602
               }
             }
           ]
+        },
+        {
+          "title": "Creating variants",
+          "contents": []
+        }
+        ,
+        {
+          "title": "Viewing variants",
+          "contents": []
+        }
+        ,
+        {
+          "title": "Editing variants",
+          "contents": []
+        },
+        {
+          "title": "Deleting variants",
+          "contents": []
+        },
+        {
+          "title": "Delete variants on purchase",
+          "contents": []
+        }
+      ]
+    },
+    {
+      "title": "App Blocks",
+      "contents": [
+        {
+          "type": "paragraph",
+          "data": "The app includes two app blocks that can be added to your shop's theme. Check to make sure that your theme supports app blocks. This section discusses how to add and remove the app blocks. For more information about the included app blocks, see their dedicated sections."
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Installing app blocks",
+          "contents": []
+        },
+        {
+          "title": "Removing app blocks",
+          "contents": []
+        }
+      ]
+    },
+    {
+      "title": "Unique Variants Picker Block",
+      "contents": [
+        {
+          "type": "paragraph",
+          "data": "The Unique Variants Picker app block displays a grid of thumbnail images of a product's variants allowing users to browse variants visually."
+        },
+        {
+          "type": "image",
+          "data": {
+            "url": "",
+            "altText": "Screenshot of Unique Variants Picker block in use on a product page",
+            "width": 500,
+            "height": 500
+          }
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Usage details",
+          "contents": []
+        },
+        {
+          "title": "Settings",
+          "contents": []
+        }
+      ]
+    },
+    {
+      "title": "Unique Variants Info Block",
+      "contents": [
+        {
+          "type": "paragraph",
+          "data": "The Unique Variants Info app block is used to display information about the currently selected variant on the product page."
+        },
+        {
+          "type": "image",
+          "data": {
+            "url": "",
+            "altText": "Screenshot of Unique Variants Info block in use on a product page",
+            "width": 500,
+            "height": 500
+          }
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Usage details",
+          "contents": []
+        },
+        {
+          "title": "Settings",
+          "contents": []
         }
       ]
     }
