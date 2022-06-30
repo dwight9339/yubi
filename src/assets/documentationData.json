@@ -66,6 +66,15 @@
             {
               "type": "paragraph",
               "data": "A list of variants for a particular product can be viewed on the product's Product Info page. Clicking any variant's entry in this list will navigate you to the variant's Variant Info page. Clicking the Edit quick action for a variant will navigate you to that variant's edit page. Clicking the Delete quick action for a variant will open a prompt to delete the selected variant. Additionally, a preview of the first three of a product's variants can be viewed by opening the Variants Preview section of a product list item in the Products List on the home page of the app."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/wcAmrNv.png",
+                "altText": "Screenshot showing variants preview section for a product",
+                "width": 621,
+                "height": 602
+              }
             }
           ]
         }

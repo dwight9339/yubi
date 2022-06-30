@@ -1,4 +1,6 @@
-export const ContentItem = ({ item }) => {
+import { ProductPhoto } from "../../common/ProductPhoto";
+
+export const ContentItem = ({ item, sectionWidth }) => {
   const { type, data } = item;
 
   if (type === "list") {
@@ -12,6 +14,9 @@ export const ContentItem = ({ item }) => {
   } else if (type === "paragraph") {
     return <p>{data}</p>;
   } else if (type === "image") {
-    return null; // To do: handle images
+    return <ProductPhoto
+      image={data}
+      cardWidth={sectionWidth}
+    />; 
   }
 }

@@ -1,12 +1,10 @@
 import { 
   Page,
-  Card,
-  TextContainer
+  Card
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { sections } from "../../../assets/documentationData.json";
-import { useEffect } from "react";
 
 import { TableOfContents } from "./TableOfContents";
 import { PageContents } from "./PageContents";
@@ -16,10 +14,6 @@ export const DocumentationPage = () => {
 
   const [currentSection, setCurrentSection] = useState(sections[0]);
   const [selectedSubsection, setSelectedSubsection] = useState(null);
-
-  // useEffect(() => {
-  //   console.log(JSON.stringify(currentSection));
-  // }, [currentSection]);
 
   const updateSection = (sectionTitle) => {
     setSelectedSubsection(null);
@@ -45,7 +39,7 @@ export const DocumentationPage = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 3fr 1fr"
+            gridTemplateColumns: "1fr 4fr 1fr"
           }}
         >
           <TableOfContents 
