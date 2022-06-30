@@ -21,10 +21,6 @@ export const DocumentationPage = () => {
   }
 
   useEffect(() => {
-    console.log(`currentSubsection: ${currentSubsection}`);
-  }, [currentSubsection]);
-
-  useEffect(() => {
     if (!anchor) return;
 
     document.getElementById(anchor).scrollIntoView();
