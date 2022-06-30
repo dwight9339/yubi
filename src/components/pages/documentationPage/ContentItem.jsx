@@ -14,9 +14,22 @@ export const ContentItem = ({ item, sectionWidth }) => {
   } else if (type === "paragraph") {
     return <p>{data}</p>;
   } else if (type === "image") {
-    return <ProductPhoto
-      image={data}
-      cardWidth={sectionWidth}
-    />; 
+    return (
+      <div>
+        <ProductPhoto
+          image={data}
+          cardWidth={sectionWidth}
+        />
+        <div
+          style={{
+            marginTop: "5px",
+            textAlign: "center",
+            fontSize: "0.85em"
+          }}
+        >
+          {data.caption}
+        </div>
+      </div>
+    ); 
   }
 }
