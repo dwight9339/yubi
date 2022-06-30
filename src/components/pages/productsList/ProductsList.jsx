@@ -57,7 +57,7 @@ export const ProductsList = () => {
     {
       content: "Search products",
       accessibilityLabel: "Search for existing products",
-      onAction: () => setProductPickerOpen(!productPickerOpen)
+      onAction: () => setProductPickerOpen(true)
     },
     {
       content: "Create new product",
@@ -74,6 +74,7 @@ export const ProductsList = () => {
   return (
     <>
       <ResourcePicker 
+        
         resourceType="Product"
         open={productPickerOpen}
         showVariants={false}
