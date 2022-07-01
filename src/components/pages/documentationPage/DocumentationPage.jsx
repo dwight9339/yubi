@@ -50,6 +50,7 @@ export const DocumentationPage = () => {
             onNavClick={({ sectionTitle }) => {
               updateSection(sectionTitle)
               setCurrentSubsection(null);
+              setAnchor(null);
             }}
             onSubnavClick={({ subsectionTitle }) => {
               setCurrentSubsection(subsectionTitle);
