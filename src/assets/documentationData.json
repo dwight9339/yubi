@@ -12,7 +12,7 @@
           "data": [
             "Manage groups of similar-but-unique products as variants of a parent product",
             "Allow products to share copy",
-            "Improve SEO by grouping products under a single shared address",
+            "Improve SEO by grouping products under a single shared url",
             "Have variants be automatically deleted after purchase",
             "Let customers browse variants visually using the Unique Variant Picker app block",
             "Dynamically update product page text in their online store based on the currently selected variant with the Unique Variant Info app block"
