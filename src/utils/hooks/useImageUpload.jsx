@@ -53,7 +53,11 @@ export const useImageUpload = (parentResource) => {
   }, [imageFile]);
 
   const dropZoneContent = useMemo(() => {
-    if (!(imageLoading || imageFile)) {
+    if (!(imageLoading 
+      || imageFile 
+      || parentResource?.featuredImage 
+      || parentResource?.image
+    )) {
       return <p>Drop image or click to browse</p>;
     } else if (imageLoading) {
       return <Spinner />;
