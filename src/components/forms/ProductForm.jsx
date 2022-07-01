@@ -69,7 +69,7 @@ export const ProductForm = () => {
         {
           content: "Cancel",
           accessibilityLabel: `Cancel product ${processType}`,
-          onAction: () => navigate(-1)
+          onAction: () => navigate("..")
         }
       ]}
     >

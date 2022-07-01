@@ -69,7 +69,7 @@ export const VariantForm = () => {
         {
           content: "Cancel",
           accessibilityLabel: `Cancel variant ${processType}`,
-          onAction: () => navigate(-1)
+          onAction: () => navigate("..")
         }
       ]}
     >
