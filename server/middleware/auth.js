@@ -82,21 +82,44 @@ export default function applyAuthMiddleware(app) {
         });
 
         if (!user) {
-          const putResult = await putNewUser(session.shop);
-          redirectParams.append("newUser", true);
+          const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+          const createBillingResult = await client.query({
+            data: `
+              mutation {
+                appPurchaseOneTimeCreate(
+                  name: "Unique Variants Manager One-Time Installation Fee",
+                  price: {amount: 14.99, currencyCode: USD},
+                  returnUrl: "${process.env.host}/payment-success?${redirectParams.toString()}",
+                  test: ${process.env.NODE_ENV === "development"}
+                ) {
+                  userErrors {
+                    field
+                    message
+                  }
+                  confirmationUrl
+                }
+              }
+            `
+          });
+          const { body: { data: { appPurchaseOneTimeCreate } } } = createBillingResult;
+          const { userErrors, confirmationUrl } = appPurchaseOneTimeCreate;
+
+          if (userErrors.length) {
+            throw `${userErrors.map((error) => error.message)}`;
+          }
+          res.redirect(confirmationUrl);
         } else if (!user.active) {
           const reactivateResult = await reactivateUser(session.shop);
           redirectParams.append("returningUser", true);
+          app.set(
+            "active-shopify-shops",
+            Object.assign(app.get("active-shopify-shops"), {
+              [session.shop]: userSettings,
+            })
+          );
+
+          res.redirect(`/?${redirectParams.toString()}`);
         }
-
-        app.set(
-          "active-shopify-shops",
-          Object.assign(app.get("active-shopify-shops"), {
-            [session.shop]: userSettings,
-          })
-        );
-
-        res.redirect(`/?${redirectParams.toString()}`);
       }
     } catch (e) {
       switch (true) {
@@ -114,6 +137,30 @@ export default function applyAuthMiddleware(app) {
           res.send(e.message);
           break;
       }
+    }
+  });
+
+  app.get("/payment-success", async (req, res) => {
+    try {
+      const { shop, host } = req.query;
+      const redirectParams = new URLSearchParams({
+        shop,
+        host,
+        newUser: true
+      });
+
+      await putNewUser(shop);
+
+      app.set(
+        "active-shopify-shops",
+        Object.assign(app.get("active-shopify-shops"), {
+          [shop]: defaultUserSettings,
+        })
+      );
+
+      res.redirect(`/?${redirectParams.toString()}`);
+    } catch(err) {
+      console.error(`payment success route error - ${err}`);
     }
   });
 }
