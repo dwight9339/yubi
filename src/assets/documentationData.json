@@ -4,14 +4,18 @@
       "title": "Introduction",
       "contents": [
         {
+          "type": "paragraph",
+          "data": "Unique Variants Manager offers merchants who sell items that are unique but share many characteristics a way to manage these items as variants of a parent item. This method of product management is optimal for these types of products as it allows copy that would otherwise be, well, copied and pasted between these items to be defined on the parent product while information unique to each variant is stored in a metafield on each variant. Unique Variants Manager provides tools that let merchants:"
+        },
+        {
           "type": "list",
           "data": [
             "Manage groups of similar-but-unique products as variants of a parent product",
             "Allow products to share copy",
             "Improve SEO by grouping products under a single shared address",
             "Have variants be automatically deleted after purchase",
-            "Let customers browse variants visually with the thumbnail grid variant picker app block",
-            "Dynamically update product page text based on the currently selected variant with the variant info app block"
+            "Let customers browse variants visually using the Unique Variant Picker app block",
+            "Dynamically update product page text in their online store based on the currently selected variant with the Unique Variant Info app block"
           ]
         }
       ]
@@ -340,11 +344,11 @@
         {
           "type": "image",
           "data": {
-            "url": "",
+            "url": "https://i.imgur.com/T2y7DBF.png",
             "altText": "Screenshot of Unique Variants Info block in use on a product page",
             "caption": "An example of the Unique Variants Info block in use on a product page",
-            "width": 500,
-            "height": 500
+            "width": 394,
+            "height": 258
           }
         }
       ],
@@ -608,11 +612,11 @@
         {
           "type": "image",
           "data": {
-            "url": "",
+            "url": "https://i.imgur.com/7NYOuNp.png",
             "altText": "Screenshot of Unique Variants Picker block in use on a product page",
             "caption": "An example of the Unique Variants Info block in use on a product page",
-            "width": 500,
-            "height": 500
+            "width": 387,
+            "height": 766
           }
         }
       ],
@@ -635,6 +639,16 @@
                 {
                   "type": "paragraph",
                   "data": "Sets the number of columns in the thumbnail grid"
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/7NYOuNp.png",
+                    "altText": "Screenshot of a thumbnail grid with 2 columns.",
+                    "caption": "A thumbnail grid with two columns",
+                    "width": 387,
+                    "height": 766 
+                  }
                 }
               ]
             },
@@ -662,6 +676,16 @@
                 {
                   "type": "paragraph",
                   "data": "Adjusts the thickness of the border that appears on the thumbnail image of the selected variant and on each thumbnail on mouse hover."
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/afOoBGf.png",
+                    "altText": "Screenshot of a thumbnail grid with a border around a thumbnail and a line indicating the width.",
+                    "caption": "Demonstration of border width",
+                    "width": 274,
+                    "height": 239
+                  }
                 }
               ]
             },
@@ -758,6 +782,16 @@
                 {
                   "type": "paragraph",
                   "data": "Adjusts the degree of rounding on the corners of the scrollbar's thumb and track elements. Only applicable in Webkit browsers."
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/B9FaETo.png",
+                    "altText": "Diagram showing a scrollbar with a 0 pixel radius next to scrollbar with a 5 pixel radius.",
+                    "caption": "Demonstration of corner radius",
+                    "width": 438,
+                    "height": 492
+                  }
                 }
               ]
             },
