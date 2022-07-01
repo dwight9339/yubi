@@ -151,6 +151,14 @@ export const AppFrame = ({ children }) => {
             actionRole="menuItem"
             items={[
               {
+                content: "FAQ",
+                accessibilityLabel: "Link to FAQ page",
+                onAction: () => {
+                  navigate("/faq");
+                  setHelpMenuOpen(false);
+                }
+              },
+              {
                 content: "Documentation",
                 accessibilityLabel: "Link to documentation",
                 onAction: () => {

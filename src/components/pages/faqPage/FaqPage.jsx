@@ -5,6 +5,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { QABlock } from "./QABlock";
+
+import { items } from "../../../assets/faqData.json";
+
 export const FaqPage = () => {
   const navigate = useNavigate();
 
@@ -29,7 +33,15 @@ export const FaqPage = () => {
       ]}
     >
       <Card>
-
+        <div
+          style={{
+            padding: "10px"
+          }}
+        >
+          {items.map((item, i) => {
+            return <QABlock key={i} item={item} />
+          })}
+        </div>
       </Card>
     </Page>
   )
