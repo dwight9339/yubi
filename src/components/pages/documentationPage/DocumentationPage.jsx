@@ -15,6 +15,7 @@ export const DocumentationPage = () => {
   const [currentSection, setCurrentSection] = useState(sections[0]);
   const [currentSubsection, setCurrentSubsection] = useState(null);
   const [anchor, setAnchor] = useState(null);
+  const [goBackFailedFlag, setGoBackFailedFlag] = useState(false);
 
   const updateSection = (sectionTitle) => {
     setCurrentSection(sections.find(({ title }) => title === sectionTitle));
@@ -26,6 +27,10 @@ export const DocumentationPage = () => {
     document.getElementById(anchor).scrollIntoView();
   }, [anchor]);
 
+  useEffect(() => {
+    if (goBackFailedFlag) navigate("/");
+  }, [goBackFailedFlag]);
+
   return (
     <Page
       title="Documentation"
@@ -33,7 +38,10 @@ export const DocumentationPage = () => {
         {
           content: "Back",
           accessibilityLabel: "Return to previous page",
-          onAction: () => navigate(-1)
+          onAction: () => {
+            navigate(-1);
+            setGoBackFailedFlag(true);
+          }
         }
       ]}
     >
