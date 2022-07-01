@@ -5,8 +5,24 @@
       "answer": "No. The product management portion of the app, i.e. the parts that run in Shopify admin, will still function as intended if you choose not to include either of the included app blocks in your store's theme."
     },
     {
+      "question": "Can I use one of the app blocks without the other?",
+      "answer": "Partially. The Unique Variants Picker app block is fully functional independent of whether you choose to use the Unique Variant Info app block with it or not. However, the Unique Variant Info block is mostly incompatible with the variant picker blocks that come standard with most themes."
+    },
+    {
       "question": "How do I have a variant automatically deleted after it is purchased?",
       "answer": "To enable automatic deletion of a variant after purchase, select the 'Delete after purchase' option when creating your variant. This option can be updated at any time from the Variant Edit form."
+    },
+    {
+      "question": "Why does converting a product delete its existing variants?",
+      "answer": "Shopify creates variants on products through the creation of 'options'. Typically, this means defining options for different colors, sizes, etc. on a product. Unique Variants Manager manages variants on a parent product by storing that variant's name in a single option (this option is name 'Title' by default). Due to Shopify's built-in variant creation and management logic, we must restrict the number of options defined on a parent product to one. Therefore, to convert a product and make it usable as a parent product, we must delete any existing variants if the parent product has more than one option defined."
+    },
+    {
+      "question": "My theme displays the name of variant options. Can I change the name of the option that stores variant names?",
+      "answer": "Yes. Unique Variants Manager does not enforce a particular title for the option in which it stores variant names, only that there is only one option defined on the product."
+    },
+    {
+      "question": "Can I delete a variant but keep the attached image on the product?",
+      "answer": "Yes. First you must go to the product's page in Shopify admin, select the variant you want to delete, and detach the variant image. Then, back in the Unique Variant Manager App, you should see the image has disappeared from the variant's Variant Info page or any thumbnails throughout the app. You can then safely delete the variant."
     }
   ]
 }
