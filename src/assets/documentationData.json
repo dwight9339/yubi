@@ -31,6 +31,7 @@
               "data": {
                 "url": "https://i.imgur.com/RZQAH6x.png",
                 "altText": "Screenshot of products list page",
+                "caption": "Products List page",
                 "width": 453,
                 "height": 622
               }
@@ -44,6 +45,7 @@
               "data": {
                 "url": "https://i.imgur.com/kWNmhQo.png",
                 "altText": "Screenshot of product search modal",
+                "caption": "Product search modal",
                 "width": 752,
                 "height": 683
               }
@@ -81,6 +83,7 @@
               "data": {
                 "url": "https://i.imgur.com/jXTKSSw.png",
                 "altText": "Screenshot of product info page",
+                "caption": "Example Product Info page",
                 "width": 980,
                 "height": 813 
               }
@@ -99,6 +102,7 @@
               "data": {
                 "url": "https://i.imgur.com/DMDaITq.png",
                 "altText": "Screenshot of product edit page",
+                "caption": "Example Product Edit page",
                 "width": 502,
                 "height": 814
               }
@@ -122,6 +126,7 @@
               "data": {
                 "url": "https://i.imgur.com/PJfpE1r.png",
                 "altText": "Screenshot showing variants list on product info page",
+                "caption": "Example variants list card",
                 "width": 980,
                 "height": 813
               }
@@ -135,6 +140,7 @@
               "data": {
                 "url": "https://i.imgur.com/LCK8jCt.png",
                 "altText": "Screenshot showing variants preview section for a product",
+                "caption": "Example Variants Preview section",
                 "width": 621,
                 "height": 602
               }
@@ -143,77 +149,189 @@
         },
         {
           "title": "Creating variants",
-          "contents": []
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "To create a new variant, click the 'Create new variant' button in the top right corner of the Variants list on the product info page of the parent product."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/N2OK5hI.png",
+                "altText": "Screenshot of variants list with create new variant button highlighted",
+                "caption": "Create new variant button",
+                "width": 445,
+                "height": 659
+              }
+            },
+            {
+              "type": "paragraph",
+              "data": "This will open the New Variant form. Fill out the variant's data and click create."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/0F71r5l.png",
+                "altText": "Screenshot of new variant form",
+                "caption": "New Variant form",
+                "width": 477,
+                "height": 563
+              }
+            }
+          ]
         }
         ,
         {
           "title": "Viewing variants",
-          "contents": []
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "Information about a variant can be viewed on the Variant Info page."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/F08CXxU.png",
+                "altText": "Screenshot of variant info page",
+                "caption": "Example Variant Info page",
+                "width": 701,
+                "height": 1156
+              }
+            },
+            {
+              "type": "paragraph",
+              "data": "To navigate to a variant's Variant Info page, click the list item of the variant in the Variants list on its parent product's Product Info page."
+            },
+            {
+              "type": "paragraph",
+              "data": "In addition, you can also navigate to a variant's Variant Info page from the Variants Preview section of its parent product's Products List item by clicking the 'View' quick action."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/OwhyG4J.png",
+                "altText": "Screenshot of variant's view quick action",
+                "caption": "Click 'View' on the parent element's Products List item for a shortcut to its Variant Info page.",
+                "width": 443,
+                "height": 384
+              }
+            }
+          ]
         }
         ,
         {
           "title": "Editing variants",
-          "contents": []
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "To edit a variant, click the 'Edit' button at the top of its Variant Info page."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/s5OvFee.png",
+                "altText": "Screenshot of edit button on variant info page.",
+                "caption": "Click 'Edit' at the top of the variant's Variant Info page to open the Variant Edit form.",
+                "width": 701,
+                "height": 1156
+              }
+            },
+            {
+              "type": "paragraph",
+              "data": "This will open the Variant Edit form. Make the desired changes, then click 'Update'."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/J02dkYg.png",
+                "altText": "Screenshot of the variant edit form.",
+                "caption": "Example Variant Edit form",
+                "width": 477,
+                "height": 711
+              }
+            },
+            {
+              "type": "paragraph",
+              "data": "You can also open a variant's Variant Edit form by clicking the 'Edit' quick action in either the Variants list card on the parent product's Product Info page or in the Variants Preview section of the parent product's list item in the Products List."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/JCmBboN.png",
+                "altText": "Split screenshot of the edit quick actions in the Variants list on a product info page and the variants preview section.",
+                "caption": "The 'Edit' quick action can be found on the variant's list item in the Variants list card on the parent product's Product Info page (top) and the parent product's Variants Preview section in the Products List (bottom).",
+                "width": 427,
+                "height": 641
+              }
+            }
+          ]
         },
         {
           "title": "Deleting variants",
-          "contents": []
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "To delete a variant, select the 'Delete' button at the top of the variant's Variant Info page. This will open the Confirm Delete modal. In the Confirm Delete modal, Click 'Delete' to proceed and delete the variant, or click 'Cancel' to go back."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/z1rUXpb.png",
+                "altText": "Screenshot of the variant info page with the delete button highlighted.",
+                "caption": "Click the 'Delete' button on a variant's Variant Info page to delete it.",
+                "width": 701,
+                "height": 1156
+              }
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/cBe55X2.png",
+                "altText": "Screenshot of the confirm delete modal",
+                "caption": "The Confirm Delete modal",
+                "width": 763,
+                "height": 439
+              }
+            },
+            {
+              "type": "paragraph",
+              "data": "A variant can also be deleted by selecting the 'Delete' quick action on the variant's list item in the Variants list on the parent product's Product Info page."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/qGHyVuv.png",
+                "altText": "Screenshot of the delete quick action button.",
+                "caption": "Another way to delete a variant is by clicking the 'Delete' quick action on the variant's list item in the Variants list.",
+                "width": 427,
+                "height": 641
+              }
+            }
+          ]
         },
         {
           "title": "Delete variants on purchase",
-          "contents": []
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "You can choose to have a variant deleted after it is purchased by enabling the 'Delete after purchase' option. Selecting this option will cause all data about the variant, including the linked product image, to be deleted when an order is created that includes the variant."
+            },
+            {
+              "type": "image",
+              "data": {
+                "url": "https://i.imgur.com/OoLVBG3.png",
+                "altText": "Screenshot of the delete after purchase checkbox on the variant edit page.",
+                "caption": "Example Variant Edit form with 'Delete after purchase' selected.",
+                "width": 317,
+                "height": 260
+              }
+            }
+          ]
         }
       ]
     },
     {
-      "title": "App Blocks",
-      "contents": [
-        {
-          "type": "paragraph",
-          "data": "The app includes two app blocks that can be added to your shop's theme. Check to make sure that your theme supports app blocks. This section discusses how to add and remove the app blocks. For more information about the included app blocks, see their dedicated sections."
-        }
-      ],
-      "subsections": [
-        {
-          "title": "Installing app blocks",
-          "contents": []
-        },
-        {
-          "title": "Removing app blocks",
-          "contents": []
-        }
-      ]
-    },
-    {
-      "title": "Unique Variants Picker Block",
-      "contents": [
-        {
-          "type": "paragraph",
-          "data": "The Unique Variants Picker app block displays a grid of thumbnail images of a product's variants allowing users to browse variants visually."
-        },
-        {
-          "type": "image",
-          "data": {
-            "url": "",
-            "altText": "Screenshot of Unique Variants Picker block in use on a product page",
-            "width": 500,
-            "height": 500
-          }
-        }
-      ],
-      "subsections": [
-        {
-          "title": "Usage details",
-          "contents": []
-        },
-        {
-          "title": "Settings",
-          "contents": []
-        }
-      ]
-    },
-    {
-      "title": "Unique Variants Info Block",
+      "title": "Unique Variant Info Block",
       "contents": [
         {
           "type": "paragraph",
@@ -224,6 +342,7 @@
           "data": {
             "url": "",
             "altText": "Screenshot of Unique Variants Info block in use on a product page",
+            "caption": "An example of the Unique Variants Info block in use on a product page",
             "width": 500,
             "height": 500
           }
@@ -232,11 +351,283 @@
       "subsections": [
         {
           "title": "Usage details",
-          "contents": []
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "This app block is meant to replace the default product page description block. It displays only the description for the parent product when there is no variant selected and can display the name and description of a variant when it is selected."
+            }
+          ]
         },
         {
           "title": "Settings",
-          "contents": [],
+          "subsections": [
+            {
+              "title": "Always show parent product description",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "If selected, the description from the parent product is always shown and variant information appears below it when a variant is selected. When unselected, the parent product description disappears and is entirely replaced by the information of the selected variant."
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/X4OoEd0.png",
+                    "altText": "Screenshot of unique variants info block with parent product description and variant info section shown.",
+                    "caption": "Parent product description and selected variant info section appear together",
+                    "width": 485,
+                    "height": 493
+                  }
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/OxGvTTC.png",
+                    "altText": "Screenshot of unique variants info block only variant info section shown.",
+                    "caption": "Only selected variant info section shown",
+                    "width": 455,
+                    "height": 394
+                  }
+                }
+              ]
+            },
+            {
+              "title": "Show block heading",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Toggles whether or not a heading appears for the entire variant info section."
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/OxGvTTC.png",
+                    "altText": "Screenshot of variant info section with block heading.",
+                    "caption": "Variant info section with block heading",
+                    "width": 455,
+                    "height": 394
+                  }
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/BBsgyVr.png",
+                    "altText": "Screenshot of variant info section without block heading.",
+                    "caption": "Variant info section with no block heading.",
+                    "width": 481,
+                    "height": 343
+                  }
+                }
+              ]
+            },
+            {
+              "title": "Block heading text",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Defines the block heading text."
+                }
+              ]
+            },
+            {
+              "title": "(Block heading) Font weight",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the font weight of the block heading."
+                }
+              ]
+            },
+            {
+              "title": "(Block heading) Font size",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the font size of the block heading."
+                }
+              ]
+            },
+            {
+              "title": "Show name",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Toggles whether or not the variant name section is displayed when a variant is selected."
+                }
+              ]
+            },
+            {
+              "title": "Show name heading",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Toggles whether or not a heading appears above the variant name in the variant name section."
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/BBsgyVr.png",
+                    "altText": "Screenshot of variant info section with variant name heading.",
+                    "caption": "Variant info section with variant name heading",
+                    "width": 481,
+                    "height": 343
+                  }
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/exKreX0.png",
+                    "altText": "Screenshot of variant info section without variant name heading.",
+                    "caption": "Variant info section with no variant name heading.",
+                    "width": 464,
+                    "height": 295
+                  }
+                }
+              ]
+            },
+            {
+              "title": "Name heading text",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Defines text for variant name heading."
+                }
+              ]
+            },
+            {
+              "title": "(Variant name) Heading font weight",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the font weight for the variant name section heading."
+                }
+              ]
+            },
+            {
+              "title": "(Variant name) Heading font size",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the font size of the variant name section heading"
+                }
+              ]
+            },
+            {
+              "title": "Name font weight",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the font weight of the variant name."
+                }
+              ]
+            },
+            {
+              "title": "Name font size",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the font size of the variant name."
+                }
+              ]
+            },
+            {
+              "title": "Show description",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Toggles whether or not the variant description section is shown when a variant is selected."
+                }
+              ]
+            },
+            {
+              "title": "Show description heading",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Toggles whether or not a heading for the variant description section is shown when a variant is selected."
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/0xhARBk.png",
+                    "altText": "Screenshot of variant info section with variant description heading.",
+                    "caption": "Variant info section with variant description heading",
+                    "width": 464,
+                    "height": 290
+                  }
+                },
+                {
+                  "type": "image",
+                  "data": {
+                    "url": "https://i.imgur.com/kTeww3C.png",
+                    "altText": "Screenshot of variant info section without variant description heading.",
+                    "caption": "Variant info section with no variant description heading.",
+                    "width": 472,
+                    "height": 183
+                  }
+                }
+              ]
+            },
+            {
+              "title": "Description heading text",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Defines text for the variant description section heading."
+                }
+              ]
+            },
+            {
+              "title": "(Variant description) Heading font weight",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Sets the font weight for the variant description section heading."
+                }
+              ]
+            },
+            {
+              "title": "(Variant description) Heading font size",
+              "contents": [
+                {
+                  "type": "paragraph",
+                  "data": "Adjusts the font size for the variant description section heading."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unique Variant Picker Block",
+      "contents": [
+        {
+          "type": "paragraph",
+          "data": "The Unique Variants Picker app block displays a grid of thumbnail images of a product's variants allowing users to browse variants visually."
+        },
+        {
+          "type": "image",
+          "data": {
+            "url": "",
+            "altText": "Screenshot of Unique Variants Picker block in use on a product page",
+            "caption": "An example of the Unique Variants Info block in use on a product page",
+            "width": 500,
+            "height": 500
+          }
+        }
+      ],
+      "subsections": [
+        {
+          "title": "Usage details",
+          "contents": [
+            {
+              "type": "paragraph",
+              "data": "Customers can select a variant they're interested in by clicking its thumbnail image. A border is added to each thumbnail image when the customer hovers over it to provide feedback. The thumbnail image of the selected variant has a border at all times."
+            }
+          ]
+        },
+        {
+          "title": "Settings",
           "subsections": [
             {
               "title": "Columns",
