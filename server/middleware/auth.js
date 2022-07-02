@@ -97,7 +97,7 @@ export default function applyAuthMiddleware(app) {
                   name: "Unique Variants Manager One-Time Installation Fee",
                   price: {amount: 14.99, currencyCode: USD},
                   returnUrl: "${
-                    process.env.host
+                    process.env.HOST
                   }/payment-success?${redirectParams.toString()}",
                   test: ${process.env.NODE_ENV === "development"}
                 ) {
