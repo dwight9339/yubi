@@ -1,9 +1,9 @@
 import { Shopify } from "@shopify/shopify-api";
-import { 
+import {
   getUser,
   putNewUser,
   reactivateUser,
-  defaultUserSettings
+  defaultUserSettings,
 } from "../helpers/userDBHelper.js";
 
 import topLevelAuthRedirect from "../helpers/top-level-auth-redirect.js";
@@ -59,17 +59,21 @@ export default function applyAuthMiddleware(app) {
         res.redirect(`/auth/?shop=${session.shop}&secondRound=true`);
       } else {
         const host = req.query.host;
-        const offlineSesh = await Shopify.Utils.loadOfflineSession(session.shop);
+        const offlineSesh = await Shopify.Utils.loadOfflineSession(
+          session.shop
+        );
 
         // Register webhooks
         const response = await Shopify.Webhooks.Registry.registerAll({
           accessToken: offlineSesh.accessToken,
-          shop: session.shop
+          shop: session.shop,
         });
 
         Object.keys(response).forEach((key) => {
           if (!response[key].success) {
-            console.error(`shop: ${session.shop} - Auth callback - Unable to register webhook for topic ${key}`);
+            console.error(
+              `shop: ${session.shop} - Auth callback - Unable to register webhook for topic ${key}`
+            );
           }
         });
 
@@ -78,18 +82,23 @@ export default function applyAuthMiddleware(app) {
         const userSettings = user?.settings || defaultUserSettings;
         const redirectParams = new URLSearchParams({
           shop: session.shop,
-          host
+          host,
         });
 
         if (!user) {
-          const client = new Shopify.Clients.Graphql(session.shop, session.accessToken);
+          const client = new Shopify.Clients.Graphql(
+            session.shop,
+            session.accessToken
+          );
           const createBillingResult = await client.query({
             data: `
               mutation {
                 appPurchaseOneTimeCreate(
                   name: "Unique Variants Manager One-Time Installation Fee",
                   price: {amount: 14.99, currencyCode: USD},
-                  returnUrl: "${process.env.host}/payment-success?${redirectParams.toString()}",
+                  returnUrl: "${
+                    process.env.host
+                  }/payment-success?${redirectParams.toString()}",
                   test: ${process.env.NODE_ENV === "development"}
                 ) {
                   userErrors {
@@ -99,9 +108,16 @@ export default function applyAuthMiddleware(app) {
                   confirmationUrl
                 }
               }
-            `
+            `,
           });
-          const { body: { data: { appPurchaseOneTimeCreate } } } = createBillingResult;
+          console.log(
+            `createBillingResult: ${JSON.stringify(createBillingResult)}`
+          );
+          const {
+            body: {
+              data: { appPurchaseOneTimeCreate },
+            },
+          } = createBillingResult;
           const { userErrors, confirmationUrl } = appPurchaseOneTimeCreate;
 
           if (userErrors.length) {
@@ -146,7 +162,7 @@ export default function applyAuthMiddleware(app) {
       const redirectParams = new URLSearchParams({
         shop,
         host,
-        newUser: true
+        newUser: true,
       });
 
       await putNewUser(shop);
@@ -159,7 +175,7 @@ export default function applyAuthMiddleware(app) {
       );
 
       res.redirect(`/?${redirectParams.toString()}`);
-    } catch(err) {
+    } catch (err) {
       console.error(`payment success route error - ${err}`);
     }
   });
