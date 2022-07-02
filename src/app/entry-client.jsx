@@ -17,6 +17,8 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Routes } from "./Routes";
 
+console.log(location);
+
 function MyProvider({ children }) {
   const app = useAppBridge();
   const cacheOptions = {
