@@ -127,9 +127,7 @@ export default function applyAuthMiddleware(app) {
             throw `${userErrors.map((error) => error.message)}`;
           }
           res.redirect(confirmationUrl);
-        } else if (!user.active) {
-          const reactivateResult = await reactivateUser(session.shop);
-          redirectParams.append("returningUser", true);
+        } else {
           app.set(
             "active-shopify-shops",
             Object.assign(app.get("active-shopify-shops"), {
