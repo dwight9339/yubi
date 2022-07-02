@@ -99,7 +99,10 @@ export default function applyAuthMiddleware(app) {
                   returnUrl: "${
                     process.env.HOST
                   }/payment-success?${redirectParams.toString()}",
-                  test: ${process.env.NODE_ENV === "development"}
+                  test: ${
+                    process.env.NODE_ENV === "development" ||
+                    process.env.PAYMENT_EXEMPTION_LIST.includes(session.shop)
+                  }
                 ) {
                   userErrors {
                     field
