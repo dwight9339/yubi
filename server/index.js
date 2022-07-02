@@ -3,12 +3,16 @@ import { resolve } from "path";
 import express from "express";
 import cookieParser from "cookie-parser";
 import { Shopify, ApiVersion } from "@shopify/shopify-api";
-import { fetchVariantsQuery, deleteVariantQuery, deleteVariantWithImage } from "./helpers/queryHelper.js";
+import {
+  fetchVariantsQuery,
+  deleteVariantQuery,
+  deleteVariantWithImage,
+} from "./helpers/queryHelper.js";
 import "dotenv/config";
 
 import applyAuthMiddleware from "./middleware/auth.js";
 import verifyRequest from "./middleware/verify-request.js";
-import { deactivateUser, getActiveUsers } from "./helpers/userDBHelper.js";
+import { getActiveUsers } from "./helpers/userDBHelper.js";
 
 const USE_ONLINE_TOKENS = true;
 const TOP_LEVEL_OAUTH_COOKIE = "shopify_top_level_oauth";
@@ -34,20 +38,25 @@ const ACTIVE_SHOPIFY_SHOPS = {};
 Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
   path: "/webhooks",
   webhookHandler: async (topic, shop, body) => {
-    console.log(`App uninstalled - user ${shop} deactivated`);
-    await deactivateUser(shop);
+    console.log(`user ${shop} uninstalled app`);
     delete ACTIVE_SHOPIFY_SHOPS[shop];
   },
 });
 
 const deleteUvs = (client, uvs, shop) => {
   uvs.forEach(async ({ id, image, product }) => {
-    const result = image 
-      ? await client.query({data: deleteVariantWithImage(id, product.id, image.id)})
-      : await client.query({data: deleteVariantQuery(id)});
-    console.log(`shop: ${shop} - order create webhook - delete variant result: ${JSON.stringify(result.body)}`);
+    const result = image
+      ? await client.query({
+          data: deleteVariantWithImage(id, product.id, image.id),
+        })
+      : await client.query({ data: deleteVariantQuery(id) });
+    console.log(
+      `shop: ${shop} - order create webhook - delete variant result: ${JSON.stringify(
+        result.body
+      )}`
+    );
   });
-}
+};
 
 Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
   path: "/webhooks",
@@ -59,15 +68,17 @@ Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
     try {
       const offlineSesh = await Shopify.Utils.loadOfflineSession(shop);
       const client = new Shopify.Clients.Graphql(shop, offlineSesh.accessToken);
-      const fetchResult = await client.query({data: fetchVariantsQuery(variantIds)});
+      const fetchResult = await client.query({
+        data: fetchVariantsQuery(variantIds),
+      });
       const uvs = Object.entries(fetchResult.body.data)
         .filter(([key, value]) => value.deleteAfterPurchase?.value === "true")
         .map(([key, value]) => value);
       deleteUvs(client, uvs, shop);
-    } catch(err) {
+    } catch (err) {
       throw `shop: ${shop} - orders create webhook variant delete error - ${err}`;
     }
-  }
+  },
 });
 
 // export for test use only
@@ -183,7 +194,10 @@ export async function createServer(
       res
         .status(200)
         .set("Content-Type", "text/html")
-        .set("Content-Security-Policy", "frame-ancestors frame iframe object embed applet")
+        .set(
+          "Content-Security-Policy",
+          "frame-ancestors frame iframe object embed applet"
+        )
         .send(fs.readFileSync(`${process.cwd()}/dist/client/index.html`));
     });
   }

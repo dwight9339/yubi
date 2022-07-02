@@ -1,10 +1,5 @@
 import { Shopify } from "@shopify/shopify-api";
-import {
-  getUser,
-  putNewUser,
-  reactivateUser,
-  defaultUserSettings,
-} from "../helpers/userDBHelper.js";
+import { getUser, putNewUser } from "../helpers/userDBHelper.js";
 
 import topLevelAuthRedirect from "../helpers/top-level-auth-redirect.js";
 
@@ -79,7 +74,6 @@ export default function applyAuthMiddleware(app) {
 
         // Update user document from DB
         const user = await getUser(session.shop);
-        const userSettings = user?.settings || defaultUserSettings;
         const redirectParams = new URLSearchParams({
           shop: session.shop,
           host,
@@ -131,7 +125,7 @@ export default function applyAuthMiddleware(app) {
           app.set(
             "active-shopify-shops",
             Object.assign(app.get("active-shopify-shops"), {
-              [session.shop]: userSettings,
+              [session.shop]: session.scope,
             })
           );
 
@@ -171,13 +165,13 @@ export default function applyAuthMiddleware(app) {
       app.set(
         "active-shopify-shops",
         Object.assign(app.get("active-shopify-shops"), {
-          [shop]: defaultUserSettings,
+          [shop]: process.env.SCOPES,
         })
       );
 
       res.redirect(`/?${redirectParams.toString()}`);
     } catch (err) {
-      console.error(`payment success route error - ${err}`);
+      res.status(500).send(err.message);
     }
   });
 }
