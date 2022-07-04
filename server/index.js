@@ -12,7 +12,11 @@ import "dotenv/config";
 
 import applyAuthMiddleware from "./middleware/auth.js";
 import verifyRequest from "./middleware/verify-request.js";
-import { getActiveUsers, deleteUserData } from "./helpers/userDBHelper.js";
+import {
+  getUser,
+  getActiveUsers,
+  deleteUserData,
+} from "./helpers/userDBHelper.js";
 import mandatoryWebhookHandlers from "./middleware/mandatory-webhook-handlers.js";
 
 const USE_ONLINE_TOKENS = true;
@@ -68,8 +72,11 @@ Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
     const variantIds = lineItems.map((entry) => entry.variant_id);
 
     try {
-      const offlineSesh = await Shopify.Utils.loadOfflineSession(shop);
-      const client = new Shopify.Clients.Graphql(shop, offlineSesh.accessToken);
+      const userRec = await getUser(shop);
+      const client = new Shopify.Clients.Graphql(
+        shop,
+        userRec.offlineAccessToken
+      );
       const fetchResult = await client.query({
         data: fetchVariantsQuery(variantIds),
       });
