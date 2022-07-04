@@ -46,6 +46,7 @@ export const putNewUser = async (shopName, offlineAccessToken) => {
         update: {
           shopName,
           offlineAccessToken,
+          settings: {},
         },
         upsert: true,
       },
