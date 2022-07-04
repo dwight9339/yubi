@@ -34,7 +34,7 @@ export const getUser = async (shopName) => {
   return userRec.data?.document || null;
 };
 
-export const putNewUser = async (shopName) => {
+export const putNewUser = async (shopName, offlineAccessToken) => {
   const putResult = await axios
     .post(
       `${endpoint}/action/updateOne`,
@@ -45,6 +45,7 @@ export const putNewUser = async (shopName) => {
         filter: { shopName },
         update: {
           shopName,
+          offlineAccessToken,
         },
         upsert: true,
       },

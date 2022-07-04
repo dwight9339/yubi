@@ -176,8 +176,9 @@ export default function applyAuthMiddleware(app) {
         host,
         newUser: true,
       });
+      const offlineSesh = await Shopify.Utils.loadOfflineSession(shop);
 
-      await putNewUser(shop);
+      await putNewUser(shop, offlineSesh.accessToken);
 
       app.set(
         "active-shopify-shops",
