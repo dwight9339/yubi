@@ -84,6 +84,31 @@ export default function applyAuthMiddleware(app) {
             session.shop,
             session.accessToken
           );
+          const getShopDataResult = await client.query({
+            data: `
+              {
+                shop {
+                  plan {
+                    partnerDevelopment
+                  }
+                }
+              }
+            `,
+          });
+
+          const {
+            body: { data: shopData, errors: shopErrors },
+          } = getShopDataResult;
+
+          if (shopErrors) {
+            throw shopErrors;
+          }
+
+          const {
+            shop: {
+              plan: { partnerDevelopment: isDevStore },
+            },
+          } = shopData;
           const createBillingResult = await client.query({
             data: `
               mutation {
@@ -104,7 +129,10 @@ export default function applyAuthMiddleware(app) {
                   }/payment-success?${redirectParams.toString()}",
                   test: ${
                     process.env.NODE_ENV === "development" ||
-                    process.env.PAYMENT_EXEMPTION_LIST.includes(session.shop)
+                    process.env.PAYMENT_EXEMPTION_LIST?.includes(
+                      session.shop
+                    ) ||
+                    isDevStore
                   },
                   trialDays: 14
                 ) {
