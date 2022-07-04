@@ -96,7 +96,7 @@ export const getActiveUsers = async () => {
         dataSource,
         database,
         collection,
-        filter: { active: true },
+        filter: {},
       },
       {
         headers: {
