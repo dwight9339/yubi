@@ -12,7 +12,7 @@ import "dotenv/config";
 
 import applyAuthMiddleware from "./middleware/auth.js";
 import verifyRequest from "./middleware/verify-request.js";
-import { getActiveUsers } from "./helpers/userDBHelper.js";
+import { getActiveUsers, deleteUserData } from "./helpers/userDBHelper.js";
 import mandatoryWebhookHandlers from "./middleware/mandatory-webhook-handlers.js";
 
 const USE_ONLINE_TOKENS = true;
@@ -41,6 +41,7 @@ Shopify.Webhooks.Registry.addHandler("APP_UNINSTALLED", {
   webhookHandler: async (topic, shop, body) => {
     console.log(`user ${shop} uninstalled app`);
     delete ACTIVE_SHOPIFY_SHOPS[shop];
+    await deleteUserData(shop);
   },
 });
 
