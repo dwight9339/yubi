@@ -13,6 +13,7 @@ import "dotenv/config";
 import applyAuthMiddleware from "./middleware/auth.js";
 import verifyRequest from "./middleware/verify-request.js";
 import { getActiveUsers } from "./helpers/userDBHelper.js";
+import mandatoryWebhookHandlers from "./middleware/mandatory-webhook-handlers.js";
 
 const USE_ONLINE_TOKENS = true;
 const TOP_LEVEL_OAUTH_COOKIE = "shopify_top_level_oauth";
@@ -76,7 +77,9 @@ Shopify.Webhooks.Registry.addHandler("ORDERS_CREATE", {
         .map(([key, value]) => value);
       deleteUvs(client, uvs, shop);
     } catch (err) {
-      throw `shop: ${shop} - orders create webhook variant delete error - ${err}`;
+      console.error(
+        `shop: ${shop} - orders create webhook variant delete error - ${err}`
+      );
     }
   },
 });
@@ -131,6 +134,7 @@ export async function createServer(
   });
 
   app.use(express.json());
+  mandatoryWebhookHandlers(app);
 
   app.use((req, res, next) => {
     const shop = req.query.shop;

@@ -87,16 +87,26 @@ export default function applyAuthMiddleware(app) {
           const createBillingResult = await client.query({
             data: `
               mutation {
-                appPurchaseOneTimeCreate(
-                  name: "Unique Variants Manager One-Time Installation Fee",
-                  price: {amount: 14.99, currencyCode: USD},
+                appSubscriptionCreate(
+                  name: "Unique Variants Manager App Subscription",
+                  lineItems: {
+                    plan: {
+                      appRecurringPricingDetails: {
+                        price: {
+                          amount: 4.99,
+                          currencyCode: USD
+                        }
+                      }
+                    }
+                  },
                   returnUrl: "${
                     process.env.HOST
                   }/payment-success?${redirectParams.toString()}",
                   test: ${
                     process.env.NODE_ENV === "development" ||
                     process.env.PAYMENT_EXEMPTION_LIST.includes(session.shop)
-                  }
+                  },
+                  trialDays: 14
                 ) {
                   userErrors {
                     field
@@ -107,15 +117,22 @@ export default function applyAuthMiddleware(app) {
               }
             `,
           });
+
           console.log(
             `createBillingResult: ${JSON.stringify(createBillingResult)}`
           );
+
           const {
-            body: {
-              data: { appPurchaseOneTimeCreate },
-            },
+            body: { data, errors },
           } = createBillingResult;
-          const { userErrors, confirmationUrl } = appPurchaseOneTimeCreate;
+
+          if (errors) {
+            throw errors;
+          }
+
+          const {
+            appSubscriptionCreate: { userErrors, confirmationUrl },
+          } = data;
 
           if (userErrors.length) {
             throw `${userErrors.map((error) => error.message)}`;
