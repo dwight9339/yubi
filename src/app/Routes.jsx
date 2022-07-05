@@ -1,4 +1,4 @@
-import { Routes as ReactRoutes, Route, Navigate } from "react-router-dom"
+import { Routes as ReactRoutes, Route, Navigate } from "react-router-dom";
 import { App } from "./App";
 import { ProductsListPage } from "../components/pages/productsList/ProductsListPage";
 import { ProductsList } from "../components/pages/productsList/ProductsList";
@@ -8,7 +8,6 @@ import { ProductForm } from "../components/forms/ProductForm";
 import { VariantPage } from "../components/pages/variantPage/VariantPage";
 import { VariantForm } from "../components/forms/VariantForm";
 import { VariantView } from "../components/pages/variantPage/VariantView";
-import { ContactPage } from "../components/pages/contactPage/ContactPage";
 import { DocumentationPage } from "../components/pages/documentationPage/DocumentationPage";
 import { FaqPage } from "../components/pages/faqPage/FaqPage";
 
@@ -25,7 +24,7 @@ export const Routes = () => {
           <Route path=":productId" element={<ProductPage />}>
             <Route index element={<ProductView />} />
             <Route path="new-variant" element={<VariantForm />} />
-            <Route path="edit" element={<ProductForm />} /> 
+            <Route path="edit" element={<ProductForm />} />
           </Route>
         </Route>
         <Route path="variant">
@@ -34,10 +33,9 @@ export const Routes = () => {
             <Route path="edit" element={<VariantForm />} />
           </Route>
         </Route>
-        <Route path="contact" element={<ContactPage />} />
         <Route path="documentation" element={<DocumentationPage />} />
         <Route path="faq" element={<FaqPage />} />
       </Route>
     </ReactRoutes>
   );
-}
+};

@@ -32,7 +32,5 @@ export const SUPPORTED_IMAGE_TYPES = ["jpeg", "png", "gif"];
 export const GENERIC_ERROR_TEXT =
   "We've encountered an error. Please try again. If the problem persists, please file a support ticket.";
 
-// EmailJS
-export const EMAILJS_SERVICE_ID = "";
-export const EMAILJS_TEMPLATE_ID = "";
-export const EMAILJS_USER_ID = "";
+export const CONTACT_LINK =
+  "https://sites.google.com/view/unique-variants-manager/contact";

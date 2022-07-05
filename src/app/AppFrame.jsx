@@ -1,19 +1,17 @@
-import { 
+import {
   Frame,
   Toast,
   Banner,
   List,
   Button,
   Popover,
-  ActionList
+  ActionList,
 } from "@shopify/polaris";
-import {
-  QuestionMarkInverseMajor
-} from '@shopify/polaris-icons';
+import { QuestionMarkInverseMajor } from "@shopify/polaris-icons";
 import { useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ConfirmDeleteModal } from "../components/modals/ConfirmDeleteModal";
-import { GENERIC_ERROR_TEXT } from "../constants";
+import { GENERIC_ERROR_TEXT, CONTACT_LINK } from "../constants";
 
 export const FeedbackContext = createContext();
 export const ModalContext = createContext();
@@ -25,60 +23,67 @@ export const AppFrame = ({ children }) => {
     show: false,
     content: "",
     duration: 3000,
-    error: false
+    error: false,
   };
   const defaultBannerContext = {
     show: false,
     title: "",
     status: "info",
-    content: ""
+    content: "",
   };
   const defaultConfirmDeleteContext = {
     show: false,
     target: {},
-    redirectUrl: null
-  }
+    redirectUrl: null,
+  };
 
   const [toastContext, setToastContext] = useState(defaultToastContext);
   const [bannerContext, setBannerContext] = useState(defaultBannerContext);
-  const [confirmDeleteContext, setConfirmDeleteContext] = useState(defaultConfirmDeleteContext);
+  const [confirmDeleteContext, setConfirmDeleteContext] = useState(
+    defaultConfirmDeleteContext
+  );
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
 
-  const showToast = (content="", duration=3000, error=false) => {
+  const showToast = (content = "", duration = 3000, error = false) => {
     setToastContext({
       show: true,
       content,
       duration,
-      error
+      error,
     });
-  }
+  };
 
-  const showBanner = (title="", content="", status="info", error=false) => {
+  const showBanner = (
+    title = "",
+    content = "",
+    status = "info",
+    error = false
+  ) => {
     setBannerContext({
       show: true,
       title,
       content,
-      status
+      status,
     });
-  }
+  };
 
-  const showErrorBanner = (title="", errors=[]) => {
+  const showErrorBanner = (title = "", errors = []) => {
     setBannerContext({
       show: true,
       title,
       content: errors,
       error: true,
-      status: "critical"
-    })
-  }
+      status: "critical",
+    });
+  };
 
   const showConfirmDeleteModal = (target, redirectUrl) => {
     setConfirmDeleteContext({
       show: true,
       target,
-      redirectUrl
+      redirectUrl,
     });
-  }
+  };
 
   const toggleHelpMenuOpen = () => setHelpMenuOpen(!helpMenuOpen);
 
@@ -94,48 +99,38 @@ export const AppFrame = ({ children }) => {
         showBanner={showBanner}
         showToast={showToast}
       />
-      {
-        toastContext.show
-          ? <Toast
-            content={toastContext.content}
-            duration={toastContext.duration}
-            error={toastContext.error}
-            onDismiss={() => setToastContext(defaultToastContext)}
-          />
-          : null
-      }
-      {
-        bannerContext.show
-          ? <Banner
-            title={bannerContext.title}
-            status={bannerContext.status}
-            onDismiss={() => setBannerContext(defaultBannerContext)}
-          >
-            {bannerContext.error && <p>{GENERIC_ERROR_TEXT}</p>}
-            {
-              (
-                Array.isArray(bannerContext.content)
-                && <List>
-                  {
-                    bannerContext.content.map((item, i) => 
-                    <List.Item key={i}>{item}</List.Item>)
-                  }
-                </List>
-              )
-              || <p>{bannerContext.content}</p>
-            }
-          </Banner>
-          : null
-      }
+      {toastContext.show ? (
+        <Toast
+          content={toastContext.content}
+          duration={toastContext.duration}
+          error={toastContext.error}
+          onDismiss={() => setToastContext(defaultToastContext)}
+        />
+      ) : null}
+      {bannerContext.show ? (
+        <Banner
+          title={bannerContext.title}
+          status={bannerContext.status}
+          onDismiss={() => setBannerContext(defaultBannerContext)}
+        >
+          {bannerContext.error && <p>{GENERIC_ERROR_TEXT}</p>}
+          {(Array.isArray(bannerContext.content) && (
+            <List>
+              {bannerContext.content.map((item, i) => (
+                <List.Item key={i}>{item}</List.Item>
+              ))}
+            </List>
+          )) || <p>{bannerContext.content}</p>}
+        </Banner>
+      ) : null}
       <div
         style={{
           width: "100%",
           display: "flex",
           justifyContent: "flex-end",
-          paddingTop: "10px"
+          paddingTop: "10px",
         }}
       >
-        
         <Popover
           activator={
             <Button
@@ -156,7 +151,7 @@ export const AppFrame = ({ children }) => {
                 onAction: () => {
                   navigate("/faq");
                   setHelpMenuOpen(false);
-                }
+                },
               },
               {
                 content: "Documentation",
@@ -164,31 +159,33 @@ export const AppFrame = ({ children }) => {
                 onAction: () => {
                   navigate("/documentation");
                   setHelpMenuOpen(false);
-                }
+                },
               },
               {
                 content: "Contact Us",
                 accessibilityLabel: "Link to contact page",
-                onAction: () => {
-                  navigate("/contact");
-                  setHelpMenuOpen(false);
-                }
-              }
+                url: CONTACT_LINK,
+                external: true,
+              },
             ]}
           />
         </Popover>
       </div>
-      <FeedbackContext.Provider value={{
-        showToast,
-        showBanner,
-        showErrorBanner
-      }}>
-        <ModalContext.Provider value={{
-          showConfirmDeleteModal
-        }}>
+      <FeedbackContext.Provider
+        value={{
+          showToast,
+          showBanner,
+          showErrorBanner,
+        }}
+      >
+        <ModalContext.Provider
+          value={{
+            showConfirmDeleteModal,
+          }}
+        >
           {children}
         </ModalContext.Provider>
       </FeedbackContext.Provider>
     </Frame>
-  )
-}
+  );
+};
