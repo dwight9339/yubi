@@ -113,7 +113,7 @@ export default function applyAuthMiddleware(app) {
             data: `
               mutation {
                 appSubscriptionCreate(
-                  name: "Unique Variants Manager App Subscription",
+                  name: "Yubi App Subscription",
                   lineItems: {
                     plan: {
                       appRecurringPricingDetails: {

@@ -1,8 +1,4 @@
-import { 
-  Modal,
-  Banner,
-  List
-} from "@shopify/polaris";
+import { Modal, Banner, List } from "@shopify/polaris";
 import { addUvTag } from "../../utils/apiHooks/addUvTag";
 import { useState, useContext, useMemo } from "react";
 import { FeedbackContext } from "../../app/AppFrame";
@@ -22,13 +18,13 @@ export const AddUvTagModal = ({ show, onClose, productId, refetch }) => {
       await addTagHook(productId);
       refetch();
       showToast("'unique variants' tag added");
-    } catch(err) {
+    } catch (err) {
       console.error(`UV tag add error - ${err}`);
       showErrorBanner(sanitizeErrorText(err));
     } finally {
       setProcessing(false);
     }
-  }
+  };
 
   return (
     <Modal
@@ -38,22 +34,22 @@ export const AddUvTagModal = ({ show, onClose, productId, refetch }) => {
       primaryAction={{
         content: "Add tag",
         onAction: doAddTag,
-        loading: processing
+        loading: processing,
       }}
       secondaryActions={[
         {
           content: "No thanks",
-          onAction: onClose
-        }
+          onAction: onClose,
+        },
       ]}
       noScroll
     >
       {errorBanner}
       <Modal.Section>
-      We noticed that this product does not have the 'unique variants' tag.
-      Without this tag, this product will not appear in the products list upon
-      opening the Unique Variants Manager app. Would you like to add it now?
+        We noticed that this product does not have the 'unique variants' tag.
+        Without this tag, this product will not appear in the products list upon
+        opening the Yubi app. Would you like to add it now?
       </Modal.Section>
     </Modal>
-  )
-}
+  );
+};

@@ -1,12 +1,12 @@
 {
   "paragraphs": {
-    "intro": "Welcome to Unique Variants Manager! This app helps you create and manage groups of unique products as variants of a generic parent product. Let’s do a quick walkthrough with a real-world example.",
+    "intro": "Welcome to Yubi! This app helps you create and manage groups of unique products as variants of a generic parent product. Let’s do a quick walkthrough with a real-world example.",
     "example_setup": "Say you’ve just finished a batch of hand-carved wooden spoons, each with its own unique style and personality, and now you’re ready to share them with the world. Rather than create a product page for each individual spoon, it’s much easier and more efficient to create a parent product with a general description and list each spoon as a variant. That way we can use the parent product’s description to talk about the similarities of the spoons (wooden, spoony, and hand-crafted with love) and a description metafield on each variant to talk about what makes each one unique (roasted mahogany with tiny knot on the handle). This also helps improve site SEO since we’re not constantly adding and removing new product pages for our one-of-a-kind handicrafts and we now have a landing page for customers looking for a particular type of product.",
     "first_glance": "After opening the app for the first time, you'll see an empty products list. Any products marked with the 'unique variants' tag will appear in this list. To create a new product click “Create new product”.",
     "create_product": "Fill out the form with details about your parent product. We can add a generic image for the product to be shown on collection pages.",
     "submit_product": "Click “Create” to submit.",
-    "product_info_page_expo": "After creating a new product, we're taken to its product info page. Here we can see important detail about our product as well as a list of variants associated with it. Since we haven't created any variants for the product yet, this list is currently empty. Let's change that. Click “Create new variant”", 
-    "create_variant":"We can create a unique name and description for this particular spoon. Don’t forget to include a picture!",
+    "product_info_page_expo": "After creating a new product, we're taken to its product info page. Here we can see important detail about our product as well as a list of variants associated with it. Since we haven't created any variants for the product yet, this list is currently empty. Let's change that. Click “Create new variant”",
+    "create_variant": "We can create a unique name and description for this particular spoon. Don’t forget to include a picture!",
     "delete_after_purchase_checkbox": "Toward the bottom of the form we see the option “Delete after purchase”. Checking this will signal to the webhook triggered whenever a new order is created that this variant should be deleted upon puchase.",
     "submit_new_variant": "Click Create.",
     "variants_list_expo": "We see the spoon has been added to the product’s list of variants. Let’s repeat the previous step to add the rest of our spoons.",
@@ -21,7 +21,7 @@
     "conclusion": "And there we go! Now that we've with the main points of the app you should be all set to start creating your own unique variants!",
     "how_to_get_help": "Buuut, just in case, you can always look for help by clicking the help menu icon in the top right corner of the app.",
     "help_menu_expo": "You can find answers to common questions by visiting our FAQ page, check the documentation for detailed app usage information, or contact the development team to report any undocumented issues.",
-    "thanks": "Thank you for choosing Unique Variants Manager!"
+    "thanks": "Thank you for choosing Yubi!"
   },
   "images": {
     "empty_products_list": {
@@ -110,12 +110,8 @@
     }
   },
   "pages": [
-    [
-      ["paragraph", "intro"]
-    ],
-    [
-      ["paragraph", "example_setup"]
-    ],
+    [["paragraph", "intro"]],
+    [["paragraph", "example_setup"]],
     [
       ["header", "Creating products"],
       ["paragraph", "first_glance"],
