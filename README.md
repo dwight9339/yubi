@@ -1,3 +1,7 @@
-# Yubi
+# Yubi (AKA Unique Variants Manager)
 
-Yubi provides tools to help Shopify merchants sell versions of products that are only slightly altered versions of a base product. This allows merchants who make handmade goods to offer items that are unique but that don't warrant the hassle of creating separate product pages for each one and all of the extra copywriting and SEO work that this would entail. The Yubi app provides a solution for such merchants by providing a way to easily create variants for a base product that don't conform to the standard "option-based" method of variant creation used by Shopify by instead allowing each individual variant to be given its own name and description describing its unique qualities. Bundled with the app is a theme app block that can be used on the product page to show a grid of thumbnails for each variant instead of an options list.
+Yubi is a Shopify app for merchants who sell one-of-a-kind, custom, often hand-crafted products. Selling these types of products poses a unique problem because you need to create a new product listing for each item and delete this listing after the item sells. This can cause a lot of unnecessary work because often these items are similar enough to share almost the same product description and deleting them afterwards causes dead links which can be harmful to a store's SEO.
+
+Yubi provides a way to quickly list unique products as variants of a parent product. The parent product contains a generic description for the group of unique products and the variants have a description metafield attached so merchants can add a unique description for that particular item. Yubi also includes theme app blocks for displaying variant description and name data and even a custom thumbnail variant picker.
+
+See the Shopify app store listing here: https://apps.shopify.com/unique-variants-manager
