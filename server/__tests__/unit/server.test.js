@@ -7,7 +7,7 @@ import { createHmac } from "crypto";
 import { Shopify } from "@shopify/shopify-api";
 import { describe, expect, test, vi } from "vitest";
 
-import { serve } from "./serve.js";
+import { serve } from "../utils/serve.js";
 
 describe("shopify-app-node server", async () => {
   const { app } = await serve(process.cwd(), false);
@@ -114,13 +114,13 @@ describe("shopify-app-node server", async () => {
         .mockImplementationOnce(() => ({
           shop: "test-shop",
           scope: "write_products",
-          isOnline: false
+          isOnline: false,
         }));
       vi.spyOn(Shopify.Webhooks.Registry, "registerAll").mockImplementationOnce(
         () => ({
           webhook1: {
-            success: true
-          }
+            success: true,
+          },
         })
       );
 
@@ -139,7 +139,7 @@ describe("shopify-app-node server", async () => {
 
       expect(response.status).toEqual(302);
       expect(response.headers.location).toEqual(
-        "/auth/?shop=test-shop"
+        "/auth/?shop=test-shop&secondRound=true"
       );
     });
 
