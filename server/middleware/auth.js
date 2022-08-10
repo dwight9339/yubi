@@ -80,93 +80,92 @@ export default function applyAuthMiddleware(app) {
         });
 
         if (!user) {
-          //   const client = new Shopify.Clients.Graphql(
-          //     session.shop,
-          //     session.accessToken
-          //   );
-          //   const getShopDataResult = await client.query({
-          //     data: `
-          //       {
-          //         shop {
-          //           plan {
-          //             partnerDevelopment
-          //           }
-          //         }
-          //       }
-          //     `,
-          //   });
+          const client = new Shopify.Clients.Graphql(
+            session.shop,
+            session.accessToken
+          );
+          const getShopDataResult = await client.query({
+            data: `
+                {
+                  shop {
+                    plan {
+                      partnerDevelopment
+                    }
+                  }
+                }
+              `,
+          });
 
-          //   const {
-          //     body: { data: shopData, errors: shopErrors },
-          //   } = getShopDataResult;
+          const {
+            body: { data: shopData, errors: shopErrors },
+          } = getShopDataResult;
 
-          //   if (shopErrors) {
-          //     throw shopErrors;
-          //   }
+          if (shopErrors) {
+            throw shopErrors;
+          }
 
-          //   const {
-          //     shop: {
-          //       plan: { partnerDevelopment: isDevStore },
-          //     },
-          //   } = shopData;
-          //   const createBillingResult = await client.query({
-          //     data: `
-          //       mutation {
-          //         appSubscriptionCreate(
-          //           name: "Yubi App Subscription",
-          //           lineItems: {
-          //             plan: {
-          //               appRecurringPricingDetails: {
-          //                 price: {
-          //                   amount: 1.99,
-          //                   currencyCode: USD
-          //                 }
-          //               }
-          //             }
-          //           },
-          //           returnUrl: "${
-          //             process.env.HOST
-          //           }/payment-success?${redirectParams.toString()}",
-          //           test: ${
-          //             process.env.NODE_ENV === "development" ||
-          //             process.env.PAYMENT_EXEMPTION_LIST?.includes(
-          //               session.shop
-          //             ) ||
-          //             isDevStore
-          //           },
-          //           trialDays: 14
-          //         ) {
-          //           userErrors {
-          //             field
-          //             message
-          //           }
-          //           confirmationUrl
-          //         }
-          //       }
-          //     `,
-          //   });
+          const {
+            shop: {
+              plan: { partnerDevelopment: isDevStore },
+            },
+          } = shopData;
+          const createBillingResult = await client.query({
+            data: `
+                mutation {
+                  appSubscriptionCreate(
+                    name: "Yubi App Subscription",
+                    lineItems: {
+                      plan: {
+                        appRecurringPricingDetails: {
+                          price: {
+                            amount: 1.99,
+                            currencyCode: USD
+                          }
+                        }
+                      }
+                    },
+                    returnUrl: "${
+                      process.env.HOST
+                    }/payment-success?${redirectParams.toString()}",
+                    test: ${
+                      process.env.NODE_ENV === "development" ||
+                      process.env.PAYMENT_EXEMPTION_LIST?.includes(
+                        session.shop
+                      ) ||
+                      isDevStore
+                    },
+                    trialDays: 14
+                  ) {
+                    userErrors {
+                      field
+                      message
+                    }
+                    confirmationUrl
+                  }
+                }
+              `,
+          });
 
           //   console.log(
           //     `createBillingResult: ${JSON.stringify(createBillingResult)}`
           //   );
 
-          //   const {
-          //     body: { data, errors },
-          //   } = createBillingResult;
+          const {
+            body: { data, errors },
+          } = createBillingResult;
 
-          //   if (errors) {
-          //     throw errors;
-          //   }
+          if (errors) {
+            throw errors;
+          }
 
-          //   const {
-          //     appSubscriptionCreate: { userErrors, confirmationUrl },
-          //   } = data;
+          const {
+            appSubscriptionCreate: { userErrors, confirmationUrl },
+          } = data;
 
-          //   if (userErrors.length) {
-          //     throw `${userErrors.map((error) => error.message)}`;
-          //   }
-          //   res.redirect(confirmationUrl);
-          res.redirect(`/payment-success?${redirectParams.toString()}`);
+          if (userErrors.length) {
+            throw `${userErrors.map((error) => error.message)}`;
+          }
+          res.redirect(confirmationUrl);
         } else {
           app.set(
             "active-shopify-shops",
